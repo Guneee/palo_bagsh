@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>519306183051-hkmvrfpm2osd9kjon8qmq04klmh7boud.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.519306183051-hkmvrfpm2osd9kjon8qmq04klmh7boud</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>519306183051-2flpa1v2le9cgibckdiphptronara6ap.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC0SCe5dCnHiDUI4Il0rcduPqhtazv6-_E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>519306183051</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>mn.palo.palo</string>
+	<key>PROJECT_ID</key>
+	<string>palo24</string>
+	<key>STORAGE_BUCKET</key>
+	<string>palo24.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:519306183051:ios:bc2e8172b33d8911bbaf8e</string>
+</dict>
+</plist>
