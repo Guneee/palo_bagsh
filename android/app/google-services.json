@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1090087148362:android:9506779dca26c16c3abfb3",
+        "mobilesdk_app_id": "1:1090087148362:android:0853e4a8f37183bc3abfb3",
         "android_client_info": {
-          "package_name": "com.gunee.palo"
+          "package_name": "mn.gunee.palo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1090087148362-pmk9i5cds2vs3i7o4gpk93ljj6knibb4.apps.googleusercontent.com",
+          "client_id": "1090087148362-2nipunnglfgov2ae5qendmjo36fi0cig.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.gunee.palo",
-            "certificate_hash": "2b24b896502b5eba52441dc871bde82eb85cfbfe"
+            "package_name": "mn.gunee.palo",
+            "certificate_hash": "239c2a72cb7cc53044a8b7dcf25ce0ba3f8e326f"
           }
         },
         {
@@ -28,7 +28,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBNNfp97rLi-L5ugKvL7_Qu_VO5LgTfwLI"
+          "current_key": "AIzaSyC33qB4Qc7qhNz1CxqSN6f0x3xqsM4pwhE"
         }
       ],
       "services": {

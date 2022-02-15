@@ -1,4 +1,4 @@
-package com.gunee.palo
+package mn.gunee.palo
 
 import io.flutter.embedding.android.FlutterActivity
 
