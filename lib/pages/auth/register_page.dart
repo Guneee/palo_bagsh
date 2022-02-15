@@ -43,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void _verifyCompleted(AuthCredential authCredential) {
     try {
       _auth.signInWithCredential(authCredential);
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         PageTransition(
           duration: Duration(milliseconds: 200),
@@ -88,30 +88,17 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {
       _isLoad = false;
     });
-    if (isVerify) {
-      Navigator.push(
-        context,
-        PageTransition(
-          duration: Duration(milliseconds: 200),
-          type: PageTransitionType.rightToLeft,
-          child: RegisterPage2(
-            phone: _userPhoneTEC.text,
-          ),
+    Navigator.push(
+      context,
+      PageTransition(
+        duration: Duration(milliseconds: 200),
+        type: PageTransitionType.rightToLeft,
+        child: OTPVerifyPage(
+          id: id,
+          phone: _userPhoneTEC.text,
         ),
-      );
-    } else {
-      Navigator.push(
-        context,
-        PageTransition(
-          duration: Duration(milliseconds: 200),
-          type: PageTransitionType.rightToLeft,
-          child: OTPVerifyPage(
-            id: id,
-            phone: _userPhoneTEC.text,
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 
   void _timeOut(verificationId) {

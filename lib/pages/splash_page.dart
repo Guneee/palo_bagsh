@@ -153,7 +153,7 @@ class _SplashPageState extends State<SplashPage> {
           Text(
             "Хуудас 1",
             style: TextStyle(
-              fontSize: height * 0.02,
+              fontSize: height * 0.024,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -172,7 +172,7 @@ class _SplashPageState extends State<SplashPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: kPrimaryColor,
-                fontSize: height * 0.017,
+                fontSize: height * 0.022,
               ),
             ),
           ),
@@ -184,7 +184,7 @@ class _SplashPageState extends State<SplashPage> {
           Text(
             "Хуудас 2",
             style: TextStyle(
-              fontSize: height * 0.02,
+              fontSize: height * 0.024,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -203,7 +203,7 @@ class _SplashPageState extends State<SplashPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: kPrimaryColor,
-                fontSize: height * 0.017,
+                fontSize: height * 0.022,
               ),
             ),
           ),
@@ -215,7 +215,7 @@ class _SplashPageState extends State<SplashPage> {
           Text(
             "Хуудас 3",
             style: TextStyle(
-              fontSize: height * 0.02,
+              fontSize: height * 0.024,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -234,7 +234,7 @@ class _SplashPageState extends State<SplashPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: kPrimaryColor,
-                fontSize: height * 0.017,
+                fontSize: height * 0.022,
               ),
             ),
           ),

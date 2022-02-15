@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "799901914590",
-    "project_id": "palo-24",
-    "storage_bucket": "palo-24.appspot.com"
+    "project_number": "1090087148362",
+    "project_id": "palo-2424",
+    "storage_bucket": "palo-2424.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:799901914590:android:86f817a1401172b428f94f",
+        "mobilesdk_app_id": "1:1090087148362:android:9506779dca26c16c3abfb3",
         "android_client_info": {
           "package_name": "com.gunee.palo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "799901914590-rlp010anrujdajousrc18f0svi9pn4tk.apps.googleusercontent.com",
+          "client_id": "1090087148362-pmk9i5cds2vs3i7o4gpk93ljj6knibb4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gunee.palo",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "799901914590-02jr0ep3b801lft7dorp76chh4o938bc.apps.googleusercontent.com",
+          "client_id": "1090087148362-tvombaoaeh5vom0acvsq21b6l7emg7hs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC2e_T4Mc4w1FVBKaCzBrR-Wv0XSobqGeI"
+          "current_key": "AIzaSyBNNfp97rLi-L5ugKvL7_Qu_VO5LgTfwLI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "799901914590-02jr0ep3b801lft7dorp76chh4o938bc.apps.googleusercontent.com",
+              "client_id": "1090087148362-tvombaoaeh5vom0acvsq21b6l7emg7hs.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
