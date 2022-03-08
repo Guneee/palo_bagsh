@@ -69,10 +69,34 @@ class _RegisterPageState extends State<RegisterPage> {
         "[firebase_auth/missing-client-identifier] This request is missing a valid app identifier, meaning that neither SafetyNet checks nor reCAPTCHA checks succeeded. Please try again, or check the logcat for more details.")) {
       showSnackBar(
           "reCAPTCHA алдаа гарлаа, Та манайхтай холбоо барина уу!", key);
+      Navigator.push(
+        context,
+        PageTransition(
+          duration: Duration(milliseconds: 200),
+          type: PageTransitionType.rightToLeft,
+          child: RegisterPage2(phone: _userPhoneTEC.text),
+        ),
+      );
     } else if (error.toString().contains("[firebase_auth/unknown] null")) {
       showSnackBar("Server түр салсан байна. Та дараа дахин оролдоно уу", key);
+      Navigator.push(
+        context,
+        PageTransition(
+          duration: Duration(milliseconds: 200),
+          type: PageTransitionType.rightToLeft,
+          child: RegisterPage2(phone: _userPhoneTEC.text),
+        ),
+      );
     } else {
       showSnackBar("Алдаа гарлаа, Та манайхтай холбоо барина уу!", key);
+      Navigator.push(
+        context,
+        PageTransition(
+          duration: Duration(milliseconds: 200),
+          type: PageTransitionType.rightToLeft,
+          child: RegisterPage2(phone: _userPhoneTEC.text),
+        ),
+      );
     }
 
     print("verify failed error = " + error.toString());

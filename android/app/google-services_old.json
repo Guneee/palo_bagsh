@@ -22,14 +22,6 @@
           }
         },
         {
-          "client_id": "1090087148362-lgmup5a82cnp3cbjo0oi5q2cmjkilgk9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "mn.gunee.palo",
-            "certificate_hash": "0e156c048a6aa7ef0ad3e3a3f81c073983e678aa"
-          }
-        },
-        {
           "client_id": "1090087148362-tvombaoaeh5vom0acvsq21b6l7emg7hs.apps.googleusercontent.com",
           "client_type": 3
         }
