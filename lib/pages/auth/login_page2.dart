@@ -63,6 +63,7 @@ class _LoginPage2State extends State<LoginPage2> {
       var body = json.decode(responce.body);
       if (responce.statusCode == 201) {
         token = body["access_token"].toString();
+        user = body["user"];
         currentUserFirstName = body["user"]["firstname"] ?? "";
         currentUserLastName = body["user"]["lastname"] ?? "";
         currentUserAvatar = body["user"]["avatar"] ?? "";

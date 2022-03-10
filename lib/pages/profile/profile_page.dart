@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:palo/pages/profile/pull_list.dart';
 import 'package:palo/pages/profile/pull_request.dart';
+import '../verify/verify_page.dart';
 import '/helpers/app_preferences.dart';
 import '/pages/profile/profile_account.dart';
 import '/pages/profile/all_history.dart';
@@ -373,6 +374,84 @@ class _ProfilePageState extends State<ProfilePage> {
                         PageTransition(
                           duration: Duration(milliseconds: 200),
                           type: PageTransitionType.rightToLeft,
+                          child: const VerifyPage(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: width,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.white.withOpacity(0.2),
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 12.0,
+                          top: 12.0,
+                        ),
+                        child: Row(
+                          children: [
+                            if (user["verify"] == "Баталсан")
+                              const Icon(
+                                Icons.verified,
+                                color: Colors.white,
+                              ),
+                            if (user["verify"] == "Татгалзсан")
+                              const Icon(
+                                Icons.verified,
+                                color: Colors.red,
+                              ),
+                            if (user["verify"] == null)
+                              const Icon(
+                                Icons.verified,
+                                color: Colors.red,
+                              ),
+                            SizedBox(width: width * 0.02),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Баталгаажуулалт",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: height * 0.024,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Хэрэглэгчийн баталгаажуулалт",
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.5),
+                                        fontSize: height * 0.016,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          duration: Duration(milliseconds: 200),
+                          type: PageTransitionType.rightToLeft,
                           child: const ProfileAccount(),
                         ),
                       );
@@ -452,6 +531,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           actions: [
                             FlatButton(
                               onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("ХААХ"),
+                            ),
+                            FlatButton(
+                              onPressed: () {
                                 final isFinish = clearUserData();
                                 if (isFinish) {
                                   goHome(context);
@@ -460,12 +545,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 }
                               },
                               child: Text("ГАРАХ"),
-                            ),
-                            FlatButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("ХААХ"),
                             ),
                           ],
                         ),

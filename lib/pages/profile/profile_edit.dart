@@ -123,7 +123,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     imageUploadRequest.fields['url'] = appUrl;
     imageUploadRequest.fields['firstname'] = _firstNameTEC.text;
     imageUploadRequest.fields['lastname'] = _lastNameTEC.text;
-    imageUploadRequest.fields['age'] = _lastNameTEC.text;
+    imageUploadRequest.fields['age'] = _ageTEC.text;
     imageUploadRequest.fields['gender'] = _gender;
 
     final streamedResponse = await imageUploadRequest.send();
@@ -431,7 +431,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                "Ирэгний үнэмлэхний ур тал  ",
+                                "Ирэгний үнэмлэхний урдтал  ",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -462,7 +462,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                "Ирэгний үнэмлэхний ар тал  ",
+                                "Ирэгний үнэмлэхний ардтал  ",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -536,8 +536,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                 "Хэрэглэгчийн мэдээлэл засах",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: height * 0.021,
-                  fontWeight: FontWeight.w400,
+                  fontSize: height * 0.022,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Row(

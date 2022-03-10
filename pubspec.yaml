@@ -98,9 +98,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Hub
+    - family: Mon
       fonts:
-        - asset: assets/fonts/hub.ttf
+        - asset: assets/fonts/mon.ttf
 
   #   - family: Trajan Pro
   #     fonts:

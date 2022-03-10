@@ -68,6 +68,7 @@ class MyApp extends StatelessWidget {
       title: 'Palo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        // fontFamily: "Mon",
         primaryColor: kPrimaryColor,
         primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,

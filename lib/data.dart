@@ -8,7 +8,7 @@ import 'pages/home/home_page.dart';
 bool isFirstHomeAdWord = false;
 
 String token = "";
-
+var user;
 String currentUserFirstName = "";
 String currentUserLastName = "";
 String currentUserEmail = "";
