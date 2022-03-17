@@ -126,6 +126,7 @@ class Ctext extends StatelessWidget {
       overflow: (textOverflow != null) ? textOverflow : TextOverflow.clip,
       maxLines: (maxLine != null) ? maxLine : 1,
       style: TextStyle(
+        letterSpacing: 1.0,
         fontSize: (normal != null)
             ? MediaQuery.of(context).size.height * 0.02
             : (large != null)

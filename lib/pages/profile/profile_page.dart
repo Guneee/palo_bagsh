@@ -1,5 +1,6 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:palo/pages/profile/pull_list.dart';
 import 'package:palo/pages/profile/pull_request.dart';
@@ -58,556 +59,571 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       );
 
-  Widget _info(double height, double width) => Column(
-        children: [
-          SizedBox(height: height * 0.04),
-          Container(
-            height: height * 0.2,
-            width: width * 0.82,
-            decoration: BoxDecoration(
-              color: kPrimaryColor,
-              borderRadius: BorderRadius.circular(16.0),
+  Widget _info(double height, double width) => AnimationLimiter(
+        child: Column(
+          children: AnimationConfiguration.toStaggeredList(
+            duration: const Duration(milliseconds: 375),
+            childAnimationBuilder: (widget) => SlideAnimation(
+              verticalOffset: 50.0,
+              child: FadeInAnimation(
+                child: widget,
+              ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+            children: [
+              SizedBox(height: height * 0.04),
+              Container(
+                height: height * 0.2,
+                width: width * 0.82,
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: width * 0.05,
-                          top: height * 0.022,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: width * 0.05,
+                              top: height * 0.022,
+                            ),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Данс",
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.4),
+                                      fontSize: height * 0.022,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: height * 0.008),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (currentUserMoney != "")
+                                        Text(
+                                          _formatter.format(currentUserMoney),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: height * 0.024,
+                                          ),
+                                        ),
+                                      if (currentUserMoney == "")
+                                        Text(
+                                          "₮ 0",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: height * 0.024,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Данс",
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.4),
-                                  fontSize: height * 0.022,
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: width * 0.05,
+                        right: width * 0.03,
+                        bottom: height * 0.01,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Нийт бөглөсөн : " + history.length.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: height * 0.02,
+                            ),
+                          ),
+                          Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    duration: Duration(milliseconds: 200),
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const AllHistory(),
+                                  ),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "түүх ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: height * 0.02,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: height * 0.022,
+                                      color: Colors.white,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            SizedBox(height: height * 0.008),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  if (currentUserMoney != "")
-                                    Text(
-                                      _formatter.format(currentUserMoney),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: height * 0.024,
-                                      ),
-                                    ),
-                                  if (currentUserMoney == "")
-                                    Text(
-                                      "₮ 0",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: height * 0.024,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                ],
-                              ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: height * 0.03),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: Material(
+                  color: kPrimaryColor,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                          duration: Duration(milliseconds: 200),
+                          type: PageTransitionType.rightToLeft,
+                          child: const PullRequestPage(),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: height * 0.08,
+                      width: width * 0.82,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: width * 0.04,
+                          right: width * 0.04,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.request_page,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: width * 0.02),
+                                Text(
+                                  "Таталт хийх хүсэлт",
+                                  style: TextStyle(
+                                    fontSize: height * 0.02,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: height * 0.024,
                             ),
                           ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.02),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: Material(
+                  color: kPrimaryColor.withOpacity(0.6),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                          duration: Duration(milliseconds: 200),
+                          type: PageTransitionType.rightToLeft,
+                          child: const PullList(),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: height * 0.08,
+                      width: width * 0.82,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: width * 0.04,
+                          right: width * 0.04,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.history_toggle_off,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: width * 0.02),
+                                Text(
+                                  "Таталтын түүх",
+                                  style: TextStyle(
+                                    fontSize: height * 0.02,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: height * 0.024,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.04),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: width * 0.06,
+                  right: width * 0.06,
+                ),
+                child: Column(
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              duration: Duration(milliseconds: 200),
+                              type: PageTransitionType.rightToLeft,
+                              child: const ProfileEdit(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: width,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.white.withOpacity(0.2),
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 12.0,
+                              top: 12.0,
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.person_pin_circle_outlined,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: width * 0.02),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Хэрэглэгч",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: height * 0.024,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Хэрэглэгчийн нэр, зураг.. засах",
+                                          style: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.5),
+                                            fontSize: height * 0.016,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              duration: Duration(milliseconds: 200),
+                              type: PageTransitionType.rightToLeft,
+                              child: const VerifyPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: width,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.white.withOpacity(0.2),
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 12.0,
+                              top: 12.0,
+                            ),
+                            child: Row(
+                              children: [
+                                if (user["verify"] == "Баталсан")
+                                  const Icon(
+                                    Icons.verified,
+                                    color: Colors.white,
+                                  ),
+                                if (user["verify"] == "Татгалзсан")
+                                  const Icon(
+                                    Icons.verified,
+                                    color: Colors.red,
+                                  ),
+                                if (user["verify"] == null)
+                                  const Icon(
+                                    Icons.verified,
+                                    color: Colors.red,
+                                  ),
+                                SizedBox(width: width * 0.02),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Баталгаажуулалт",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: height * 0.024,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Хэрэглэгчийн баталгаажуулалт",
+                                          style: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.5),
+                                            fontSize: height * 0.016,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              duration: Duration(milliseconds: 200),
+                              type: PageTransitionType.rightToLeft,
+                              child: const ProfileAccount(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: width,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.white.withOpacity(0.2),
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 12.0,
+                              top: 12.0,
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.account_balance,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: width * 0.02),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Данс",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: height * 0.024,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Таталт хийх данс бүртгэх, засах",
+                                          style: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.5),
+                                            fontSize: height * 0.016,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => AlertDialog(
+                              title: Text("Гарах"),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Та системээс түр гарахад итгэлтэй байна уу?",
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                FlatButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("ХААХ"),
+                                ),
+                                FlatButton(
+                                  onPressed: () {
+                                    final isFinish = clearUserData();
+                                    if (isFinish) {
+                                      goHome(context);
+                                    } else {
+                                      showSnackBar("Алдаа гарлаа", _key);
+                                    }
+                                  },
+                                  child: Text("ГАРАХ"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: width,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.white.withOpacity(0.2),
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 12.0,
+                              top: 12.0,
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.exit_to_app,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: width * 0.02),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Гарах",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: height * 0.024,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Системээс түр гарах",
+                                          style: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.5),
+                                            fontSize: height * 0.016,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: width * 0.05,
-                    right: width * 0.03,
-                    bottom: height * 0.01,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Нийт бөглөсөн : " + history.length.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: height * 0.02,
-                        ),
-                      ),
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                duration: Duration(milliseconds: 200),
-                                type: PageTransitionType.rightToLeft,
-                                child: const AllHistory(),
-                              ),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "түүх ",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: height * 0.02,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: height * 0.022,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: height * 0.03),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: Material(
-              color: kPrimaryColor,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                      duration: Duration(milliseconds: 200),
-                      type: PageTransitionType.rightToLeft,
-                      child: const PullRequestPage(),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  height: height * 0.08,
-                  width: width * 0.82,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.04,
-                      right: width * 0.04,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.request_page,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: width * 0.02),
-                            Text(
-                              "Таталт хийх хүсэлт",
-                              style: TextStyle(
-                                fontSize: height * 0.02,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                          size: height * 0.024,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ),
-            ),
+            ],
           ),
-          SizedBox(height: height * 0.02),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: Material(
-              color: kPrimaryColor.withOpacity(0.6),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                      duration: Duration(milliseconds: 200),
-                      type: PageTransitionType.rightToLeft,
-                      child: const PullList(),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  height: height * 0.08,
-                  width: width * 0.82,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.04,
-                      right: width * 0.04,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.history_toggle_off,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: width * 0.02),
-                            Text(
-                              "Таталтын түүх",
-                              style: TextStyle(
-                                fontSize: height * 0.02,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                          size: height * 0.024,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: height * 0.04),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.06,
-              right: width * 0.06,
-            ),
-            child: Column(
-              children: [
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          duration: Duration(milliseconds: 200),
-                          type: PageTransitionType.rightToLeft,
-                          child: const ProfileEdit(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: width,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.white.withOpacity(0.2),
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 12.0,
-                          top: 12.0,
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.person_pin_circle_outlined,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: width * 0.02),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Хэрэглэгч",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: height * 0.024,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Хэрэглэгчийн нэр, зураг.. засах",
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.5),
-                                        fontSize: height * 0.016,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          duration: Duration(milliseconds: 200),
-                          type: PageTransitionType.rightToLeft,
-                          child: const VerifyPage(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: width,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.white.withOpacity(0.2),
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 12.0,
-                          top: 12.0,
-                        ),
-                        child: Row(
-                          children: [
-                            if (user["verify"] == "Баталсан")
-                              const Icon(
-                                Icons.verified,
-                                color: Colors.white,
-                              ),
-                            if (user["verify"] == "Татгалзсан")
-                              const Icon(
-                                Icons.verified,
-                                color: Colors.red,
-                              ),
-                            if (user["verify"] == null)
-                              const Icon(
-                                Icons.verified,
-                                color: Colors.red,
-                              ),
-                            SizedBox(width: width * 0.02),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Баталгаажуулалт",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: height * 0.024,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Хэрэглэгчийн баталгаажуулалт",
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.5),
-                                        fontSize: height * 0.016,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          duration: Duration(milliseconds: 200),
-                          type: PageTransitionType.rightToLeft,
-                          child: const ProfileAccount(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: width,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.white.withOpacity(0.2),
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 12.0,
-                          top: 12.0,
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.account_balance,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: width * 0.02),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Данс",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: height * 0.024,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Таталт хийх данс бүртгэх, засах",
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.5),
-                                        fontSize: height * 0.016,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => AlertDialog(
-                          title: Text("Гарах"),
-                          content: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Та системээс түр гарахад итгэлтэй байна уу?",
-                                ),
-                              ],
-                            ),
-                          ),
-                          actions: [
-                            FlatButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("ХААХ"),
-                            ),
-                            FlatButton(
-                              onPressed: () {
-                                final isFinish = clearUserData();
-                                if (isFinish) {
-                                  goHome(context);
-                                } else {
-                                  showSnackBar("Алдаа гарлаа", _key);
-                                }
-                              },
-                              child: Text("ГАРАХ"),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: width,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.white.withOpacity(0.2),
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 12.0,
-                          top: 12.0,
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.exit_to_app,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: width * 0.02),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Гарах",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: height * 0.024,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Системээс түр гарах",
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.5),
-                                        fontSize: height * 0.016,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       );
 
   Widget _authButtons(double height, double width) => SizedBox(

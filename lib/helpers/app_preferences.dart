@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../constants.dart';
+
+go(BuildContext context, Widget page) {
+  Navigator.push(
+    context,
+    PageTransition(
+      duration: Duration(milliseconds: 200),
+      type: PageTransitionType.rightToLeft,
+      child: page,
+    ),
+  );
+}
 
 Future<void> checkLocationPermission() async {
   LocationPermission permission;

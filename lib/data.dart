@@ -44,6 +44,13 @@ List surveys = [];
 List banners = [];
 List nearSurveys = [];
 List userPullRequestItems = [];
+List quests = [
+  {"id": 1, "title": "Хүнс"},
+  {"id": 2, "title": "Гоо сайхан"},
+  {"id": 3, "title": "Багаж хэрэгсэл"},
+  {"id": 4, "title": "Материал"},
+];
+
 //android:name="${applicationName}"
 bool clearUserData() {
   currentBottomIndex = 0;

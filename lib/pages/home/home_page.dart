@@ -4,10 +4,11 @@ import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/pages/job/job_page.dart';
 import 'package:palo/pages/select_words.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../quest/quest_page.dart';
 import '/data.dart';
 import '../../constants.dart';
 import '/pages/profile/profile_page.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'home_page_content.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,9 +21,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   late PageController _pageController;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   List<Widget> tabPages = [
     const HomePageContent(),
+    const QuestPage(),
     const JobPage(),
     const ProfilePage(),
   ];
@@ -50,11 +53,35 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _firebaseNotification() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
     if (token != "") {
+      _firebaseNotification();
       if (!isFirstHomeAdWord) {
         _checkIsFirst();
       }
@@ -105,7 +132,7 @@ class _HomePageState extends State<HomePage> {
   Widget _bottomNavigationBar() => BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         fixedColor: currentBottomIndex == 0 ? kPrimaryColor : Colors.white,
-        backgroundColor: currentBottomIndex == 2 ? kPrimaryColor : Colors.white,
+        backgroundColor: currentBottomIndex == 3 ? kPrimaryColor : Colors.white,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: currentBottomIndex,
@@ -133,14 +160,31 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Icon(
                     Icons.home_outlined,
-                    color: (currentBottomIndex == 2)
+                    color: (currentBottomIndex == 3)
+                        ? Colors.white.withOpacity(0.4)
+                        : Colors.black.withOpacity(0.5),
+                  ),
+          ),
+          BottomNavigationBarItem(
+            label: 'Эрэл',
+            icon: (currentBottomIndex == 1)
+                ? const Text(
+                    "Эрэл",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : Icon(
+                    Icons.question_answer,
+                    color: (currentBottomIndex == 3)
                         ? Colors.white.withOpacity(0.4)
                         : Colors.black.withOpacity(0.5),
                   ),
           ),
           BottomNavigationBarItem(
             label: "Ажил",
-            icon: (currentBottomIndex == 1)
+            icon: (currentBottomIndex == 2)
                 ? const Text(
                     "Ажил",
                     style: TextStyle(
@@ -150,14 +194,14 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Icon(
                     Icons.location_history_outlined,
-                    color: (currentBottomIndex == 2)
+                    color: (currentBottomIndex == 3)
                         ? Colors.white.withOpacity(0.4)
                         : Colors.black.withOpacity(0.5),
                   ),
           ),
           BottomNavigationBarItem(
             label: 'Хэрэглэгчийн хуудас',
-            icon: (currentBottomIndex == 2)
+            icon: (currentBottomIndex == 3)
                 ? const Text(
                     "Профайл",
                     style: TextStyle(

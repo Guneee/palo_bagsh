@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:palo/pages/home/home_page.dart';
 
@@ -19,7 +18,6 @@ import '../../pages/auth/register_page.dart';
 import '../../pages/home/survey_detail2.dart';
 
 import '../../constants.dart';
-import '../profile/profile_page.dart';
 import 'category_items.dart';
 import 'survey_detail.dart';
 import 'video_page.dart';
@@ -358,264 +356,240 @@ class _HomePageContentState extends State<HomePageContent> {
       );
 
   Widget _mainBody(double height, double width) => Column(
-        children: [
-          if (banners.isNotEmpty) _bannerItems(height, width),
-          if (!_isLoad)
-            if (nearSurveys.isNotEmpty)
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: null,
-                  child: SizedBox(
-                    width: width,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: width * 0.05,
-                              top: height * 0.02,
-                            ),
-                            child: Text(
-                              "Таньд санал болгосон",
-                              style: TextStyle(
-                                fontSize: height * 0.024,
-                                fontWeight: FontWeight.bold,
+        children: AnimationConfiguration.toStaggeredList(
+          duration: const Duration(milliseconds: 375),
+          childAnimationBuilder: (widget) => SlideAnimation(
+            verticalOffset: 50.0,
+            child: FadeInAnimation(
+              child: widget,
+            ),
+          ),
+          children: [
+            if (banners.isNotEmpty) _bannerItems(height, width),
+            if (!_isLoad)
+              if (nearSurveys.isNotEmpty)
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: null,
+                    child: SizedBox(
+                      width: width,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: width * 0.05,
+                                top: height * 0.02,
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-          if (!_isLoad)
-            if (nearSurveys.isNotEmpty)
-              SizedBox(
-                height: height * 0.32,
-                width: width,
-                child: AnimationLimiter(
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: nearSurveys.length,
-                    itemBuilder: (context, index2) =>
-                        AnimationConfiguration.staggeredList(
-                      position: index2,
-                      duration: const Duration(milliseconds: 375),
-                      child: SlideAnimation(
-                        horizontalOffset: 50.0,
-                        child: FadeInAnimation(
-                          child: Row(
-                            children: [
-                              if (index2 == 0) SizedBox(width: width * 0.04),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: height * 0.02,
-                                  right: width * 0.024,
-                                  bottom: height * 0.012,
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        spreadRadius: 0.1,
-                                        blurRadius: 3,
-                                        offset: const Offset(3, 3),
-                                      ),
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Material(
-                                      color: Colors.white,
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            PageTransition(
-                                              duration:
-                                                  Duration(milliseconds: 200),
-                                              type: PageTransitionType
-                                                  .rightToLeft,
-                                              child: SurveyDetail2(
-                                                index: index2,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: SizedBox(
-                                          height: height * 0.3,
-                                          width: width * 0.4,
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                flex: 5,
-                                                child: Stack(
-                                                  children: [
-                                                    Image.network(
-                                                      nearSurveys[index2]
-                                                              ["image"]
-                                                          .toString(),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    if (nearSurveys[index2]
-                                                            ["is_history"] ==
-                                                        true)
-                                                      Align(
-                                                        alignment: Alignment
-                                                            .bottomRight,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                4.0,
-                                                              ),
-                                                              color: kBtnColor,
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(4.0),
-                                                              child: Text(
-                                                                "Бөглөсөн",
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      height *
-                                                                          0.014,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    top: height * 0.018,
-                                                    bottom: height * 0.02,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            Alignment.topLeft,
-                                                        child: Text(
-                                                          "    " +
-                                                              nearSurveys[index2]
-                                                                      ["title"]
-                                                                  .toString(),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                            fontSize:
-                                                                height * 0.02,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Column(
-                                                        children: [
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .topLeft,
-                                                            child: Text(
-                                                              "    " +
-                                                                  nearSurveys[index2]
-                                                                          [
-                                                                          "created_at"]
-                                                                      .toString()
-                                                                      .substring(
-                                                                          0,
-                                                                          10),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                fontSize:
-                                                                    height *
-                                                                        0.018,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.5),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height:
-                                                                height * 0.002,
-                                                          ),
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .topLeft,
-                                                            child: Text(
-                                                              "    Шагнал " +
-                                                                  nearSurveys[index2]
-                                                                          [
-                                                                          "price"]
-                                                                      .toString() +
-                                                                  "₮",
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                fontSize:
-                                                                    height *
-                                                                        0.018,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                              child: Text(
+                                "Таньд санал болгосон",
+                                style: TextStyle(
+                                  fontSize: height * 0.024,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-          _items(height, width),
-          SizedBox(height: height * 0.05),
-        ],
+            if (!_isLoad)
+              if (nearSurveys.isNotEmpty)
+                SizedBox(
+                  height: height * 0.32,
+                  width: width,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: nearSurveys.length,
+                    itemBuilder: (context, index2) => Row(
+                      children: [
+                        if (index2 == 0) SizedBox(width: width * 0.04),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: height * 0.02,
+                            right: width * 0.024,
+                            bottom: height * 0.012,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  spreadRadius: 0.1,
+                                  blurRadius: 3,
+                                  offset: const Offset(3, 3),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Material(
+                                color: Colors.white,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        duration: Duration(milliseconds: 200),
+                                        type: PageTransitionType.rightToLeft,
+                                        child: SurveyDetail2(
+                                          index: index2,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    height: height * 0.3,
+                                    width: width * 0.4,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Stack(
+                                            children: [
+                                              Image.network(
+                                                nearSurveys[index2]["image"]
+                                                    .toString(),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              if (nearSurveys[index2]
+                                                      ["is_history"] ==
+                                                  true)
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          4.0,
+                                                        ),
+                                                        color: kBtnColor,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(4.0),
+                                                        child: Text(
+                                                          "Бөглөсөн",
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize:
+                                                                height * 0.014,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 4,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              top: height * 0.018,
+                                              bottom: height * 0.02,
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    "    " +
+                                                        nearSurveys[index2]
+                                                                ["title"]
+                                                            .toString(),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: height * 0.02,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                        "    " +
+                                                            nearSurveys[index2][
+                                                                    "created_at"]
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 10),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              height * 0.018,
+                                                          color: Colors.black
+                                                              .withOpacity(0.5),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: height * 0.002,
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                        "    Шагнал " +
+                                                            nearSurveys[index2]
+                                                                    ["price"]
+                                                                .toString() +
+                                                            "₮",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              height * 0.018,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            _items(height, width),
+            SizedBox(height: height * 0.05),
+          ],
+        ),
       );
 
   Widget _items(double height, double width) => Column(
@@ -639,199 +613,207 @@ class _HomePageContentState extends State<HomePageContent> {
               ),
             ),
           if (!_isLoad)
-            AnimationLimiter(
-              child: Column(
-                children: AnimationConfiguration.toStaggeredList(
-                  duration: const Duration(milliseconds: 375),
-                  childAnimationBuilder: (widget) => SlideAnimation(
-                    horizontalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: widget,
-                    ),
-                  ),
-                  children: List.generate(
-                    homeItems.length,
-                    (index) => Column(
-                      children: [
-                        if (index == 1) _banner(height, width),
-                        if (homeItems[index].surveys.isNotEmpty)
-                          Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: (homeItems[index].surveys.length >= 3)
-                                  ? () {
-                                      Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          duration: Duration(milliseconds: 200),
-                                          type: PageTransitionType.rightToLeft,
-                                          child: CategoryItems(
-                                            index: index,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  : null,
-                              child: SizedBox(
-                                width: width,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: width * 0.05,
-                                          top: height * 0.02,
-                                        ),
-                                        child: Text(
-                                          homeItems[index].title,
-                                          style: TextStyle(
-                                            fontSize: height * 0.024,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+            Column(
+              children: List.generate(
+                homeItems.length,
+                (index) => Column(
+                  children: [
+                    if (index == 1) _banner(height, width),
+                    if (homeItems[index].surveys.isNotEmpty)
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: (homeItems[index].surveys.length >= 3)
+                              ? () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      duration: Duration(milliseconds: 200),
+                                      type: PageTransitionType.rightToLeft,
+                                      child: CategoryItems(
+                                        index: index,
                                       ),
-                                      if (homeItems[index].surveys.length >= 3)
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            right: width * 0.05,
-                                            top: height * 0.02,
-                                          ),
-                                          child: Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: height * 0.022,
-                                            color:
-                                                Colors.black.withOpacity(0.6),
-                                          ),
-                                        ),
-                                    ],
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: SizedBox(
+                            width: width,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: width * 0.05,
+                                      top: height * 0.02,
+                                    ),
+                                    child: Text(
+                                      homeItems[index].title,
+                                      style: TextStyle(
+                                        fontSize: height * 0.024,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  if (homeItems[index].surveys.length >= 3)
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: width * 0.05,
+                                        top: height * 0.02,
+                                      ),
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: height * 0.022,
+                                        color: Colors.black.withOpacity(0.6),
+                                      ),
+                                    ),
+                                ],
                               ),
                             ),
                           ),
-                        SizedBox(height: height * 0.014),
-                        SizedBox(
-                          height: height * 0.32,
-                          width: width,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: homeItems[index].surveys.length,
-                            itemBuilder: (context, index2) => Row(
-                              children: [
-                                if (index2 == 0) SizedBox(width: width * 0.04),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    right: width * 0.024,
-                                    bottom: height * 0.012,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.1),
-                                          spreadRadius: 0.1,
-                                          blurRadius: 3,
-                                          offset: const Offset(3, 3),
-                                        ),
-                                      ],
+                        ),
+                      ),
+                    SizedBox(height: height * 0.014),
+                    SizedBox(
+                      height: height * 0.32,
+                      width: width,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: homeItems[index].surveys.length,
+                        itemBuilder: (context, index2) => Row(
+                          children: [
+                            if (index2 == 0) SizedBox(width: width * 0.04),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                right: width * 0.024,
+                                bottom: height * 0.012,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 0.1,
+                                      blurRadius: 3,
+                                      offset: const Offset(3, 3),
                                     ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Material(
-                                        color: Colors.white,
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                duration:
-                                                    Duration(milliseconds: 200),
-                                                type: PageTransitionType
-                                                    .rightToLeft,
-                                                child: SurveyDetail(
-                                                  index: index,
-                                                  index2: index2,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: SizedBox(
-                                            height: height * 0.3,
-                                            width: width * 0.4,
-                                            child: Column(
-                                              children: [
-                                                Expanded(
-                                                  flex: 5,
-                                                  child: Stack(
-                                                    children: [
-                                                      Image.network(
-                                                        homeItems[index]
-                                                            .surveys[index2]
-                                                                ["image"]
-                                                            .toString(),
-                                                        fit: BoxFit.cover,
-                                                        height: height * 0.3,
-                                                        width: width * 0.4,
-                                                      ),
-                                                      if (homeItems[index]
-                                                                      .surveys[
-                                                                  index2]
-                                                              ["is_history"] ==
-                                                          true)
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .bottomRight,
+                                  ],
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Material(
+                                    color: Colors.white,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            duration:
+                                                Duration(milliseconds: 200),
+                                            type:
+                                                PageTransitionType.rightToLeft,
+                                            child: SurveyDetail(
+                                              index: index,
+                                              index2: index2,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: SizedBox(
+                                        height: height * 0.3,
+                                        width: width * 0.4,
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              flex: 5,
+                                              child: Stack(
+                                                children: [
+                                                  Image.network(
+                                                    homeItems[index]
+                                                        .surveys[index2]
+                                                            ["image"]
+                                                        .toString(),
+                                                    fit: BoxFit.cover,
+                                                    height: height * 0.3,
+                                                    width: width * 0.4,
+                                                  ),
+                                                  if (homeItems[index]
+                                                              .surveys[index2]
+                                                          ["is_history"] ==
+                                                      true)
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.bottomRight,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              4.0,
+                                                            ),
+                                                            color: kBtnColor,
+                                                          ),
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                  4.0,
-                                                                ),
-                                                                color:
-                                                                    kBtnColor,
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        4.0),
-                                                                child: Text(
-                                                                  "Бөглөсөн",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        height *
-                                                                            0.014,
-                                                                  ),
-                                                                ),
+                                                                    .all(4.0),
+                                                            child: Text(
+                                                              "Бөглөсөн",
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                    height *
+                                                                        0.014,
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 4,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      top: height * 0.018,
-                                                      bottom: height * 0.02,
+                                                      ),
                                                     ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 4,
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  top: height * 0.018,
+                                                  bottom: height * 0.02,
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                        "    " +
+                                                            homeItems[index]
+                                                                .surveys[index2]
+                                                                    ["title"]
+                                                                .toString(),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              height * 0.02,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Column(
                                                       children: [
                                                         Align(
                                                           alignment:
@@ -841,14 +823,44 @@ class _HomePageContentState extends State<HomePageContent> {
                                                                 homeItems[index]
                                                                     .surveys[
                                                                         index2][
-                                                                        "title"]
-                                                                    .toString(),
+                                                                        "created_at"]
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 10),
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  height * 0.02,
+                                                              fontSize: height *
+                                                                  0.018,
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.5),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              height * 0.002,
+                                                        ),
+                                                        Align(
+                                                          alignment:
+                                                              Alignment.topLeft,
+                                                          child: Text(
+                                                            "    Шагнал " +
+                                                                homeItems[index]
+                                                                    .surveys[
+                                                                        index2][
+                                                                        "price"]
+                                                                    .toString() +
+                                                                "₮",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: TextStyle(
+                                                              fontSize: height *
+                                                                  0.018,
                                                               color:
                                                                   Colors.black,
                                                               fontWeight:
@@ -857,216 +869,143 @@ class _HomePageContentState extends State<HomePageContent> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Column(
-                                                          children: [
-                                                            Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topLeft,
-                                                              child: Text(
-                                                                "    " +
-                                                                    homeItems[
-                                                                            index]
-                                                                        .surveys[
-                                                                            index2]
-                                                                            [
-                                                                            "created_at"]
-                                                                        .toString()
-                                                                        .substring(
-                                                                            0,
-                                                                            10),
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      height *
-                                                                          0.018,
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.5),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: height *
-                                                                  0.002,
-                                                            ),
-                                                            Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topLeft,
-                                                              child: Text(
-                                                                "    Шагнал " +
-                                                                    homeItems[
-                                                                            index]
-                                                                        .surveys[
-                                                                            index2]
-                                                                            [
-                                                                            "price"]
-                                                                        .toString() +
-                                                                    "₮",
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      height *
-                                                                          0.018,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
                                                       ],
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        if (homeItems.length > 1)
-                          if (index == 1)
-                            Padding(
-                              padding: EdgeInsets.only(top: height * 0.02),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: width * 0.084,
-                                      ),
-                                      child: Text(
-                                        "Ангилал",
-                                        style: TextStyle(
-                                          fontSize: height * 0.024,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: width * 0.034,
-                                      top: height * 0.02,
-                                    ),
-                                    child: SizedBox(
-                                      height: height * 0.14,
-                                      width: width,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: homeItems.length,
-                                        itemBuilder: (context, index3) =>
-                                            Padding(
-                                          padding: EdgeInsets.only(
-                                            left: width * 0.042,
-                                            right: width * 0.02,
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      spreadRadius: 0.1,
-                                                      blurRadius: 4,
-                                                      offset:
-                                                          const Offset(3, 3),
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    4.0,
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: height * 0.09,
-                                                        width: width * 0.16,
-                                                        child: Image.network(
-                                                          homeItems[index3]
-                                                              .image
-                                                              .toString(),
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        child: InkWell(
-                                                          onTap: () {
-                                                            Navigator.push(
-                                                              context,
-                                                              PageTransition(
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        200),
-                                                                type: PageTransitionType
-                                                                    .rightToLeft,
-                                                                child:
-                                                                    CategoryItems(
-                                                                  index: index3,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                          child: SizedBox(
-                                                            height:
-                                                                height * 0.09,
-                                                            width: width * 0.16,
-                                                            child:
-                                                                const Text(""),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: height * 0.014,
-                                              ),
-                                              Text(
-                                                homeItems[index3].title,
-                                                style: TextStyle(
-                                                  fontSize: height * 0.018,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               ),
                             ),
-                      ],
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                    if (homeItems.length > 1)
+                      if (index == 1)
+                        Padding(
+                          padding: EdgeInsets.only(top: height * 0.02),
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: width * 0.084,
+                                  ),
+                                  child: Text(
+                                    "Ангилал",
+                                    style: TextStyle(
+                                      fontSize: height * 0.024,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: width * 0.034,
+                                  top: height * 0.02,
+                                ),
+                                child: SizedBox(
+                                  height: height * 0.14,
+                                  width: width,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: homeItems.length,
+                                    itemBuilder: (context, index3) => Padding(
+                                      padding: EdgeInsets.only(
+                                        left: width * 0.042,
+                                        right: width * 0.02,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.1),
+                                                  spreadRadius: 0.1,
+                                                  blurRadius: 4,
+                                                  offset: const Offset(3, 3),
+                                                ),
+                                              ],
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                4.0,
+                                              ),
+                                              child: Stack(
+                                                children: [
+                                                  SizedBox(
+                                                    height: height * 0.09,
+                                                    width: width * 0.16,
+                                                    child: Image.network(
+                                                      homeItems[index3]
+                                                          .image
+                                                          .toString(),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Material(
+                                                    color: Colors.transparent,
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    200),
+                                                            type:
+                                                                PageTransitionType
+                                                                    .rightToLeft,
+                                                            child:
+                                                                CategoryItems(
+                                                              index: index3,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: SizedBox(
+                                                        height: height * 0.09,
+                                                        width: width * 0.16,
+                                                        child: const Text(""),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.014,
+                                          ),
+                                          Text(
+                                            homeItems[index3].title,
+                                            style: TextStyle(
+                                              fontSize: height * 0.018,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                  ],
                 ),
               ),
             ),
@@ -1078,66 +1017,56 @@ class _HomePageContentState extends State<HomePageContent> {
           SizedBox(
             height: height * 0.24,
             width: width,
-            child: AnimationLimiter(
-              child: PageView.builder(
-                itemCount: banners.length,
-                itemBuilder: (context, index) =>
-                    AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 375),
-                  child: SlideAnimation(
-                    horizontalOffset: 50.0,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: height * 0.03,
-                        left: width * 0.04,
-                        right: width * 0.04,
-                        bottom: height * 0.01,
+            child: PageView.builder(
+              itemCount: banners.length,
+              itemBuilder: (context, index) => Padding(
+                padding: EdgeInsets.only(
+                  top: height * 0.03,
+                  left: width * 0.04,
+                  right: width * 0.04,
+                  bottom: height * 0.01,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        banners[index]["image"],
+                        height: height * 0.24,
+                        width: width,
+                        fit: BoxFit.cover,
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Stack(
-                          children: [
-                            Image.network(
-                              banners[index]["image"],
-                              height: height * 0.24,
-                              width: width,
-                              fit: BoxFit.cover,
-                            ),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
-                                width: width,
-                                color: Colors.black.withOpacity(0.6),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    banners[index]["title"].toString(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: height * 0.016,
-                                    ),
-                                  ),
-                                ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                          width: width,
+                          color: Colors.black.withOpacity(0.6),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              banners[index]["title"].toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: height * 0.016,
                               ),
                             ),
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  _showSheet(index);
-                                },
-                                child: SizedBox(
-                                  height: height * 0.24,
-                                  width: width,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            _showSheet(index);
+                          },
+                          child: SizedBox(
+                            height: height * 0.24,
+                            width: width,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

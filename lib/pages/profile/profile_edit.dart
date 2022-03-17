@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:multi_image_picker2/multi_image_picker2.dart';
@@ -275,216 +276,231 @@ class _ProfileEditState extends State<ProfileEdit> {
     );
   }
 
-  Widget _information(double height, double width) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: height * 0.14,
-            width: height * 0.1,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: height * 0.02,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                      height * 0.5,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          _getImage();
-                        },
-                        child: SizedBox(
-                          height: height * 0.1,
-                          width: height * 0.1,
-                          child: (currentUserAvatar == "null")
-                              ? Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: height * 0.05,
-                                )
-                              : Image.network(
-                                  currentUserAvatar,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: height * 0.02),
-                    child: Icon(
-                      Icons.edit,
-                      color: images.isNotEmpty
-                          ? Colors.green
-                          : kPrimaryColor.withOpacity(0.8),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: height * 0.04,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              right: width * 0.1,
-              left: width * 0.1,
-            ),
-            child: SizedBox(
-              width: width,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _firstNameTEC,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(color: Colors.white),
-                      labelText: 'Овог',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: kPrimaryColor,
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  TextFormField(
-                    controller: _lastNameTEC,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(color: Colors.white),
-                      labelText: 'Нэр',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: kPrimaryColor,
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  TextFormField(
-                    controller: _ageTEC,
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(color: Colors.white),
-                      labelText: 'Нас',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: kPrimaryColor,
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      addRadioButton(0, 'Эр'),
-                      addRadioButton(1, 'Эм'),
-                      addRadioButton(2, 'Бусад'),
-                    ],
-                  ),
-                  SizedBox(height: height * 0.02),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Material(
-                      color: kPrimaryColor,
-                      child: InkWell(
-                        onTap: () {
-                          _getImage1();
-                        },
-                        child: SizedBox(
-                          height: height * 0.06,
-                          width: height * 0.8,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Ирэгний үнэмлэхний урдтал  ",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              if (currentUserIdFront != "")
-                                const Icon(Icons.image, color: Colors.green),
-                              if (currentUserIdFront == "")
-                                const Icon(Icons.image, color: Colors.red),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.02),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Material(
-                      color: kPrimaryColor,
-                      child: InkWell(
-                        onTap: () {
-                          _getImage2();
-                        },
-                        child: SizedBox(
-                          height: height * 0.06,
-                          width: height * 0.8,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Ирэгний үнэмлэхний ардтал  ",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              if (currentUserIdRear != "")
-                                const Icon(Icons.image, color: Colors.green),
-                              if (currentUserIdRear == "")
-                                const Icon(Icons.image, color: Colors.red),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+  Widget _information(double height, double width) => AnimationLimiter(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: AnimationConfiguration.toStaggeredList(
+            duration: const Duration(milliseconds: 375),
+            childAnimationBuilder: (widget) => SlideAnimation(
+              verticalOffset: 50.0,
+              child: FadeInAnimation(
+                child: widget,
               ),
             ),
+            children: [
+              SizedBox(
+                height: height * 0.14,
+                width: height * 0.1,
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: height * 0.02,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          height * 0.5,
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              _getImage();
+                            },
+                            child: SizedBox(
+                              height: height * 0.1,
+                              width: height * 0.1,
+                              child: (currentUserAvatar == "null")
+                                  ? Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: height * 0.05,
+                                    )
+                                  : Image.network(
+                                      currentUserAvatar,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: height * 0.02),
+                        child: Icon(
+                          Icons.edit,
+                          color: images.isNotEmpty
+                              ? Colors.green
+                              : kPrimaryColor.withOpacity(0.8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: height * 0.04,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  right: width * 0.1,
+                  left: width * 0.1,
+                ),
+                child: SizedBox(
+                  width: width,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _firstNameTEC,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelStyle: const TextStyle(color: Colors.white),
+                          labelText: 'Овог',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: kPrimaryColor,
+                          contentPadding: const EdgeInsets.all(16),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      TextFormField(
+                        controller: _lastNameTEC,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelStyle: const TextStyle(color: Colors.white),
+                          labelText: 'Нэр',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: kPrimaryColor,
+                          contentPadding: const EdgeInsets.all(16),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      TextFormField(
+                        controller: _ageTEC,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelStyle: const TextStyle(color: Colors.white),
+                          labelText: 'Нас',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: kPrimaryColor,
+                          contentPadding: const EdgeInsets.all(16),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          addRadioButton(0, 'Эр'),
+                          addRadioButton(1, 'Эм'),
+                          addRadioButton(2, 'Бусад'),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.02),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Material(
+                          color: kPrimaryColor,
+                          child: InkWell(
+                            onTap: () {
+                              _getImage1();
+                            },
+                            child: SizedBox(
+                              height: height * 0.06,
+                              width: height * 0.8,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Ирэгний үнэмлэхний урдтал  ",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  if (currentUserIdFront != "")
+                                    const Icon(Icons.image,
+                                        color: Colors.green),
+                                  if (currentUserIdFront == "")
+                                    const Icon(Icons.image, color: Colors.red),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Material(
+                          color: kPrimaryColor,
+                          child: InkWell(
+                            onTap: () {
+                              _getImage2();
+                            },
+                            child: SizedBox(
+                              height: height * 0.06,
+                              width: height * 0.8,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Ирэгний үнэмлэхний ардтал  ",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  if (currentUserIdRear != "")
+                                    const Icon(Icons.image,
+                                        color: Colors.green),
+                                  if (currentUserIdRear == "")
+                                    const Icon(Icons.image, color: Colors.red),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: height * 0.1,
+              ),
+            ],
           ),
-          SizedBox(
-            height: height * 0.1,
-          ),
-        ],
+        ),
       );
 
   void _onChanged(dynamic value) {

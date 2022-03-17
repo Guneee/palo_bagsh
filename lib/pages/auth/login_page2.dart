@@ -2,7 +2,8 @@
 
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '/pages/home/home_page.dart';
@@ -38,6 +39,17 @@ class _LoginPage2State extends State<LoginPage2> {
   Future<void> _saveUserData(String username, String password, String email,
       String id, String firstname, String lastname) async {
     final prefs = await SharedPreferences.getInstance();
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String device = "empty";
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      print('Running on ${androidInfo.model}');
+      device = androidInfo.model.toString();
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      print('Running on ${iosInfo.utsname.machine}');
+      device = iosInfo.utsname.machine.toString();
+    }
 
     prefs.setString("username", username.toString());
     prefs.setString("id", id.toString());
@@ -45,6 +57,7 @@ class _LoginPage2State extends State<LoginPage2> {
     prefs.setString("email", email.toString());
     prefs.setString("lastname", lastname.toString());
     prefs.setString("firstname", firstname.toString());
+    prefs.setString("device", device.toString());
   }
 
   Future<void> _login() async {
@@ -107,8 +120,20 @@ class _LoginPage2State extends State<LoginPage2> {
     }
   }
 
+  void _check() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      print('Running on ${androidInfo.model}');
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      print('Running on ${iosInfo.utsname.machine}');
+    }
+  }
+
   @override
   void initState() {
+    _check();
     _loadUserData();
     super.initState();
   }

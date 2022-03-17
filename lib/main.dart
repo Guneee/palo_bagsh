@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,8 +15,17 @@ import 'data.dart';
 import 'helpers/api_url.dart';
 import 'pages/splash_page.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp();
 
   if (Platform.isAndroid) {
@@ -26,9 +36,9 @@ void main() async {
     BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
     BackgroundFetch.scheduleTask(TaskConfig(
       taskId: "com.transistorsoft.flutter_background_fetch",
-      delay: 1 * 1 * 5000,
+      delay: 300,
       periodic: true,
-      forceAlarmManager: false,
+      forceAlarmManager: true,
       stopOnTerminate: false,
       enableHeadless: true,
     ));
@@ -91,23 +101,39 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
 }
 
 void detectLocationCheck() async {
+  // sendLocationData(
+  //   "test",
+  //   "test",
+  //   "test",
+  //   "124124,12412",
+  //   "ckeck",
+  //   "check",
+  //   "check",
+  //   "check",
+  // );
   LocationPermission permission;
   permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
   } else {
-    Position userLocation = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    String _location = userLocation.latitude.toString() +
-        "," +
-        userLocation.longitude.toString();
-    String _speed = userLocation.speed.toString();
+    // Position userLocation = await Geolocator.getCurrentPosition(
+    //     desiredAccuracy: LocationAccuracy.high);
+    // String _location = userLocation.latitude.toString() +
+    //     "," +
+    //     userLocation.longitude.toString();
+    // String _speed = userLocation.speed.toString();
     final prefs = await SharedPreferences.getInstance();
 
     String? _phone = prefs.getString("username");
+    String? _device = prefs.getString("device");
     String? _email = prefs.getString("email");
     String? _id = prefs.getString("id");
     String? _firstname = prefs.getString("firstname");
     String? _lastname = prefs.getString("lastname");
+    String? _location = "unknown";
+    if (prefs.getString("location").toString() != "null") {
+      _location = prefs.getString("location").toString();
+    }
+
     if (_phone != null && _phone != "") {
       sendLocationData(
         _id!,
@@ -115,15 +141,23 @@ void detectLocationCheck() async {
         _lastname!,
         _location,
         _email!,
-        _speed,
+        "0",
         _phone,
+        _device!,
       );
     }
   }
 }
 
-void sendLocationData(String _id, String _firstname, String _lastname,
-    String _location, String _email, String _speed, String _phone) async {
+void sendLocationData(
+    String _id,
+    String _firstname,
+    String _lastname,
+    String _location,
+    String _email,
+    String _speed,
+    String _phone,
+    String device) async {
   DateTime now = DateTime.now();
   final responce =
       await https.post(Uri.parse(mainApiUrl + "v1/push-location"), headers: {
@@ -138,6 +172,7 @@ void sendLocationData(String _id, String _firstname, String _lastname,
     'speed': _speed,
     'phone': _phone,
     'date': now.toString(),
+    'device': device.toString(),
   });
   if (kDebugMode) {
     print(responce.body);
@@ -148,25 +183,28 @@ void isolate2(String _userData) async {
   if (kDebugMode) {
     print("isolate started..");
   }
-  Position userLocation = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
-  String _location = userLocation.latitude.toString() +
-      "," +
-      userLocation.longitude.toString();
-  String _speed = userLocation.speed.toString();
 
   String _phone = _userData.split(",").elementAt(0);
   String _email = _userData.split(",").elementAt(1);
   String _id = _userData.split(",").elementAt(2);
   String _firstname = _userData.split(",").elementAt(3);
   String _lastname = _userData.split(",").elementAt(4);
+  String _device = _userData.split(",").elementAt(5);
+  String _location =
+      _userData.split(",").elementAt(6) + _userData.split(",").elementAt(7);
+  String _speed = _userData.split(",").elementAt(8);
 
   if (_phone != "") {
     sendLocationData(
-        _id, _firstname, _lastname, _location, _email, _speed, _phone);
-  }
-  if (kDebugMode) {
-    print(_location + ", " + _speed);
+      _id,
+      _firstname,
+      _lastname,
+      _location,
+      _email,
+      _speed,
+      _phone,
+      _device,
+    );
   }
 
   if (kDebugMode) {
@@ -179,13 +217,21 @@ void detectLocation() async {
   permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
   } else {
+    Position userLocation = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    String _location = userLocation.latitude.toString() +
+        "," +
+        userLocation.longitude.toString();
+    String _speed = userLocation.speed.toString();
     final prefs = await SharedPreferences.getInstance();
+    prefs.setString("location", _location);
 
     String? _username = prefs.getString("username");
     String? _email = prefs.getString("email");
     String? _id = prefs.getString("id");
     String? _firstname = prefs.getString("firstname");
     String? _lastname = prefs.getString("lastname");
+    String? _device = prefs.getString("device");
     if (kDebugMode) {
       print(_username);
     }
@@ -195,6 +241,31 @@ void detectLocation() async {
       }
       try {
         await FlutterIsolate.spawn(
+          isolate2,
+          _username +
+              "," +
+              _email! +
+              "," +
+              _id! +
+              "," +
+              _firstname! +
+              "," +
+              _lastname! +
+              "," +
+              _device! +
+              "," +
+              _location +
+              "," +
+              _speed,
+        );
+      } on PlatformException catch (e) {
+        if (e.code == 'PERMISSION_DENIED') {
+          debugPrint("Permission Denied");
+        }
+      }
+      Timer.periodic(const Duration(minutes: 1), (timer) async {
+        try {
+          await FlutterIsolate.spawn(
             isolate2,
             _username +
                 "," +
@@ -204,25 +275,14 @@ void detectLocation() async {
                 "," +
                 _firstname! +
                 "," +
-                _lastname!);
-      } on PlatformException catch (e) {
-        if (e.code == 'PERMISSION_DENIED') {
-          debugPrint("Permission Denied");
-        }
-      }
-      Timer.periodic(const Duration(minutes: 5), (timer) async {
-        try {
-          await FlutterIsolate.spawn(
-              isolate2,
-              _username +
-                  "," +
-                  _email! +
-                  "," +
-                  _id! +
-                  "," +
-                  _firstname! +
-                  "," +
-                  _lastname!);
+                _lastname! +
+                "," +
+                _device! +
+                "," +
+                _location +
+                "," +
+                _speed,
+          );
         } on PlatformException catch (e) {
           if (e.code == 'PERMISSION_DENIED') {
             debugPrint("Permission Denied");
