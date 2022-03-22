@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:palo/helpers/api_url.dart';
 import 'package:palo/helpers/app_preferences.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../constants.dart';
 import '../../../data.dart';
 import '../../../helpers/components.dart';
 
+import 'dart:convert';
+import 'dart:ui' as ui;
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
+
 class QuestStep extends StatefulWidget {
   final int index;
+  final int index2;
   const QuestStep({
     Key? key,
     required this.index,
+    required this.index2,
   }) : super(key: key);
 
   @override
@@ -31,6 +41,48 @@ class _QuestStepState extends State<QuestStep> {
       _isLoad = true;
     });
 
+    // Uri apiUrl = Uri.parse(mainApiUrl + "v1/");
+    // final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
+    // imageUploadRequest.headers.addAll({
+    //   "Authorization": "Bearer $token",
+    //   "Content-Type": "multipart/form-data"
+    // });
+
+    // // if (images.isNotEmpty) {
+    // //   ByteData byteData = await images[0].getByteData();
+    // //   Uint8List originalUnit8List = byteData.buffer.asUint8List();
+    // //   var codec = await ui.instantiateImageCodec(
+    // //     originalUnit8List,
+    // //     targetWidth: 800,
+    // //   );
+    // //   var frameInfo = await codec.getNextFrame();
+    // //   ui.Image targetUiImage = frameInfo.image;
+
+    // //   ByteData? targetByteData =
+    // //       await targetUiImage.toByteData(format: ui.ImageByteFormat.png);
+
+    // //   Uint8List data = targetByteData!.buffer.asUint8List();
+    // //   List<int> imageData = data;
+
+    // //   imageUploadRequest.files.add(
+    // //     http.MultipartFile.fromBytes(
+    // //       'avatar',
+    // //       imageData,
+    // //       filename: images[0].name.toString(),
+    // //       contentType: MediaType('image', 'jpeg'),
+    // //     ),
+    // //   );
+    // // }
+
+    // // imageUploadRequest.fields['id'] = currentUserId.toString();
+    // // imageUploadRequest.fields['url'] = appUrl;
+    // // imageUploadRequest.fields['firstname'] = _firstNameTEC.text;
+    // // imageUploadRequest.fields['lastname'] = _lastNameTEC.text;
+    // // imageUploadRequest.fields['age'] = _ageTEC.text;
+    // // imageUploadRequest.fields['gender'] = _gender;
+
+    // final streamedResponse = await imageUploadRequest.send();
+    // final response = await http.Response.fromStream(streamedResponse);
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         showSnackBar("Амжиллтай илгээгдлээ", globalKey);

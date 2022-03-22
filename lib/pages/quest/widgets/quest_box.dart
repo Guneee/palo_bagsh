@@ -45,7 +45,7 @@ class QuestBox extends StatelessWidget {
                         width: width * 0.68,
                         child: Center(
                           child: Ctext(
-                            text: quests[index]["title"].toString(),
+                            text: questItems[index]["title"].toString(),
                             normal: true,
                           ),
                         ),
@@ -133,7 +133,7 @@ class QuestBox extends StatelessWidget {
                         width: width * 0.68,
                         child: Center(
                           child: Ctext(
-                            text: quests[index]["title"].toString(),
+                            text: questItems[index]["title"].toString(),
                             normal: true,
                           ),
                         ),

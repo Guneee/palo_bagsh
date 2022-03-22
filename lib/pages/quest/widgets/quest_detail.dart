@@ -9,9 +9,11 @@ import '../../../helpers/components.dart';
 
 class QuestDetail extends StatefulWidget {
   final int index;
+  final int index2;
   const QuestDetail({
     Key? key,
     required this.index,
+    required this.index2,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class QuestDetail extends StatefulWidget {
 }
 
 class _QuestDetailState extends State<QuestDetail> {
-  int index = 0;
+  int index = 0, index2 = 0;
   bool _isLoad = false;
 
   void _begin() async {
@@ -32,13 +34,20 @@ class _QuestDetailState extends State<QuestDetail> {
         _isLoad = false;
       });
 
-      go(context, QuestStep(index: index));
+      go(
+        context,
+        QuestStep(
+          index: index,
+          index2: index2,
+        ),
+      );
     });
   }
 
   @override
   void initState() {
     index = widget.index;
+    index2 = widget.index2;
     super.initState();
   }
 
@@ -52,7 +61,7 @@ class _QuestDetailState extends State<QuestDetail> {
         centerTitle: true,
         elevation: 0.0,
         title: Ctext(
-          text: "Нүүрний тос",
+          text: questItems[index]["title"].toString(),
           textOverflow: TextOverflow.ellipsis,
           color: Colors.white,
           large: true,
@@ -83,15 +92,16 @@ class _QuestDetailState extends State<QuestDetail> {
                 ),
                 children: [
                   SizedBox(height: height * 0.03),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Image.network(
-                      currentUserAvatar,
-                      height: height * 0.2,
-                      width: width * 0.9,
-                      fit: BoxFit.cover,
+                  if (questItems[index]["quest"][index2]["image"] != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: Image.network(
+                        questItems[index]["quest"][index2]["image"].toString(),
+                        height: height * 0.2,
+                        width: width * 0.9,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -101,7 +111,8 @@ class _QuestDetailState extends State<QuestDetail> {
                         top: height * 0.02,
                       ),
                       child: Ctext(
-                        text: "Нүүрний тос",
+                        text: questItems[index]["quest"][index2]["title"]
+                            .toString(),
                         maxLine: 3,
                         bold: true,
                         color: kPrimaryColor,
@@ -121,7 +132,10 @@ class _QuestDetailState extends State<QuestDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Ctext(
-                            text: "2022-10-12",
+                            text: questItems[index]["quest"][index2]
+                                    ["created_at"]
+                                .toString()
+                                .substring(0, 10),
                             bold: true,
                             color: Colors.black.withOpacity(0.5),
                             normal: true,
@@ -130,7 +144,9 @@ class _QuestDetailState extends State<QuestDetail> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Ctext(
-                                text: "1,000",
+                                text: questItems[index]["quest"][index2]
+                                        ["amount"]
+                                    .toString(),
                                 extraLarge: true,
                                 color: kPrimaryColor,
                                 bold: true,
@@ -155,7 +171,8 @@ class _QuestDetailState extends State<QuestDetail> {
                         top: height * 0.01,
                       ),
                       child: Text(
-                        "Манай тос бүх арьсанд зориулсан эд юм. Та хэрэглээд үзээд ямар байгааг хэлээрэй.",
+                        questItems[index]["quest"][index2]["content"]
+                            .toString(),
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           color: kPrimaryColor,

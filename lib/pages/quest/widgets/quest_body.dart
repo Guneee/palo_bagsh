@@ -31,10 +31,10 @@ class _QuestBodyState extends State<QuestBody> {
               ),
             ),
             children: List.generate(
-              quests.length,
+              questItems.length,
               (index) => QuestBox(
                 index: index,
-                length: quests.length,
+                length: questItems.length,
               ),
             ),
           ),

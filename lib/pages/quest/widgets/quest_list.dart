@@ -25,7 +25,7 @@ class QuestList extends StatelessWidget {
         centerTitle: true,
         elevation: 0.0,
         title: Ctext(
-          text: quests[index]["title"].toString(),
+          text: questItems[index]["title"].toString(),
           color: Colors.white,
           large: true,
         ),
@@ -54,13 +54,15 @@ class QuestList extends StatelessWidget {
                   ),
                 ),
                 children: List.generate(
-                  1,
-                  (index) => Padding(
+                  (questItems[index]["quest"] != null)
+                      ? questItems[index]["quest"].length
+                      : 0,
+                  (index2) => Padding(
                     padding: EdgeInsets.only(
                       left: width * 0.06,
                       right: width * 0.06,
-                      top: (index == 0) ? height * 0.03 : height * 0.01,
-                      bottom: (index == 1) ? height * 0.03 : height * 0.02,
+                      top: (index2 == 0) ? height * 0.03 : height * 0.01,
+                      bottom: (index2 == 1) ? height * 0.03 : height * 0.02,
                     ),
                     child: Container(
                       decoration: BoxDecoration(
@@ -81,7 +83,10 @@ class QuestList extends StatelessWidget {
                             onTap: () {
                               go(
                                 context,
-                                QuestDetail(index: index),
+                                QuestDetail(
+                                  index: index,
+                                  index2: index2,
+                                ),
                               );
                             },
                             child: SizedBox(
@@ -104,7 +109,9 @@ class QuestList extends StatelessWidget {
                                           Align(
                                             alignment: Alignment.centerLeft,
                                             child: Ctext(
-                                              text: "Нүүрний тос",
+                                              text: questItems[index]["quest"]
+                                                      [index2]["title"]
+                                                  .toString(),
                                               bold: true,
                                               textOverflow:
                                                   TextOverflow.ellipsis,
@@ -114,8 +121,9 @@ class QuestList extends StatelessWidget {
                                           Align(
                                             alignment: Alignment.centerLeft,
                                             child: Ctext(
-                                              text:
-                                                  "Манай тос бүх арьсанд зориулсан эд юм. Та хэрэглээд үзээд ямар байгааг хэлээрэй.",
+                                              text: questItems[index]["quest"]
+                                                      [index2]["content"]
+                                                  .toString(),
                                               maxLine: 2,
                                               small: true,
                                               textOverflow:
@@ -131,7 +139,9 @@ class QuestList extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         Ctext(
-                                          text: "1,000",
+                                          text: questItems[index]["quest"]
+                                                  [index2]["amount"]
+                                              .toString(),
                                           color: kBtnColor,
                                           bold: true,
                                           large: true,

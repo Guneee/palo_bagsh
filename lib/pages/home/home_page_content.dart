@@ -173,6 +173,7 @@ class _HomePageContentState extends State<HomePageContent> {
         );
         homeItems.add(homeModel);
       }
+      var body = json.decode(responce.body);
       history.clear();
       json.decode(responce.body)["history"].forEach((item) {
         history.add(item);
@@ -184,6 +185,18 @@ class _HomePageContentState extends State<HomePageContent> {
       banners.clear();
       json.decode(responce.body)['banners'].forEach((value) {
         banners.add(value);
+      });
+      quests.clear();
+      body["quests"].forEach((value) {
+        quests.add(value);
+      });
+      questCategories.clear();
+      body["quest_categories"].forEach((value) {
+        questCategories.add(value);
+      });
+      questItems.clear();
+      body["quest_items"].forEach((value) {
+        questItems.add(value);
       });
 
       _checkIsHistory();
