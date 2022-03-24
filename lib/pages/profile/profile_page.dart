@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
-      backgroundColor: kBtnColor,
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -54,8 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _body(double height, double width) => Column(
         children: [
-          if (token == "") _authButtons(height, width),
-          if (token != "") _info(height, width),
+          _info(height, width),
         ],
       );
 
@@ -70,13 +69,13 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             children: [
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.02),
               Container(
                 height: height * 0.2,
                 width: width * 0.82,
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
-                  borderRadius: BorderRadius.circular(16.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,7 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text(
                                     "Данс",
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.4),
+                                      color: kBtnColor,
+                                      letterSpacing: 1.2,
                                       fontSize: height * 0.022,
                                     ),
                                   ),
@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Text(
                                           _formatter.format(currentUserMoney),
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: kBtnColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: height * 0.024,
                                           ),
@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Text(
                                           "₮ 0",
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: kBtnColor,
                                             fontSize: height * 0.024,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -146,7 +146,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             "Нийт бөглөсөн : " + history.length.toString(),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: kBtnColor,
+                              letterSpacing: 1.0,
                               fontSize: height * 0.02,
                             ),
                           ),
@@ -170,14 +171,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                     Text(
                                       "түүх ",
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: kBtnColor,
                                         fontSize: height * 0.02,
                                       ),
                                     ),
                                     Icon(
                                       Icons.arrow_forward_ios,
                                       size: height * 0.022,
-                                      color: Colors.white,
+                                      color: kBtnColor,
                                     ),
                                   ],
                                 ),
@@ -192,7 +193,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: height * 0.03),
               ClipRRect(
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(10.0),
                 child: Material(
                   color: kPrimaryColor,
                   child: InkWell(
@@ -221,21 +222,21 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 const Icon(
                                   Icons.request_page,
-                                  color: Colors.white,
+                                  color: kBtnColor,
                                 ),
                                 SizedBox(width: width * 0.02),
                                 Text(
                                   "Таталт хийх хүсэлт",
                                   style: TextStyle(
                                     fontSize: height * 0.02,
-                                    color: Colors.white,
+                                    color: kBtnColor,
                                   ),
                                 ),
                               ],
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
-                              color: Colors.white,
+                              color: kBtnColor,
                               size: height * 0.024,
                             ),
                           ],
@@ -247,9 +248,9 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: height * 0.02),
               ClipRRect(
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(10.0),
                 child: Material(
-                  color: kPrimaryColor.withOpacity(0.6),
+                  color: Colors.white.withOpacity(0.1),
                   child: InkWell(
                     onTap: () {
                       Navigator.pushReplacement(
@@ -300,7 +301,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.03),
               Padding(
                 padding: EdgeInsets.only(
                   left: width * 0.06,
@@ -565,14 +566,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         },
                         child: Container(
                           width: width,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.white.withOpacity(0.2),
-                                width: 1.0,
-                              ),
-                            ),
-                          ),
                           child: Padding(
                             padding: const EdgeInsets.only(
                               bottom: 12.0,
@@ -626,118 +619,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
 
-  Widget _authButtons(double height, double width) => SizedBox(
-        width: width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: height * 0.24,
-            ),
-            Container(
-              height: height * 0.08,
-              width: height * 0.08,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(height * 0.02),
-                color: kPrimaryColor.withOpacity(0.9),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.attach_money,
-                  color: Colors.white,
-                  size: height * 0.05,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Text(
-              "SURVEY APP",
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.6),
-                fontSize: height * 0.02,
-              ),
-            ),
-            SizedBox(
-              height: height * 0.03,
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(
-                12.0,
-              ),
-              child: Material(
-                color: kPrimaryColor,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        duration: Duration(milliseconds: 200),
-                        type: PageTransitionType.rightToLeft,
-                        child: const LoginPage(),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    height: height * 0.044,
-                    width: width * 0.5,
-                    child: Center(
-                      child: Text(
-                        "НЭВТРЭХ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: height * 0.02,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(
-                12.0,
-              ),
-              child: Material(
-                color: kPrimaryColor,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        duration: Duration(milliseconds: 200),
-                        type: PageTransitionType.rightToLeft,
-                        child: const RegisterPage(),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    height: height * 0.044,
-                    width: width * 0.5,
-                    child: Center(
-                      child: Text(
-                        "БҮРТГҮҮЛЭХ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: height * 0.02,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-
   Widget _top(double height, double width) => Padding(
         padding: EdgeInsets.only(
-          top: height * 0.02,
+          top: height * 0.01,
         ),
         child: SizedBox(
           height: height * 0.08,

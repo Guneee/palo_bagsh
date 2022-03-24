@@ -109,6 +109,7 @@ class _SurveyForm2State extends State<SurveyForm2> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -223,7 +224,7 @@ class _SurveyForm2State extends State<SurveyForm2> {
       );
 
   Widget _top(double height, double width) => SizedBox(
-        height: height * 0.08,
+        height: height * 0.07,
         child: Padding(
           padding: EdgeInsets.only(
             left: width * 0.03,
@@ -238,13 +239,13 @@ class _SurveyForm2State extends State<SurveyForm2> {
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
               Text(
                 widget.title,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: height * 0.02,
                   fontWeight: FontWeight.w500,
                 ),

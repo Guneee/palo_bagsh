@@ -118,7 +118,7 @@ class _PullRequestPageState extends State<PullRequestPage> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: kBtnColor,
+        backgroundColor: kBackgroundColor,
         floatingActionButton: FloatingActionButton.extended(
           onPressed: null,
           backgroundColor: Colors.transparent,
@@ -148,7 +148,7 @@ class _PullRequestPageState extends State<PullRequestPage> {
                             child: const CircularProgressIndicator(
                               strokeWidth: 1.2,
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
+                                kBtnColor,
                               ),
                             ),
                           ),
@@ -157,7 +157,7 @@ class _PullRequestPageState extends State<PullRequestPage> {
                         Text(
                           "ИЛГЭЭХ",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: kBtnColor,
                             fontSize: height * 0.02,
                           ),
                         ),
@@ -326,7 +326,7 @@ class _PullRequestPageState extends State<PullRequestPage> {
               height: height * 0.2,
               width: width,
               decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.7),
+                color: Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: Padding(

@@ -256,7 +256,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
-      backgroundColor: kBtnColor,
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -368,7 +368,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             ),
                           ),
                           filled: true,
-                          fillColor: kPrimaryColor,
+                          fillColor: Colors.white.withOpacity(0.1),
                           contentPadding: const EdgeInsets.all(16),
                         ),
                       ),
@@ -389,7 +389,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             ),
                           ),
                           filled: true,
-                          fillColor: kPrimaryColor,
+                          fillColor: Colors.white.withOpacity(0.1),
                           contentPadding: const EdgeInsets.all(16),
                         ),
                       ),
@@ -414,7 +414,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             ),
                           ),
                           filled: true,
-                          fillColor: kPrimaryColor,
+                          fillColor: Colors.white.withOpacity(0.1),
                           contentPadding: const EdgeInsets.all(16),
                         ),
                       ),
@@ -432,7 +432,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12.0),
                         child: Material(
-                          color: kPrimaryColor,
+                          color: Colors.white.withOpacity(0.1),
                           child: InkWell(
                             onTap: () {
                               _getImage1();
@@ -464,7 +464,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12.0),
                         child: Material(
-                          color: kPrimaryColor,
+                          color: Colors.white.withOpacity(0.1),
                           child: InkWell(
                             onTap: () {
                               _getImage2();
@@ -550,7 +550,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 },
               ),
               Text(
-                "Хэрэглэгчийн мэдээлэл засах",
+                "Мэдээлэл засах",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: height * 0.022,
@@ -568,7 +568,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         child: const CircularProgressIndicator(
                           strokeWidth: 1.2,
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.green,
+                            Colors.white,
                           ),
                         ),
                       ),
@@ -576,8 +576,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                   if (!_isLoad)
                     IconButton(
                       icon: const Icon(
-                        Icons.done,
-                        color: Colors.green,
+                        Icons.upload_outlined,
+                        color: Colors.white,
                       ),
                       onPressed: () {
                         if (_gender.isNotEmpty && _ageTEC.text.isNotEmpty) {

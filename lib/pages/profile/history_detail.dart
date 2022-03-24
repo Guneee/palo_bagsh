@@ -17,6 +17,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -61,38 +62,12 @@ class _HistoryDetailState extends State<HistoryDetail> {
                         style: TextStyle(
                           fontSize: height * 0.028,
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: height * 0.01),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.08,
-                      right: width * 0.08,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Text(
-                            "Survey оруулсан,",
-                            style: TextStyle(
-                              fontSize: height * 0.02,
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                          ),
-                          Text(
-                            " Админ",
-                            style: TextStyle(
-                              fontSize: height * 0.02,
-                              color: kPrimaryColor.withOpacity(0.9),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+
                   SizedBox(height: height * 0.01),
                   Padding(
                     padding: EdgeInsets.only(
@@ -107,7 +82,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
                             "Бөглөсөн хугацаа: ",
                             style: TextStyle(
                               fontSize: height * 0.02,
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.white.withOpacity(0.5),
                             ),
                           ),
                           Text(
@@ -137,7 +112,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
                             "Survey үүсгэсэн хугацаа: ",
                             style: TextStyle(
                               fontSize: height * 0.02,
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.white.withOpacity(0.5),
                             ),
                           ),
                           Text(
@@ -164,10 +139,10 @@ class _HistoryDetailState extends State<HistoryDetail> {
                       child: Row(
                         children: [
                           Text(
-                            "Үнэлгээ: ",
+                            "Шагнал: ",
                             style: TextStyle(
                               fontSize: height * 0.02,
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.white.withOpacity(0.5),
                             ),
                           ),
                           Text(
@@ -180,9 +155,6 @@ class _HistoryDetailState extends State<HistoryDetail> {
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
                   ),
                   // Padding(
                   //   padding: EdgeInsets.only(left: width * 0.08),
@@ -224,7 +196,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
                   //   ),
                   // ),
                   SizedBox(
-                    height: height * 0.04,
+                    height: height * 0.03,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -235,6 +207,9 @@ class _HistoryDetailState extends State<HistoryDetail> {
                     child: Text(
                       history[widget.index]['content'],
                       textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],

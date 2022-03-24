@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/pages/job/job_page.dart';
 import 'package:palo/pages/profile/profile_page.dart';
+import 'package:palo/pages/quest/quest_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';
@@ -58,6 +59,7 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
         SurveyDetail2Temp(
           index: index,
         ),
+        const QuestPage(),
         const JobPage(),
         const ProfilePage(),
       ];
@@ -71,7 +73,7 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
-      backgroundColor: currentBottomIndex == 1 ? kBtnColor : null,
+      backgroundColor: kBackgroundColor,
       bottomNavigationBar: (token != "") ? _bottomNavigationBar() : null,
       body: SizedBox(
         height: height,
@@ -96,8 +98,8 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
 
   Widget _bottomNavigationBar() => BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        fixedColor: currentBottomIndex == 0 ? kPrimaryColor : Colors.white,
-        backgroundColor: currentBottomIndex == 2 ? kPrimaryColor : Colors.white,
+        fixedColor: kPrimaryColor,
+        backgroundColor: kBtnColor,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: currentBottomIndex,
@@ -125,14 +127,27 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
                   )
                 : Icon(
                     Icons.home_outlined,
-                    color: (currentBottomIndex == 2)
-                        ? Colors.white.withOpacity(0.4)
-                        : Colors.black.withOpacity(0.5),
+                    color: Colors.white,
+                  ),
+          ),
+          BottomNavigationBarItem(
+            label: "Эрэл",
+            icon: (currentBottomIndex == 1)
+                ? const Text(
+                    "Эрэл",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : Icon(
+                    Icons.question_answer_outlined,
+                    color: Colors.white,
                   ),
           ),
           BottomNavigationBarItem(
             label: "Ажил",
-            icon: (currentBottomIndex == 1)
+            icon: (currentBottomIndex == 2)
                 ? const Text(
                     "Ажил",
                     style: TextStyle(
@@ -142,14 +157,12 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
                   )
                 : Icon(
                     Icons.location_history_outlined,
-                    color: (currentBottomIndex == 2)
-                        ? Colors.white.withOpacity(0.4)
-                        : Colors.black.withOpacity(0.5),
+                    color: Colors.white,
                   ),
           ),
           BottomNavigationBarItem(
             label: 'Хэрэглэгчийн хуудас',
-            icon: (currentBottomIndex == 2)
+            icon: (currentBottomIndex == 3)
                 ? const Text(
                     "Профайл",
                     style: TextStyle(
@@ -159,7 +172,7 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
                   )
                 : Icon(
                     Icons.person_outlined,
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.white,
                   ),
           ),
         ],
@@ -253,6 +266,7 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -297,35 +311,8 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
                         style: TextStyle(
                           fontSize: height * 0.028,
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.08,
-                      right: width * 0.08,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Text(
-                            "Судалгаа оруулсан,",
-                            style: TextStyle(
-                              fontSize: height * 0.02,
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                          ),
-                          Text(
-                            " Админ",
-                            style: TextStyle(
-                              fontSize: height * 0.02,
-                              color: kPrimaryColor.withOpacity(0.9),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ),
@@ -343,7 +330,7 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
                             "Оруулсан хугацаа,",
                             style: TextStyle(
                               fontSize: height * 0.02,
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.white.withOpacity(0.5),
                             ),
                           ),
                           Text(
@@ -429,7 +416,7 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.04,
+                    height: height * 0.03,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -440,6 +427,7 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
                     child: Text(
                       nearSurveys[index]['content'],
                       textAlign: TextAlign.justify,
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ],

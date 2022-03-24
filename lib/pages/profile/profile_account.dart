@@ -44,6 +44,7 @@ class _ProfileAccountState extends State<ProfileAccount> {
           json.decode(response.body)["bank_account"].toString();
       currentUserAccountName =
           json.decode(response.body)["bank_account_name"].toString();
+      showSnackBar("Амжилттай хадгаллаа", _scaffoldKey);
     }
 
     setState(() {
@@ -72,7 +73,7 @@ class _ProfileAccountState extends State<ProfileAccount> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: kBtnColor,
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -123,7 +124,7 @@ class _ProfileAccountState extends State<ProfileAccount> {
                         ),
                       ),
                       filled: true,
-                      fillColor: kPrimaryColor,
+                      fillColor: Colors.white.withOpacity(0.1),
                       contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
@@ -144,7 +145,7 @@ class _ProfileAccountState extends State<ProfileAccount> {
                         ),
                       ),
                       filled: true,
-                      fillColor: kPrimaryColor,
+                      fillColor: Colors.white.withOpacity(0.1),
                       contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
@@ -167,7 +168,7 @@ class _ProfileAccountState extends State<ProfileAccount> {
                         ),
                       ),
                       filled: true,
-                      fillColor: kPrimaryColor,
+                      fillColor: Colors.white.withOpacity(0.1),
                       contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
@@ -223,7 +224,7 @@ class _ProfileAccountState extends State<ProfileAccount> {
                         child: const CircularProgressIndicator(
                           strokeWidth: 1.2,
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.green,
+                            Colors.white,
                           ),
                         ),
                       ),
@@ -231,8 +232,8 @@ class _ProfileAccountState extends State<ProfileAccount> {
                   if (!_isLoad)
                     IconButton(
                       icon: const Icon(
-                        Icons.done,
-                        color: Colors.green,
+                        Icons.upload_outlined,
+                        color: Colors.white,
                       ),
                       onPressed: () {
                         _uploadAccount();

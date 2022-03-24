@@ -121,6 +121,7 @@ class _SurveyFormState extends State<SurveyForm> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -171,7 +172,7 @@ class _SurveyFormState extends State<SurveyForm> {
                           Text(
                             "Автоматаар гарахад " + _timeOut.toString() + "..",
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.white.withOpacity(0.5),
                               fontSize: height * 0.016,
                             ),
                           ),
@@ -235,7 +236,7 @@ class _SurveyFormState extends State<SurveyForm> {
       );
 
   Widget _top(double height, double width) => SizedBox(
-        height: height * 0.08,
+        height: height * 0.07,
         child: Padding(
           padding: EdgeInsets.only(
             left: width * 0.03,
@@ -251,14 +252,14 @@ class _SurveyFormState extends State<SurveyForm> {
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
               Text(
                 widget.title,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: height * 0.02,
                   fontWeight: FontWeight.w500,
                 ),

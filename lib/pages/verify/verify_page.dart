@@ -63,7 +63,7 @@ class _VerifyPageState extends State<VerifyPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: globalKey,
-      backgroundColor: kBtnColor,
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: kBtnColor,
@@ -350,12 +350,12 @@ class _VerifyPageState extends State<VerifyPage> {
                           children: [
                             Icon(
                               Icons.location_pin,
-                              color: Colors.white,
+                              color: kBtnColor,
                             ),
                             SizedBox(width: width * 0.02),
                             Ctext(
                               text: "Оршин суугаа хаяг",
-                              color: Colors.white,
+                              color: kBtnColor,
                               large: true,
                             ),
                           ],
@@ -376,12 +376,12 @@ class _VerifyPageState extends State<VerifyPage> {
                           children: [
                             Icon(
                               Icons.person_search,
-                              color: Colors.white,
+                              color: kBtnColor,
                             ),
                             SizedBox(width: width * 0.02),
                             Ctext(
                               text: "Үнэмлэхний зураг",
-                              color: Colors.white,
+                              color: kBtnColor,
                               large: true,
                             ),
                           ],
@@ -393,7 +393,7 @@ class _VerifyPageState extends State<VerifyPage> {
                       height: height * 0.14,
                       width: width * 0.9,
                       decoration: BoxDecoration(
-                        color: kPrimaryColor.withOpacity(0.4),
+                        color: Colors.white.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Center(
@@ -418,6 +418,7 @@ class _VerifyPageState extends State<VerifyPage> {
                     if (user["verify"] != "Баталсан")
                       Cbutton(
                         text: "Хүсэлт илгээх",
+                        textColor: kBtnColor,
                         normal: true,
                         onPress: () {
                           _request();

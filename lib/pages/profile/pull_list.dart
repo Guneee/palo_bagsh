@@ -83,7 +83,7 @@ class _PullListState extends State<PullList> {
         return Future<bool>.value(true);
       },
       child: Scaffold(
-        backgroundColor: kBtnColor,
+        backgroundColor: kBackgroundColor,
         body: SizedBox(
           height: height,
           width: width,
@@ -134,7 +134,7 @@ class _PullListState extends State<PullList> {
               ),
             ),
             filled: true,
-            fillColor: kPrimaryColor.withOpacity(0.6),
+            fillColor: Colors.white.withOpacity(0.1),
             contentPadding: const EdgeInsets.all(1),
             isDense: true,
           ),
@@ -166,7 +166,7 @@ class _PullListState extends State<PullList> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16.0),
                               child: Material(
-                                color: kPrimaryColor,
+                                color: Colors.white.withOpacity(0.1),
                                 child: SizedBox(
                                   height: height * 0.08,
                                   width: width * 0.8,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:palo/constants.dart';
 import 'package:palo/pages/quest/widgets/quest_body.dart';
 
 class QuestPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _QuestPageState extends State<QuestPage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,

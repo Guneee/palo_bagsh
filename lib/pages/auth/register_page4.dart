@@ -30,10 +30,10 @@ class _RegisterPage4State extends State<RegisterPage4> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
+      backgroundColor: kBackgroundColor,
       body: Container(
         height: height,
         width: width,
-        color: Colors.white,
         child: SafeArea(
           child: Align(
             alignment: Alignment.topCenter,
@@ -59,8 +59,10 @@ class _RegisterPage4State extends State<RegisterPage4> {
                     ),
                     child: TextFormField(
                       controller: _userTEC,
+                      style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Нэр',
+                        labelStyle: TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(
@@ -69,6 +71,7 @@ class _RegisterPage4State extends State<RegisterPage4> {
                           ),
                         ),
                         filled: true,
+                        fillColor: Colors.white.withOpacity(0.1),
                         contentPadding: const EdgeInsets.all(16),
                       ),
                     ),
@@ -146,7 +149,7 @@ class _RegisterPage4State extends State<RegisterPage4> {
             IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: kPrimaryColor,
+                color: Colors.white,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -158,12 +161,14 @@ class _RegisterPage4State extends State<RegisterPage4> {
                   "Бүртгүүлэх",
                   style: TextStyle(
                     fontSize: height * 0.024,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
                   "Алхам 4/5",
                   style: TextStyle(
-                    fontSize: height * 0.012,
+                    fontSize: height * 0.016,
+                    color: kPrimaryColor,
                   ),
                 ),
               ],

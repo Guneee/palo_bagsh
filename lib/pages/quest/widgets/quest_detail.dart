@@ -56,6 +56,7 @@ class _QuestDetailState extends State<QuestDetail> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         backgroundColor: (index % 2 == 1) ? kBtnColor : kPrimaryColor,
         centerTitle: true,
@@ -63,7 +64,7 @@ class _QuestDetailState extends State<QuestDetail> {
         title: Ctext(
           text: questItems[index]["title"].toString(),
           textOverflow: TextOverflow.ellipsis,
-          color: Colors.white,
+          color: (index % 2 == 1) ? Colors.white : kBtnColor,
           large: true,
         ),
         leading: IconButton(
@@ -72,7 +73,7 @@ class _QuestDetailState extends State<QuestDetail> {
           },
           icon: Icon(
             Icons.close,
-            color: Colors.white,
+            color: (index % 2 == 1) ? Colors.white : kBtnColor,
           ),
         ),
       ),
@@ -115,7 +116,7 @@ class _QuestDetailState extends State<QuestDetail> {
                             .toString(),
                         maxLine: 3,
                         bold: true,
-                        color: kPrimaryColor,
+                        color: Colors.white,
                         extraLarge: true,
                       ),
                     ),
@@ -137,7 +138,7 @@ class _QuestDetailState extends State<QuestDetail> {
                                 .toString()
                                 .substring(0, 10),
                             bold: true,
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.white.withOpacity(0.5),
                             normal: true,
                           ),
                           Column(
@@ -148,13 +149,13 @@ class _QuestDetailState extends State<QuestDetail> {
                                         ["amount"]
                                     .toString(),
                                 extraLarge: true,
-                                color: kPrimaryColor,
+                                color: Colors.white,
                                 bold: true,
                               ),
                               Ctext(
                                 text: "оноо",
                                 normal: true,
-                                color: kPrimaryColor,
+                                color: Colors.white,
                               ),
                             ],
                           ),
@@ -175,7 +176,7 @@ class _QuestDetailState extends State<QuestDetail> {
                             .toString(),
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          color: kPrimaryColor,
+                          color: Colors.white,
                           letterSpacing: 1.0,
                           fontSize: height * 0.02,
                         ),
@@ -192,6 +193,7 @@ class _QuestDetailState extends State<QuestDetail> {
                       ),
                       child: Cbutton(
                         text: "Эхлэх",
+                        color: kBtnColor,
                         large: true,
                         onPress: () {
                           _begin();

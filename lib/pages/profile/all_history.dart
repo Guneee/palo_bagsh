@@ -31,7 +31,7 @@ class _AllHistoryState extends State<AllHistory> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kBtnColor,
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -81,7 +81,7 @@ class _AllHistoryState extends State<AllHistory> {
               ),
             ),
             filled: true,
-            fillColor: kPrimaryColor.withOpacity(0.6),
+            fillColor: Colors.white.withOpacity(0.1),
             contentPadding: const EdgeInsets.all(1),
             isDense: true,
           ),
@@ -109,7 +109,7 @@ class _AllHistoryState extends State<AllHistory> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(16.0),
                             child: Material(
-                              color: kPrimaryColor,
+                              color: Colors.white.withOpacity(0.1),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(

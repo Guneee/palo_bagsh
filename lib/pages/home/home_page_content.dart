@@ -312,7 +312,7 @@ class _HomePageContentState extends State<HomePageContent> {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
+                                  color: Colors.white.withOpacity(0.1),
                                   spreadRadius: 0.1,
                                   blurRadius: 3,
                                   offset: const Offset(3, 3),
@@ -548,6 +548,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                       style: TextStyle(
                                         fontSize: height * 0.024,
                                         fontWeight: FontWeight.bold,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -560,7 +561,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                       child: Icon(
                                         Icons.arrow_forward_ios,
                                         size: height * 0.022,
-                                        color: Colors.black.withOpacity(0.6),
+                                        color: Colors.white.withOpacity(0.6),
                                       ),
                                     ),
                                 ],
@@ -588,7 +589,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                 decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
+                                      color: Colors.white.withOpacity(0.1),
                                       spreadRadius: 0.1,
                                       blurRadius: 3,
                                       offset: const Offset(3, 3),
@@ -598,7 +599,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Material(
-                                    color: Colors.white,
+                                    color: Colors.white.withOpacity(0.2),
                                     child: InkWell(
                                       onTap: () {
                                         Navigator.push(
@@ -701,7 +702,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                                         style: TextStyle(
                                                           fontSize:
                                                               height * 0.02,
-                                                          color: Colors.black,
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -728,7 +729,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                                               fontSize: height *
                                                                   0.018,
                                                               color: Colors
-                                                                  .black
+                                                                  .white
                                                                   .withOpacity(
                                                                       0.5),
                                                             ),
@@ -756,7 +757,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                                               fontSize: height *
                                                                   0.018,
                                                               color:
-                                                                  Colors.black,
+                                                                  Colors.white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
@@ -798,6 +799,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                     style: TextStyle(
                                       fontSize: height * 0.024,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -888,6 +890,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                             style: TextStyle(
                                               fontSize: height * 0.018,
                                               fontWeight: FontWeight.bold,
+                                              color: Colors.white,
                                             ),
                                           ),
                                         ],
@@ -921,7 +924,7 @@ class _HomePageContentState extends State<HomePageContent> {
                   bottom: height * 0.01,
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   child: Stack(
                     children: [
                       Image.network(
@@ -1023,7 +1026,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                   child: Text(
                                     "Бичлэг үзээд 200₮",
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: kBtnColor,
                                       fontSize: height * 0.02,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -1037,7 +1040,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                   child: Text(
                                     "Өдөрт нэг удаа",
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.4),
+                                      color: kBtnColor.withOpacity(0.4),
                                       fontSize: height * 0.016,
                                     ),
                                   ),
@@ -1052,7 +1055,7 @@ class _HomePageContentState extends State<HomePageContent> {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: kBtnColor.withOpacity(0.2),
                                   spreadRadius: 5,
                                   blurRadius: 15,
                                   offset: const Offset(0, 3),
@@ -1061,7 +1064,7 @@ class _HomePageContentState extends State<HomePageContent> {
                             ),
                             child: Icon(
                               Icons.card_giftcard,
-                              color: Colors.white.withOpacity(0.5),
+                              color: kBtnColor.withOpacity(0.5),
                               size: height * 0.05,
                             ),
                           ),
@@ -1121,17 +1124,30 @@ class _HomePageContentState extends State<HomePageContent> {
             if (currentUserAvatar != "")
               ClipRRect(
                 borderRadius: BorderRadius.circular(height * 0.5),
-                child: Image.network(
-                  currentUserAvatar,
-                  height: height * 0.07,
-                  width: height * 0.07,
-                  fit: BoxFit.cover,
+                child: InkWell(
+                  onTap: () {
+                    currentBottomIndex = 3;
+                    Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                        duration: Duration(milliseconds: 200),
+                        type: PageTransitionType.rightToLeft,
+                        child: HomePage(),
+                      ),
+                    );
+                  },
+                  child: Image.network(
+                    currentUserAvatar,
+                    height: height * 0.07,
+                    width: height * 0.07,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             if (currentUserAvatar == "")
               IconButton(
                 onPressed: () {
-                  currentBottomIndex = 2;
+                  currentBottomIndex = 3;
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
@@ -1143,7 +1159,7 @@ class _HomePageContentState extends State<HomePageContent> {
                 },
                 icon: Icon(
                   Icons.person,
-                  color: Colors.black,
+                  color: Colors.white,
                   size: height * 0.04,
                 ),
               ),
@@ -1277,8 +1293,8 @@ class _HomePageContentState extends State<HomePageContent> {
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
         ),
       ),
       builder: (_) {

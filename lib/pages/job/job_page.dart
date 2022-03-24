@@ -137,6 +137,7 @@ class _JobPageState extends State<JobPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
+      backgroundColor: kBackgroundColor,
       bottomSheet: (!_isLoad)
           ? DraggableScrollableSheet(
               expand: false,
@@ -290,15 +291,15 @@ class _JobPageState extends State<JobPage> {
                           offset: Offset(0.0, 3.0),
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(16.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     height: height * 0.15,
                     width: width * 0.9,
                     child: Material(
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(16.0),
+                      borderRadius: BorderRadius.circular(10.0),
                       child: InkWell(
-                        borderRadius: BorderRadius.circular(16.0),
+                        borderRadius: BorderRadius.circular(10.0),
                         onTap: () {
                           showDialog(
                             context: context,
@@ -347,7 +348,7 @@ class _JobPageState extends State<JobPage> {
                           );
                         },
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16.0),
+                          borderRadius: BorderRadius.circular(10.0),
                           child: Row(
                             children: [
                               Expanded(

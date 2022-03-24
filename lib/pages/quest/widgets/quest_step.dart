@@ -114,6 +114,7 @@ class _QuestStepState extends State<QuestStep> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       key: globalKey,
       appBar: AppBar(
         backgroundColor: (index % 2 == 1) ? kBtnColor : kPrimaryColor,
@@ -122,7 +123,7 @@ class _QuestStepState extends State<QuestStep> {
         title: Ctext(
           text: "Нүүрний тос",
           textOverflow: TextOverflow.ellipsis,
-          color: Colors.white,
+          color: (index % 2 == 1) ? Colors.white : kBtnColor,
           large: true,
         ),
         leading: IconButton(
@@ -155,7 +156,10 @@ class _QuestStepState extends State<QuestStep> {
                     steps: [
                       Step(
                         isActive: _currentStep == 0,
-                        title: Ctext(text: 1.toString() + "-р шат"),
+                        title: Ctext(
+                          text: 1.toString() + "-р шат",
+                          color: Colors.white,
+                        ),
                         content: Padding(
                           padding: EdgeInsets.only(
                             left: width * 0.02,
@@ -168,6 +172,7 @@ class _QuestStepState extends State<QuestStep> {
                                 child: Ctext(
                                   text: "Е-Баримт зураг",
                                   large: true,
+                                  color: Colors.white,
                                 ),
                               ),
                               SizedBox(height: height * 0.01),
@@ -176,6 +181,9 @@ class _QuestStepState extends State<QuestStep> {
                                 child: Text(
                                   "Заавар:\nБарааны баримтын зургыг бүтнээр авах.",
                                   textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               SizedBox(height: height * 0.02),
@@ -183,6 +191,7 @@ class _QuestStepState extends State<QuestStep> {
                                 alignment: Alignment.centerLeft,
                                 child: Cbutton(
                                   text: "Зураг авах",
+                                  textColor: kBtnColor,
                                   normal: true,
                                   onPress: () {
                                     _captureImage();
@@ -197,13 +206,17 @@ class _QuestStepState extends State<QuestStep> {
                       ),
                       Step(
                         isActive: _currentStep == 1,
-                        title: Ctext(text: 2.toString() + "-р шат"),
+                        title: Ctext(
+                          text: 2.toString() + "-р шат",
+                          color: Colors.white,
+                        ),
                         content: Column(
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Ctext(
                                 text: "Сэтгэгдэл, шүүмжлэл",
+                                color: Colors.white,
                                 large: true,
                               ),
                             ),
@@ -212,10 +225,16 @@ class _QuestStepState extends State<QuestStep> {
                               keyboardType: TextInputType.multiline,
                               maxLength: 256,
                               maxLines: null,
-                              style: TextStyle(letterSpacing: 1.5),
+                              style: TextStyle(
+                                letterSpacing: 1.5,
+                                color: Colors.white,
+                              ),
                               decoration: InputDecoration(
                                 errorText: _commentEmpty ? "Бөглөнө үү" : null,
                                 hintText: "...",
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                             SizedBox(height: height * 0.01),
@@ -224,7 +243,10 @@ class _QuestStepState extends State<QuestStep> {
                       ),
                       Step(
                         isActive: _currentStep == 2,
-                        title: Ctext(text: 3.toString() + "-р шат"),
+                        title: Ctext(
+                          text: 3.toString() + "-р шат",
+                          color: Colors.white,
+                        ),
                         content: Column(
                           children: [
                             Align(
@@ -232,6 +254,7 @@ class _QuestStepState extends State<QuestStep> {
                               child: Ctext(
                                 text: "Ашиглаж буй бичлэг",
                                 large: true,
+                                color: Colors.white,
                               ),
                             ),
                             SizedBox(height: height * 0.01),
@@ -240,6 +263,9 @@ class _QuestStepState extends State<QuestStep> {
                               child: Text(
                                 "Заавар:\nӨөрийн биеээр ашиглаж буй бичлэгээ богино хугацаанд хийх.",
                                 textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                             SizedBox(height: height * 0.02),
@@ -247,6 +273,7 @@ class _QuestStepState extends State<QuestStep> {
                               alignment: Alignment.centerLeft,
                               child: Cbutton(
                                 text: "Бичлэг хийх",
+                                textColor: kBtnColor,
                                 normal: true,
                                 onPress: () {
                                   _recordVideo();
@@ -260,7 +287,10 @@ class _QuestStepState extends State<QuestStep> {
                       ),
                       Step(
                         isActive: _currentStep == 3,
-                        title: Ctext(text: 4.toString() + "-р шат"),
+                        title: Ctext(
+                          text: 4.toString() + "-р шат",
+                          color: Colors.white,
+                        ),
                         content: Column(
                           children: [
                             Align(
@@ -268,6 +298,7 @@ class _QuestStepState extends State<QuestStep> {
                               child: Ctext(
                                 text: "Хүсэлт илгээх",
                                 large: true,
+                                color: Colors.white,
                               ),
                             ),
                             SizedBox(height: height * 0.01),
@@ -276,6 +307,9 @@ class _QuestStepState extends State<QuestStep> {
                               child: Text(
                                 "Хүсэлт илгээснээр таны оруулсан мэдээллэлүүдийг бид шалган таньд 1,000 оноо буюу '₮' төгрөгийг шилжүүлэх болно.",
                                 textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                             SizedBox(height: height * 0.01),
@@ -319,12 +353,16 @@ class _QuestStepState extends State<QuestStep> {
                                 }
                               },
                               child: (_currentStep != 3)
-                                  ? Ctext(text: "ДАРААЧИЙН")
+                                  ? Ctext(
+                                      text: "ДАРААЧИЙН",
+                                      color: Colors.white,
+                                    )
                                   : Text(""),
                             ),
                           if (_currentStep == 3)
                             Cbutton(
                               text: "ИЛГЭЭХ",
+                              textColor: kBtnColor,
                               onPress: () {
                                 if (!_isLoad) {
                                   _request();
@@ -342,7 +380,10 @@ class _QuestStepState extends State<QuestStep> {
                                 }
                               },
                               child: (_currentStep != 0)
-                                  ? Ctext(text: "БУЦАХ")
+                                  ? Ctext(
+                                      text: "БУЦАХ",
+                                      color: Colors.white,
+                                    )
                                   : Text(""),
                             ),
                         ],

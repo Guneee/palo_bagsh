@@ -131,8 +131,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _bottomNavigationBar() => BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        fixedColor: currentBottomIndex == 0 ? kPrimaryColor : Colors.white,
-        backgroundColor: currentBottomIndex == 3 ? kPrimaryColor : Colors.white,
+        fixedColor: Colors.white,
+        backgroundColor: kBtnColor,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: currentBottomIndex,
@@ -160,9 +160,7 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Icon(
                     Icons.home_outlined,
-                    color: (currentBottomIndex == 3)
-                        ? Colors.white.withOpacity(0.4)
-                        : Colors.black.withOpacity(0.5),
+                    color: Colors.white,
                   ),
           ),
           BottomNavigationBarItem(
@@ -176,10 +174,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   )
                 : Icon(
-                    Icons.question_answer,
-                    color: (currentBottomIndex == 3)
-                        ? Colors.white.withOpacity(0.4)
-                        : Colors.black.withOpacity(0.5),
+                    Icons.question_answer_outlined,
+                    color: Colors.white,
                   ),
           ),
           BottomNavigationBarItem(
@@ -194,9 +190,7 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Icon(
                     Icons.location_history_outlined,
-                    color: (currentBottomIndex == 3)
-                        ? Colors.white.withOpacity(0.4)
-                        : Colors.black.withOpacity(0.5),
+                    color: Colors.white,
                   ),
           ),
           BottomNavigationBarItem(
@@ -211,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Icon(
                     Icons.person_outlined,
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.white,
                   ),
           ),
         ],

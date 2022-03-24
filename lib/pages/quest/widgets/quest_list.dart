@@ -19,14 +19,14 @@ class QuestList extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         backgroundColor: (index % 2 == 1) ? kBtnColor : kPrimaryColor,
         centerTitle: true,
         elevation: 0.0,
         title: Ctext(
           text: questItems[index]["title"].toString(),
-          color: Colors.white,
+          color: (index % 2 == 1) ? Colors.white : kBtnColor,
           large: true,
         ),
         leading: IconButton(
@@ -35,7 +35,7 @@ class QuestList extends StatelessWidget {
           },
           icon: Icon(
             Icons.close,
-            color: Colors.white,
+            color: (index % 2 == 1) ? Colors.white : kBtnColor,
           ),
         ),
       ),
@@ -70,15 +70,15 @@ class QuestList extends StatelessWidget {
                           BoxShadow(
                             spreadRadius: 1.0,
                             blurRadius: 3.0,
-                            color: Colors.black.withOpacity(0.05),
+                            color: Colors.white.withOpacity(0.05),
                             offset: Offset(3.0, 3.0),
                           )
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(10.0),
                         child: Material(
-                          color: Colors.white,
+                          color: Colors.white.withOpacity(0.1),
                           child: InkWell(
                             onTap: () {
                               go(
@@ -116,6 +116,7 @@ class QuestList extends StatelessWidget {
                                               textOverflow:
                                                   TextOverflow.ellipsis,
                                               normal: true,
+                                              color: Colors.white,
                                             ),
                                           ),
                                           Align(
@@ -128,6 +129,7 @@ class QuestList extends StatelessWidget {
                                               small: true,
                                               textOverflow:
                                                   TextOverflow.ellipsis,
+                                              color: Colors.white,
                                             ),
                                           ),
                                         ],
@@ -142,13 +144,14 @@ class QuestList extends StatelessWidget {
                                           text: questItems[index]["quest"]
                                                   [index2]["amount"]
                                               .toString(),
-                                          color: kBtnColor,
+                                          color: Colors.white,
                                           bold: true,
                                           large: true,
                                         ),
                                         Ctext(
                                           text: "оноо",
                                           normal: true,
+                                          color: Colors.white,
                                         ),
                                       ],
                                     ),

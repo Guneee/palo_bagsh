@@ -35,7 +35,7 @@ class QuestBox extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(top: height * 0.01),
                   child: Material(
-                    color: Colors.white,
+                    color: Colors.white.withOpacity(0.2),
                     child: InkWell(
                       onTap: () {
                         go(context, QuestList(index: index));
@@ -46,6 +46,7 @@ class QuestBox extends StatelessWidget {
                         child: Center(
                           child: Ctext(
                             text: questItems[index]["title"].toString(),
+                            color: Colors.white,
                             normal: true,
                           ),
                         ),
@@ -123,7 +124,7 @@ class QuestBox extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(top: height * 0.01),
                   child: Material(
-                    color: Colors.white,
+                    color: Colors.white.withOpacity(0.2),
                     child: InkWell(
                       onTap: () {
                         go(context, QuestList(index: index));
@@ -134,6 +135,7 @@ class QuestBox extends StatelessWidget {
                         child: Center(
                           child: Ctext(
                             text: questItems[index]["title"].toString(),
+                            color: Colors.white,
                             normal: true,
                           ),
                         ),
