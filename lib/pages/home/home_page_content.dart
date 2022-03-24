@@ -223,6 +223,7 @@ class _HomePageContentState extends State<HomePageContent> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,
@@ -247,126 +248,6 @@ class _HomePageContentState extends State<HomePageContent> {
       ),
     );
   }
-
-  Widget _authButtons(double height, double width) => SizedBox(
-        width: width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Image.asset(
-              "assets/survey.png",
-              height: height * 0.4,
-            ),
-            Text(
-              "Тавтай морил",
-              style: TextStyle(
-                color: kBtnColor,
-                fontSize: height * 0.03,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: height * 0.01),
-            Text(
-              "Palo",
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.6),
-                fontSize: height * 0.02,
-              ),
-            ),
-            SizedBox(height: height * 0.001),
-            Text(
-              "таны сонирхол, таны ойр",
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.6),
-                fontSize: height * 0.02,
-              ),
-            ),
-            SizedBox(height: height * 0.1),
-            Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 7,
-                    offset: const Offset(2, 4),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  12.0,
-                ),
-                child: Material(
-                  color: kPrimaryColor,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          duration: Duration(milliseconds: 200),
-                          type: PageTransitionType.rightToLeft,
-                          child: const LoginPage(),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                      height: height * 0.06,
-                      width: width * 0.8,
-                      child: Center(
-                        child: Text(
-                          "НЭВТРЭХ",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: height * 0.02,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: height * 0.02),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(
-                12.0,
-              ),
-              child: Material(
-                color: kBtnColor,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        duration: Duration(milliseconds: 200),
-                        type: PageTransitionType.rightToLeft,
-                        child: const RegisterPage(),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    height: height * 0.06,
-                    width: width * 0.8,
-                    child: Center(
-                      child: Text(
-                        "БҮРТГҮҮЛЭХ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: height * 0.02,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
 
   Widget _mainBody(double height, double width) => Column(
         children: AnimationConfiguration.toStaggeredList(
@@ -1215,7 +1096,7 @@ class _HomePageContentState extends State<HomePageContent> {
                     child: Text(
                       "Тавтай морил " + currentUserLastName + ",",
                       style: TextStyle(
-                        color: kBtnColor,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: height * 0.023,
                       ),
@@ -1229,7 +1110,7 @@ class _HomePageContentState extends State<HomePageContent> {
                     child: Text(
                       "Та юу сонирхож байна вэ?",
                       style: TextStyle(
-                        color: Colors.black.withOpacity(0.4),
+                        color: Colors.white.withOpacity(0.4),
                         fontSize: height * 0.018,
                       ),
                     ),
@@ -1266,6 +1147,126 @@ class _HomePageContentState extends State<HomePageContent> {
                   size: height * 0.04,
                 ),
               ),
+          ],
+        ),
+      );
+
+  Widget _authButtons(double height, double width) => SizedBox(
+        width: width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Image.asset(
+              "assets/survey.png",
+              height: height * 0.4,
+            ),
+            Text(
+              "Тавтай морил",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: height * 0.03,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: height * 0.01),
+            Text(
+              "Palo",
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+                fontSize: height * 0.02,
+              ),
+            ),
+            SizedBox(height: height * 0.001),
+            Text(
+              "таны сонирхол, таны ойр",
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+                fontSize: height * 0.02,
+              ),
+            ),
+            SizedBox(height: height * 0.1),
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 7,
+                    offset: const Offset(2, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  12.0,
+                ),
+                child: Material(
+                  color: kPrimaryColor,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          duration: Duration(milliseconds: 200),
+                          type: PageTransitionType.rightToLeft,
+                          child: const LoginPage(),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: height * 0.06,
+                      width: width * 0.8,
+                      child: Center(
+                        child: Text(
+                          "НЭВТРЭХ",
+                          style: TextStyle(
+                            color: kBtnColor,
+                            fontSize: height * 0.02,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: height * 0.02),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(
+                12.0,
+              ),
+              child: Material(
+                color: kBtnColor,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        duration: Duration(milliseconds: 200),
+                        type: PageTransitionType.rightToLeft,
+                        child: const RegisterPage(),
+                      ),
+                    );
+                  },
+                  child: SizedBox(
+                    height: height * 0.06,
+                    width: width * 0.8,
+                    child: Center(
+                      child: Text(
+                        "БҮРТГҮҮЛЭХ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: height * 0.02,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       );

@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
-      backgroundColor: currentBottomIndex == 2 ? kBtnColor : null,
+      backgroundColor: kBackgroundColor,
       bottomNavigationBar: (token != "") ? _bottomNavigationBar() : null,
       body: SizedBox(
         height: height,

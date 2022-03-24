@@ -144,10 +144,10 @@ class _LoginPage2State extends State<LoginPage2> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
+      backgroundColor: kBackgroundColor,
       body: Container(
         height: height,
         width: width,
-        color: Colors.white,
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
@@ -172,8 +172,10 @@ class _LoginPage2State extends State<LoginPage2> {
                   child: TextFormField(
                     controller: _passwordTEC,
                     obscureText: true,
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Нууц үг',
+                      labelStyle: TextStyle(color: Colors.white),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(
@@ -182,6 +184,7 @@ class _LoginPage2State extends State<LoginPage2> {
                         ),
                       ),
                       filled: true,
+                      fillColor: Colors.white.withOpacity(0.1),
                       contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
@@ -260,7 +263,7 @@ class _LoginPage2State extends State<LoginPage2> {
             IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: kPrimaryColor,
+                color: Colors.white,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -272,12 +275,14 @@ class _LoginPage2State extends State<LoginPage2> {
                   "Нэвтрэх",
                   style: TextStyle(
                     fontSize: height * 0.024,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
                   "Алхам 2/2",
                   style: TextStyle(
-                    fontSize: height * 0.012,
+                    fontSize: height * 0.016,
+                    color: kPrimaryColor,
                   ),
                 ),
               ],

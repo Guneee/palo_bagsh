@@ -245,6 +245,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     if (currentUserGender != "") {
       _gender = currentUserGender;
     }
+    print(currentUserAvatar);
     setState(() {});
     super.initState();
   }
@@ -311,7 +312,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             child: SizedBox(
                               height: height * 0.1,
                               width: height * 0.1,
-                              child: (currentUserAvatar == "null")
+                              child: (currentUserAvatar.isEmpty)
                                   ? Icon(
                                       Icons.person,
                                       color: Colors.white,

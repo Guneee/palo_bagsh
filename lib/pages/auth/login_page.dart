@@ -40,10 +40,10 @@ class _LoginPageState extends State<LoginPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
+      backgroundColor: kBackgroundColor,
       body: Container(
         height: height,
         width: width,
-        color: Colors.white,
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
@@ -69,8 +69,10 @@ class _LoginPageState extends State<LoginPage> {
                     keyboardType: TextInputType.phone,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     controller: _userPhoneTEC,
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Хэрэглэгчийн утасны дугаар',
+                      labelStyle: TextStyle(color: Colors.white),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(
@@ -79,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       filled: true,
+                      fillColor: Colors.white.withOpacity(0.1),
                       contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
@@ -150,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
             IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: kPrimaryColor,
+                color: Colors.white,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -161,13 +164,15 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   "Нэвтрэх",
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: height * 0.024,
                   ),
                 ),
                 Text(
                   "Алхам 1/2",
                   style: TextStyle(
-                    fontSize: height * 0.012,
+                    color: kPrimaryColor,
+                    fontSize: height * 0.016,
                   ),
                 ),
               ],

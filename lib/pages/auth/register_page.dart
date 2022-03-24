@@ -135,10 +135,10 @@ class _RegisterPageState extends State<RegisterPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
+      backgroundColor: kBackgroundColor,
       body: Container(
         height: height,
         width: width,
-        color: Colors.white,
         child: SafeArea(
           child: Align(
             alignment: Alignment.topCenter,
@@ -166,7 +166,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       keyboardType: TextInputType.phone,
                       controller: _userPhoneTEC,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white),
                         labelText: 'Хэрэглэгчийн утас',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -176,6 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         filled: true,
+                        fillColor: Colors.white.withOpacity(0.1),
                         contentPadding: const EdgeInsets.all(16),
                       ),
                     ),
@@ -264,7 +267,7 @@ class _RegisterPageState extends State<RegisterPage> {
             IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: kPrimaryColor,
+                color: Colors.white,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -276,12 +279,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   "Бүртгүүлэх",
                   style: TextStyle(
                     fontSize: height * 0.024,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
                   "Алхам 1/5",
                   style: TextStyle(
-                    fontSize: height * 0.012,
+                    fontSize: height * 0.016,
+                    color: kPrimaryColor,
                   ),
                 ),
               ],
