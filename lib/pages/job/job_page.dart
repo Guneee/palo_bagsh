@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:palo/helpers/api_url.dart';
+import 'package:palo/helpers/app_preferences.dart';
+import 'package:palo/pages/job/widgets/job_detail.dart';
 import '../../constants.dart';
 import '../../data.dart';
 import 'package:http/http.dart' as https;
@@ -150,90 +152,104 @@ class _JobPageState extends State<JobPage> {
                   controller: scrollController,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(18.0),
-                      topRight: Radius.circular(18.0),
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: height * 0.006),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(""),
-                            Container(
-                              width: width * 0.06,
-                              height: 1.5,
-                              color: Colors.black,
-                            ),
-                            Text(""),
-                          ],
-                        ),
-                        SizedBox(height: height * 0.01),
-                        Text(
-                          "Нийт " + jobs.length.toString() + " ажил байна",
-                          style: TextStyle(
-                            fontSize: height * 0.022,
-                            fontWeight: FontWeight.bold,
+                    child: Container(
+                      color: kBackgroundColor,
+                      child: Column(
+                        children: [
+                          SizedBox(height: height * 0.006),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(""),
+                              Container(
+                                width: width * 0.06,
+                                height: 1.5,
+                                color: Colors.white,
+                              ),
+                              Text(""),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: height * 0.04),
-                        Column(
-                          children: List.generate(
-                            jobs.length,
-                            (index) => Padding(
-                              padding: EdgeInsets.only(
-                                bottom: height * 0.04,
-                                left: width * 0.06,
-                                right: width * 0.06,
-                              ),
-                              child: Column(
-                                children: [
-                                  if (jobs[index]["image"] != null)
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      child: Image.network(
-                                        jobs[index]["image"],
-                                        height: height * 0.3,
-                                        width: width,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  SizedBox(
-                                    height: 12.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      (index + 1).toString() +
-                                          ". " +
-                                          jobs[index]["title"],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      jobs[index]["content"],
-                                      textAlign: TextAlign.justify,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(jobs[index]["phone"]),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(jobs[index]["work_time"]),
-                                  ),
-                                ],
-                              ),
+                          SizedBox(height: height * 0.01),
+                          Text(
+                            "Нийт " + jobs.length.toString() + " ажил байна",
+                            style: TextStyle(
+                              fontSize: height * 0.022,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: height * 0.04),
+                          Column(
+                            children: List.generate(
+                              jobs.length,
+                              (index) => Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: height * 0.04,
+                                  left: width * 0.06,
+                                  right: width * 0.06,
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    go(context, JobDetail(index: index));
+                                  },
+                                  child: Column(
+                                    children: [
+                                      if (jobs[index]["image"] != null)
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          child: Image.network(
+                                            jobs[index]["image"],
+                                            height: height * 0.3,
+                                            width: width,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      SizedBox(
+                                        height: 12.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          (index + 1).toString() +
+                                              ". " +
+                                              jobs[index]["title"],
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 8.0),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          jobs[index]["phone"],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          jobs[index]["work_time"],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

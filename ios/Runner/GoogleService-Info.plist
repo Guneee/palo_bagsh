@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>519306183051-hkmvrfpm2osd9kjon8qmq04klmh7boud.apps.googleusercontent.com</string>
+	<string>1090087148362-tk98u6kitaeeppgn0aho3883k22sqp0s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.519306183051-hkmvrfpm2osd9kjon8qmq04klmh7boud</string>
+	<string>com.googleusercontent.apps.1090087148362-tk98u6kitaeeppgn0aho3883k22sqp0s</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>519306183051-2flpa1v2le9cgibckdiphptronara6ap.apps.googleusercontent.com</string>
+	<string>1090087148362-2nipunnglfgov2ae5qendmjo36fi0cig.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC0SCe5dCnHiDUI4Il0rcduPqhtazv6-_E</string>
+	<string>AIzaSyC9UX5KuENzf_r3jdC2hV4ORTtUiESzcQ4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>519306183051</string>
+	<string>1090087148362</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>mn.palo.palo</string>
 	<key>PROJECT_ID</key>
-	<string>palo24</string>
+	<string>palo-2424</string>
 	<key>STORAGE_BUCKET</key>
-	<string>palo24.appspot.com</string>
+	<string>palo-2424.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:519306183051:ios:bc2e8172b33d8911bbaf8e</string>
+	<string>1:1090087148362:ios:96013276374be92b3abfb3</string>
 </dict>
 </plist>

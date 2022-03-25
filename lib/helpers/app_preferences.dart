@@ -4,6 +4,21 @@ import 'package:page_transition/page_transition.dart';
 
 import '../constants.dart';
 
+Size size(BuildContext context) {
+  return MediaQuery.of(context).size;
+}
+
+goRepalce(BuildContext context, Widget page) {
+  Navigator.pushReplacement(
+    context,
+    PageTransition(
+      duration: Duration(milliseconds: 200),
+      type: PageTransitionType.rightToLeft,
+      child: page,
+    ),
+  );
+}
+
 go(BuildContext context, Widget page) {
   Navigator.push(
     context,

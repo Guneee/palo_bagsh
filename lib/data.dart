@@ -36,6 +36,7 @@ bool isVerify = false;
 //https://docs.google.com/forms/d/e/1FAIpQLSfhYUnWqT45xrBJ2WTv5VCsJQqe2vy8maqy46IKufmOe0PkGg/viewform?usp=sf_link
 
 List<Marker> jobMarkers = [];
+List<Marker> questMarkers = [];
 List jobs = [];
 List<HomeModel> homeItems = [];
 List<CategoryModel> categoryItems = [];

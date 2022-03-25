@@ -34,20 +34,23 @@ class QuestBox extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Padding(
                   padding: EdgeInsets.only(top: height * 0.01),
-                  child: Material(
-                    color: Colors.white.withOpacity(0.2),
-                    child: InkWell(
-                      onTap: () {
-                        go(context, QuestList(index: index));
-                      },
-                      child: SizedBox(
-                        height: height * 0.056,
-                        width: width * 0.68,
-                        child: Center(
-                          child: Ctext(
-                            text: questItems[index]["title"].toString(),
-                            color: Colors.white,
-                            normal: true,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Material(
+                      color: Colors.white.withOpacity(0.2),
+                      child: InkWell(
+                        onTap: () {
+                          go(context, QuestList(index: index));
+                        },
+                        child: SizedBox(
+                          height: height * 0.056,
+                          width: width * 0.68,
+                          child: Center(
+                            child: Ctext(
+                              text: questItems[index]["title"].toString(),
+                              color: Colors.white,
+                              normal: true,
+                            ),
                           ),
                         ),
                       ),
@@ -123,20 +126,23 @@ class QuestBox extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Padding(
                   padding: EdgeInsets.only(top: height * 0.01),
-                  child: Material(
-                    color: Colors.white.withOpacity(0.2),
-                    child: InkWell(
-                      onTap: () {
-                        go(context, QuestList(index: index));
-                      },
-                      child: SizedBox(
-                        height: height * 0.056,
-                        width: width * 0.68,
-                        child: Center(
-                          child: Ctext(
-                            text: questItems[index]["title"].toString(),
-                            color: Colors.white,
-                            normal: true,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Material(
+                      color: Colors.white.withOpacity(0.2),
+                      child: InkWell(
+                        onTap: () {
+                          go(context, QuestList(index: index));
+                        },
+                        child: SizedBox(
+                          height: height * 0.056,
+                          width: width * 0.68,
+                          child: Center(
+                            child: Ctext(
+                              text: questItems[index]["title"].toString(),
+                              color: Colors.white,
+                              normal: true,
+                            ),
                           ),
                         ),
                       ),

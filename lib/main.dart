@@ -80,6 +80,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // fontFamily: "Mon",
         primaryColor: kPrimaryColor,
+        canvasColor: Colors.transparent,
         primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
