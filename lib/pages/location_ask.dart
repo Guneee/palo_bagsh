@@ -72,7 +72,7 @@ class _LocationAskState extends State<LocationAsk> {
                 Text(
                   "Байршилын зөвшөөрөл",
                   style: TextStyle(
-                    fontSize: height * 0.02,
+                    fontSize: height * 0.022,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -99,7 +99,7 @@ class _LocationAskState extends State<LocationAsk> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: kPrimaryColor,
-                      fontSize: height * 0.017,
+                      fontSize: height * 0.02,
                     ),
                   ),
                 ),
@@ -114,7 +114,7 @@ class _LocationAskState extends State<LocationAsk> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: kPrimaryColor,
-                      fontSize: height * 0.017,
+                      fontSize: height * 0.02,
                     ),
                   ),
                 ),
@@ -131,7 +131,7 @@ class _LocationAskState extends State<LocationAsk> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4.0),
                           child: Material(
-                            color: kPrimaryColor,
+                            color: kBtnColor,
                             child: InkWell(
                               onTap: () {
                                 _checkPerm();
@@ -143,7 +143,7 @@ class _LocationAskState extends State<LocationAsk> {
                                     "Зөвшөөрөх",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: height * 0.016,
+                                      fontSize: height * 0.02,
                                     ),
                                   ),
                                 ),
@@ -157,7 +157,7 @@ class _LocationAskState extends State<LocationAsk> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4.0),
                           child: Material(
-                            color: kPrimaryColor.withOpacity(0.7),
+                            color: kBtnColor.withOpacity(0.7),
                             child: InkWell(
                               onTap: () {
                                 Navigator.pushReplacement(
@@ -176,7 +176,7 @@ class _LocationAskState extends State<LocationAsk> {
                                     "Татгалзах",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: height * 0.016,
+                                      fontSize: height * 0.02,
                                     ),
                                   ),
                                 ),

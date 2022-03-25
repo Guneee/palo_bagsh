@@ -83,7 +83,7 @@ class _SplashPageState extends State<SplashPage> {
                     18.0,
                   ),
                   child: Material(
-                    color: kPrimaryColor,
+                    color: kBtnColor,
                     child: InkWell(
                       onTap: () {
                         if (_selectedIndex == 0) {

@@ -121,6 +121,7 @@ class _SelectWordsState extends State<SelectWords> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
+      backgroundColor: kBackgroundColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -163,9 +164,9 @@ class _SelectWordsState extends State<SelectWords> {
                   Text(
                     "Та эдгээрээс сонгох шаардлагатай",
                     style: TextStyle(
-                      fontSize: height * 0.02,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: height * 0.02,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -175,8 +176,7 @@ class _SelectWordsState extends State<SelectWords> {
                   child: Text(
                     "Хамгийн багадаа 1, Хамгийн эхдээ 3-ыг сонгох боломжтой",
                     style: TextStyle(
-                      fontSize: height * 0.014,
-                    ),
+                        fontSize: height * 0.014, color: Colors.white),
                   ),
                 ),
                 if (!_isLoad)
@@ -229,9 +229,8 @@ class _SelectWordsState extends State<SelectWords> {
                 ),
                 Text(
                   _words[index]["title"],
-                  style: TextStyle(
-                    fontSize: height * 0.02,
-                  ),
+                  style:
+                      TextStyle(fontSize: height * 0.02, color: Colors.white),
                 ),
               ],
             ),
