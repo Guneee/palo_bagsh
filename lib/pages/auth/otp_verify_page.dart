@@ -100,6 +100,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
+      backgroundColor: kBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -234,7 +235,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
               IconButton(
                 icon: const Icon(
                   Icons.arrow_back_ios,
-                  color: kPrimaryColor,
+                  color: Colors.white,
                 ),
                 onPressed: () {
                   Navigator.pop(context);

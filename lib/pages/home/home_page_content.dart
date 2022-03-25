@@ -282,6 +282,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                 style: TextStyle(
                                   fontSize: height * 0.024,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -322,7 +323,7 @@ class _HomePageContentState extends State<HomePageContent> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Material(
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.1),
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(
@@ -411,7 +412,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                       fontSize: height * 0.02,
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -434,7 +435,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                                         style: TextStyle(
                                                           fontSize:
                                                               height * 0.018,
-                                                          color: Colors.black
+                                                          color: Colors.white
                                                               .withOpacity(0.5),
                                                         ),
                                                       ),
@@ -456,7 +457,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                                         style: TextStyle(
                                                           fontSize:
                                                               height * 0.018,
-                                                          color: Colors.black,
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
