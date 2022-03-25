@@ -143,7 +143,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
               "Оруулсан утасны дугаарт ирсэн\n6 оронтой тоог оруулна уу",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: kPrimaryColor.withOpacity(0.6),
+                color: Colors.white,
                 fontSize: height * 0.018,
               ),
             ),
@@ -155,7 +155,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
             ),
             child: Material(
               color: (_code.length == 6)
-                  ? Colors.green.withOpacity(0.7)
+                  ? kPrimaryColor.withOpacity(0.7)
                   : kBtnColor,
               child: InkWell(
                 onTap: () {
@@ -178,7 +178,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
                           child: const CircularProgressIndicator(
                             strokeWidth: 1.2,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white,
+                              kBtnColor,
                             ),
                           ),
                         ),
@@ -186,7 +186,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
                         Text(
                           "ИЛГЭЭХ",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: kBtnColor,
                             fontSize: height * 0.018,
                           ),
                         ),
