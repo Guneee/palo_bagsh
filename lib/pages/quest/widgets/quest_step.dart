@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:palo/helpers/api_url.dart';
 import 'package:palo/helpers/app_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -30,10 +31,10 @@ class QuestStep extends StatefulWidget {
 
 class _QuestStepState extends State<QuestStep> {
   final GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
-  int index = 0, _currentStep = 0;
+  int index = 0, index2 = 0, _currentStep = 0;
   bool _isLoad = false, _commentEmpty = false;
   final ImagePicker _picker = ImagePicker();
-
+  XFile? _photo, _video;
   final _commentTEC = TextEditingController();
 
   Future<void> _request() async {
@@ -41,71 +42,88 @@ class _QuestStepState extends State<QuestStep> {
       _isLoad = true;
     });
 
-    // Uri apiUrl = Uri.parse(mainApiUrl + "v1/");
-    // final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
-    // imageUploadRequest.headers.addAll({
-    //   "Authorization": "Bearer $token",
-    //   "Content-Type": "multipart/form-data"
-    // });
-
-    // // if (images.isNotEmpty) {
-    // //   ByteData byteData = await images[0].getByteData();
-    // //   Uint8List originalUnit8List = byteData.buffer.asUint8List();
-    // //   var codec = await ui.instantiateImageCodec(
-    // //     originalUnit8List,
-    // //     targetWidth: 800,
-    // //   );
-    // //   var frameInfo = await codec.getNextFrame();
-    // //   ui.Image targetUiImage = frameInfo.image;
-
-    // //   ByteData? targetByteData =
-    // //       await targetUiImage.toByteData(format: ui.ImageByteFormat.png);
-
-    // //   Uint8List data = targetByteData!.buffer.asUint8List();
-    // //   List<int> imageData = data;
-
-    // //   imageUploadRequest.files.add(
-    // //     http.MultipartFile.fromBytes(
-    // //       'avatar',
-    // //       imageData,
-    // //       filename: images[0].name.toString(),
-    // //       contentType: MediaType('image', 'jpeg'),
-    // //     ),
-    // //   );
-    // // }
-
-    // // imageUploadRequest.fields['id'] = currentUserId.toString();
-    // // imageUploadRequest.fields['url'] = appUrl;
-    // // imageUploadRequest.fields['firstname'] = _firstNameTEC.text;
-    // // imageUploadRequest.fields['lastname'] = _lastNameTEC.text;
-    // // imageUploadRequest.fields['age'] = _ageTEC.text;
-    // // imageUploadRequest.fields['gender'] = _gender;
-
-    // final streamedResponse = await imageUploadRequest.send();
-    // final response = await http.Response.fromStream(streamedResponse);
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        showSnackBar("Амжиллтай илгээгдлээ", globalKey);
-        setState(() {
-          _isLoad = false;
-        });
-      }
+    Uri apiUrl = Uri.parse(mainApiUrl + "v1/quest-verify-request");
+    final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
+    imageUploadRequest.headers.addAll({
+      "Authorization": "Bearer $token",
+      "Content-Type": "multipart/form-data"
     });
+
+    if (_photo != null) {
+      final mimeTypeData =
+          lookupMimeType(_photo!.path, headerBytes: [0xFF, 0xD8])?.split('/');
+      // Attach the file in the request
+      final file = await http.MultipartFile.fromPath(
+        'ebarimt',
+        _photo!.path,
+        contentType: MediaType(
+          mimeTypeData![0],
+          mimeTypeData[1],
+        ),
+      );
+      imageUploadRequest.files.add(file);
+    }
+    if (_video != null) {
+      final mimeTypeData =
+          lookupMimeType(_video!.path, headerBytes: [0xFF, 0xD8])?.split("/");
+      final file = await http.MultipartFile.fromPath(
+        'video',
+        _video!.path,
+        contentType: MediaType(
+          mimeTypeData![0],
+          mimeTypeData[1],
+        ),
+      );
+      imageUploadRequest.files.add(file);
+    }
+
+    imageUploadRequest.fields['user_id'] = currentUserId.toString();
+    imageUploadRequest.fields['quest_id'] =
+        questItems[index]["quest"][index2]["id"].toString();
+    imageUploadRequest.fields['url'] = appUrl;
+    imageUploadRequest.fields['comment'] = _commentTEC.text;
+
+    final streamedResponse = await imageUploadRequest.send();
+    final response = await http.Response.fromStream(streamedResponse);
+    print(response.body);
+    if (response.statusCode == 201) {
+      var body = json.decode(response.body);
+      if (body["status"]) {
+        showSnackBar(body["message"], globalKey);
+      } else {
+        showSnackBar("Амжилтгүй боллоо", globalKey);
+      }
+    } else {
+      showSnackBar("Алдаа гарлаа, Та дараа дахин оролдоно уу!", globalKey);
+    }
+    if (mounted) {
+      setState(() {
+        _isLoad = false;
+      });
+    }
   }
 
   void _captureImage() async {
     // Capture a photo
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    _photo = await _picker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: 1280,
+      maxWidth: 720,
+    );
   }
 
   void _recordVideo() async {
     // Capture a video
-    final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
+    _video = await _picker.pickVideo(
+      source: ImageSource.camera,
+      maxDuration: Duration(minutes: 2),
+    );
   }
 
   @override
   void initState() {
     index = widget.index;
+    index2 = widget.index2;
     super.initState();
   }
 
@@ -121,7 +139,7 @@ class _QuestStepState extends State<QuestStep> {
         centerTitle: true,
         elevation: 0.0,
         title: Ctext(
-          text: "Нүүрний тос",
+          text: questItems[index]["quest"][index2]["title"].toString(),
           textOverflow: TextOverflow.ellipsis,
           color: (index % 2 == 1) ? Colors.white : kBtnColor,
           large: true,
@@ -261,7 +279,7 @@ class _QuestStepState extends State<QuestStep> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Заавар:\nӨөрийн биеээр ашиглаж буй бичлэгээ богино хугацаанд хийх.",
+                                "Заавар:\nӨөрийн биеээр ашиглаж буй бичлэгээ богино хугацаанд хийх. Хамгийн эхдээ 2-минут",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   color: Colors.white,
