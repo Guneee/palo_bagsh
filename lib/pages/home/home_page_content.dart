@@ -1183,16 +1183,17 @@ class _HomePageContentState extends State<HomePageContent> {
             Text(
               "Тавтай морил",
               style: TextStyle(
-                color: Colors.white,
+                color: kBtnColor,
                 fontSize: height * 0.03,
                 fontWeight: FontWeight.bold,
+                letterSpacing: 1.0,
               ),
             ),
             SizedBox(height: height * 0.01),
             Text(
               "Palo",
               style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
+                color: kBtnColor.withOpacity(0.6),
                 fontSize: height * 0.02,
               ),
             ),
@@ -1200,7 +1201,7 @@ class _HomePageContentState extends State<HomePageContent> {
             Text(
               "таны сонирхол, таны ойр",
               style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
+                color: kBtnColor.withOpacity(0.6),
                 fontSize: height * 0.02,
               ),
             ),
@@ -1209,7 +1210,7 @@ class _HomePageContentState extends State<HomePageContent> {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: kPrimaryColor.withOpacity(1.0),
                     spreadRadius: 1,
                     blurRadius: 7,
                     offset: const Offset(2, 4),
@@ -1238,9 +1239,11 @@ class _HomePageContentState extends State<HomePageContent> {
                       width: width * 0.8,
                       child: Center(
                         child: Text(
-                          "НЭВТРЭХ",
+                          "Нэвтрэх",
                           style: TextStyle(
-                            color: kBtnColor,
+                            color: Colors.white,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.bold,
                             fontSize: height * 0.02,
                           ),
                         ),
@@ -1256,7 +1259,7 @@ class _HomePageContentState extends State<HomePageContent> {
                 12.0,
               ),
               child: Material(
-                color: kBtnColor,
+                color: Colors.white,
                 child: InkWell(
                   onTap: () {
                     Navigator.push(
@@ -1275,7 +1278,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       child: Text(
                         "БҮРТГҮҮЛЭХ",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: kPrimaryColor,
                           fontSize: height * 0.02,
                         ),
                       ),

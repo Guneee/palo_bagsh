@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-const Color kPrimaryColor = Color(0xFF56E39F);
-const Color kBtnColor = Color(0xFF0d0a0b);
-const Color kBtn2Color = Color(0xFFEF6FC);
-const Color textColor = Color(0xFF465775);
-const Color kYellowColor = Color(0xFFffc833);
-const Color kBackgroundColor = Color(0xFF465775);
+const Color kPrimaryColor = Color(0xFF00B267);
+const Color kBtnColor = Color(0xFF00B267);
+const Color kBtn2Color = Color(0xFF72DC60);
+const Color kTextColor = Color(0xFF28293D);
+const Color kYellowColor = Color(0xFFDFB300);
+const Color kGreyColor = Color(0xFFC7C9D9);
+Color? kBackgroundColor = Colors.white;
 
 ///Users/bayrbileg/Documents/flutterlast/bin/flutter

@@ -171,8 +171,8 @@ class _SplashPageState extends State<SplashPage> {
               "Бидний энэхүү бүтээсэн апп нь таны амьдралын хэв маягаас хамааруулан танд тохирох жижиг ажлуудыг санал болох болно",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: kPrimaryColor,
-                fontSize: height * 0.022,
+                color: kTextColor,
+                fontSize: height * 0.021,
               ),
             ),
           ),

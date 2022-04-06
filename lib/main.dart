@@ -29,19 +29,19 @@ void main() async {
   await Firebase.initializeApp();
 
   if (Platform.isAndroid) {
-    if (kDebugMode) {
-      print("starting android");
-    }
-    detectLocation();
-    BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
-    BackgroundFetch.scheduleTask(TaskConfig(
-      taskId: "com.transistorsoft.flutter_background_fetch",
-      delay: 300,
-      periodic: true,
-      forceAlarmManager: true,
-      stopOnTerminate: false,
-      enableHeadless: true,
-    ));
+    // if (kDebugMode) {
+    //   print("starting android");
+    // }
+    // detectLocation();
+    // BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+    // BackgroundFetch.scheduleTask(TaskConfig(
+    //   taskId: "com.transistorsoft.flutter_background_fetch",
+    //   delay: 300,
+    //   periodic: true,
+    //   forceAlarmManager: true,
+    //   stopOnTerminate: false,
+    //   enableHeadless: true,
+    // ));
   } else if (Platform.isIOS) {
     if (kDebugMode) {
       print("starting ios");
