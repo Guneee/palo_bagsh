@@ -8,11 +8,17 @@ Size size(BuildContext context) {
   return MediaQuery.of(context).size;
 }
 
+goAndClear(BuildContext context, Widget page) {
+  Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => page),
+      (Route<dynamic> route) => false);
+}
+
 goRepalce(BuildContext context, Widget page) {
   Navigator.pushReplacement(
     context,
     PageTransition(
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 175),
       type: PageTransitionType.rightToLeft,
       child: page,
     ),
@@ -23,7 +29,7 @@ go(BuildContext context, Widget page) {
   Navigator.push(
     context,
     PageTransition(
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 175),
       type: PageTransitionType.rightToLeft,
       child: page,
     ),
@@ -41,9 +47,9 @@ Future<void> checkLocationPermission() async {
   }
 }
 
-void showSnackBar(String value, GlobalKey<ScaffoldState> key) {
+void showSnackBar(String value, GlobalKey<ScaffoldState> globalKey) {
   // ignore: deprecated_member_use
-  key.currentState!.showSnackBar(
+  globalKey.currentState!.showSnackBar(
     SnackBar(
       content: Text(value),
       duration: const Duration(seconds: 2),

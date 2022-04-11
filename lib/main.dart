@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:palo/pages/first_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as https;
 import 'constants.dart';
 import 'data.dart';
 import 'helpers/api_url.dart';
+import 'pages/home/home_page.dart';
 import 'pages/splash_page.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -78,13 +80,13 @@ class MyApp extends StatelessWidget {
       title: 'Palo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // fontFamily: "Mon",
+        fontFamily: "Sego",
         primaryColor: kPrimaryColor,
         canvasColor: Colors.transparent,
         primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const SplashPage(),
+      home: const FirstPage(),
     );
   }
 }
