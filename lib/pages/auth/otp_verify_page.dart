@@ -46,7 +46,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
       Navigator.pushReplacement(
         context,
         PageTransition(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
           child: RegisterPage2(
             phone: widget.phone,

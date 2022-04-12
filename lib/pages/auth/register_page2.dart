@@ -87,7 +87,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                             Navigator.push(
                               context,
                               PageTransition(
-                                duration: Duration(milliseconds: 200),
+                                duration: Duration(milliseconds: 175),
                                 type: PageTransitionType.rightToLeft,
                                 child: RegisterPage3(
                                   email: _userTEC.text,

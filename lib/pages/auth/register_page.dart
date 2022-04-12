@@ -6,8 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:palo/data.dart';
 import 'package:palo/helpers/app_preferences.dart';
+import 'package:palo/pages/auth/login_page.dart';
 
 import '../../constants.dart';
+import '../../helpers/components.dart';
 import 'otp_verify_page.dart';
 import 'register_page2.dart';
 
@@ -21,6 +23,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   final _userPhoneTEC = TextEditingController();
+  final _userPasswordTEC = TextEditingController();
   late FirebaseAuth _auth;
   bool _isLoad = false;
 
@@ -46,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pushReplacement(
         context,
         PageTransition(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
           child: RegisterPage2(phone: _userPhoneTEC.text),
         ),
@@ -72,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.push(
         context,
         PageTransition(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
           child: RegisterPage2(phone: _userPhoneTEC.text),
         ),
@@ -82,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.push(
         context,
         PageTransition(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
           child: RegisterPage2(phone: _userPhoneTEC.text),
         ),
@@ -92,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.push(
         context,
         PageTransition(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
           child: RegisterPage2(phone: _userPhoneTEC.text),
         ),
@@ -115,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
     Navigator.push(
       context,
       PageTransition(
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 175),
         type: PageTransitionType.rightToLeft,
         child: OTPVerifyPage(
           id: id,
@@ -135,87 +138,113 @@ class _RegisterPageState extends State<RegisterPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Colors.white,
       body: Container(
         height: height,
         width: width,
-        child: SafeArea(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: height * 0.02),
-                  _top(height, width),
-                  SizedBox(
-                    height: height * 0.02,
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: height * 0.02),
+                _top(height, width),
+                SizedBox(height: height * 0.28),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: width * 0.06,
+                    left: width * 0.06,
                   ),
-                  Image.asset(
-                    "assets/survey.png",
-                    height: height * 0.4,
-                  ),
-                  SizedBox(height: height * 0.02),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      right: width * 0.06,
-                      left: width * 0.06,
-                    ),
+                  child: Opacity(
+                    opacity: 0.7,
                     child: TextFormField(
                       keyboardType: TextInputType.phone,
-                      controller: _userPhoneTEC,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      style: TextStyle(color: Colors.white),
+                      controller: _userPhoneTEC,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: height * 0.022,
+                      ),
                       decoration: InputDecoration(
-                        labelStyle: TextStyle(color: Colors.white),
-                        labelText: 'Хэрэглэгчийн утас',
+                        labelText: 'Утасны дугаар',
+                        labelStyle: TextStyle(
+                          color: kTextColor,
+                          fontSize: height * 0.022,
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 2.0,
                           ),
                         ),
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.1),
+                        fillColor: Color(0xFFF2F2F5),
                         contentPadding: const EdgeInsets.all(16),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: height * 0.04,
+                ),
+                SizedBox(height: height * 0.02),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: width * 0.06,
+                    left: width * 0.06,
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                      18.0,
+                  child: Opacity(
+                    opacity: 0.7,
+                    child: TextFormField(
+                      controller: _userPasswordTEC,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: height * 0.022,
+                      ),
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Нууц үг',
+                        labelStyle: TextStyle(
+                          color: kTextColor,
+                          fontSize: height * 0.022,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 2.0,
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: Color(0xFFF2F2F5),
+                        contentPadding: const EdgeInsets.all(16),
+                      ),
                     ),
-                    child: Material(
-                      color: kBtnColor,
-                      child: InkWell(
-                        onTap: () {
-                          if (_userPhoneTEC.text.length >= 8) {
-                            if (isVerify) {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  duration: Duration(milliseconds: 200),
-                                  type: PageTransitionType.rightToLeft,
-                                  child: RegisterPage2(
-                                    phone: _userPhoneTEC.text,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              _registerFirebaseUser(context);
-                            }
-                          } else {
-                            showSnackBar("Зөв утас оруулна уу", key);
-                          }
-                        },
-                        child: SizedBox(
-                          height: height * 0.06,
-                          width: width * 0.88,
+                  ),
+                ),
+                SizedBox(height: height * 0.024),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: Material(
+                    color: _userPhoneTEC.text.isNotEmpty &&
+                            _userPasswordTEC.text.isNotEmpty
+                        ? kPrimaryColor
+                        : Color(0xFFEBEBF0),
+                    child: InkWell(
+                      onTap: () {
+                        if (!_isLoad) {
+                          _registerFirebaseUser(context);
+                        }
+                      },
+                      child: AnimatedSize(
+                        curve: Curves.fastOutSlowIn,
+                        duration: const Duration(milliseconds: 375),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: height * 0.016,
+                            bottom: height * 0.016,
+                            left: _isLoad ? width * 0.04 : width * 0.28,
+                            right: _isLoad ? width * 0.04 : width * 0.28,
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -231,12 +260,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ),
                               if (!_isLoad)
-                                Text(
-                                  "Цааш",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: height * 0.02,
-                                  ),
+                                Ctext(
+                                  color: Colors.white,
+                                  text: "Үргэлжлүүлэх",
+                                  large: true,
+                                  bold: true,
                                 ),
                             ],
                           ),
@@ -244,11 +272,52 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: height * 0.1,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: height * 0.18),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Ctext(
+                      text: "Нэвтрэх",
+                      small: true,
+                    ),
+                    SizedBox(height: height * 0.01),
+                    Material(
+                      color: kPrimaryColor,
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(50.0),
+                        onTap: () {
+                          goRepalce(context, const LoginPage());
+                        },
+                        child: Container(
+                          height: height * 0.06,
+                          width: height * 0.06,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: height * 0.02,
+                              ),
+                              Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                                size: height * 0.02,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: height * 0.1),
+              ],
             ),
           ),
         ),
@@ -266,30 +335,12 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             IconButton(
               icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
+                Icons.arrow_back,
+                color: Colors.black,
               ),
               onPressed: () {
                 Navigator.pop(context);
               },
-            ),
-            Column(
-              children: [
-                Text(
-                  "Бүртгүүлэх",
-                  style: TextStyle(
-                    fontSize: height * 0.024,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  "Алхам 1/5",
-                  style: TextStyle(
-                    fontSize: height * 0.016,
-                    color: kPrimaryColor,
-                  ),
-                ),
-              ],
             ),
             const IconButton(
               icon: Icon(

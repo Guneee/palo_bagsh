@@ -74,7 +74,7 @@ class _PullListState extends State<PullList> {
         Navigator.pushReplacement(
           context,
           PageTransition(
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 175),
             type: PageTransitionType.rightToLeft,
             child: const HomePage(),
           ),
@@ -304,7 +304,7 @@ class _PullListState extends State<PullList> {
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
-                      duration: Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 175),
                       type: PageTransitionType.rightToLeft,
                       child: const HomePage(),
                     ),

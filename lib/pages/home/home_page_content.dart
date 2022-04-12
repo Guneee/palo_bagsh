@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/pages/home/home_page.dart';
 
 import '../../data.dart';
 import 'package:http/http.dart' as https;
 import '../../helpers/api_url.dart';
+import '../../helpers/components.dart';
 import '../../models/home_model.dart';
 import '../../pages/auth/login_page.dart';
 import '../../pages/auth/register_page.dart';
@@ -223,27 +225,132 @@ class _HomePageContentState extends State<HomePageContent> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Colors.white,
+      bottomSheet: (token == "")
+          ? DraggableScrollableSheet(
+              expand: true,
+              initialChildSize: 0.26,
+              minChildSize: 0.26,
+              maxChildSize: 0.26,
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                return SingleChildScrollView(
+                  controller: scrollController,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24.0),
+                      topRight: Radius.circular(24.0),
+                    ),
+                    child: Container(
+                      color: kBackgroundColor,
+                      child: Column(
+                        children: [
+                          SizedBox(height: height * 0.01),
+                          Container(
+                            width: width * 0.06,
+                            height: 2.0,
+                            color: Colors.black.withOpacity(0.2),
+                          ),
+                          SizedBox(height: height * 0.05),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: kPrimaryColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              border: Border.all(
+                                width: 2.0,
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(16.0),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(16.0),
+                                onTap: () {
+                                  go(context, const LoginPage());
+                                },
+                                child: SizedBox(
+                                  height: height * 0.056,
+                                  width: width * 0.84,
+                                  child: Center(
+                                    child: Ctext(
+                                      color: Colors.white,
+                                      text: "Нэвтрэх",
+                                      large: true,
+                                      bold: true,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: height * 0.02),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.0),
+                              border: Border.all(
+                                width: 2.0,
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(16.0),
+                              color: Colors.white,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(16.0),
+                                onTap: () {
+                                  go(context, const RegisterPage());
+                                },
+                                child: SizedBox(
+                                  height: height * 0.056,
+                                  width: width * 0.84,
+                                  child: Center(
+                                    child: Ctext(
+                                      color: kPrimaryColor,
+                                      text: "Бүртгүүлэх",
+                                      large: true,
+                                      bold: true,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: height * 0.1),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            )
+          : null,
       body: SizedBox(
         height: height,
         width: width,
-        child: SafeArea(
-          child: RefreshIndicator(
-            onRefresh: _refreshData,
-            color: kPrimaryColor,
-            strokeWidth: 1.5,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (token != "") _top(height, width),
-                  if (token == "") _authButtons(height, width),
-                  if (token != "") _mainBody(height, width),
-                ],
+        child: Stack(
+          children: [
+            if (token != "")
+              SizedBox(
+                height: height,
+                width: width,
+                child: RefreshIndicator(
+                  onRefresh: _refreshData,
+                  color: kPrimaryColor,
+                  strokeWidth: 1.5,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _top(height, width),
+                        _mainBody(height, width),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
+            if (token == "") _authButtons(height, width),
+          ],
         ),
       ),
     );
@@ -329,7 +436,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                     Navigator.push(
                                       context,
                                       PageTransition(
-                                        duration: Duration(milliseconds: 200),
+                                        duration: Duration(milliseconds: 175),
                                         type: PageTransitionType.rightToLeft,
                                         child: SurveyDetail2(
                                           index: index2,
@@ -523,7 +630,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                   Navigator.push(
                                     context,
                                     PageTransition(
-                                      duration: Duration(milliseconds: 200),
+                                      duration: Duration(milliseconds: 175),
                                       type: PageTransitionType.rightToLeft,
                                       child: CategoryItems(
                                         index: index,
@@ -607,7 +714,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                           context,
                                           PageTransition(
                                             duration:
-                                                Duration(milliseconds: 200),
+                                                Duration(milliseconds: 175),
                                             type:
                                                 PageTransitionType.rightToLeft,
                                             child: SurveyDetail(
@@ -1002,7 +1109,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       Navigator.push(
                         context,
                         PageTransition(
-                          duration: Duration(milliseconds: 200),
+                          duration: Duration(milliseconds: 175),
                           type: PageTransitionType.rightToLeft,
                           child: const VideoPage(),
                         ),
@@ -1131,7 +1238,7 @@ class _HomePageContentState extends State<HomePageContent> {
                     Navigator.pushReplacement(
                       context,
                       PageTransition(
-                        duration: Duration(milliseconds: 200),
+                        duration: Duration(milliseconds: 175),
                         type: PageTransitionType.rightToLeft,
                         child: HomePage(),
                       ),
@@ -1152,7 +1259,7 @@ class _HomePageContentState extends State<HomePageContent> {
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
-                      duration: Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 175),
                       type: PageTransitionType.rightToLeft,
                       child: HomePage(),
                     ),
@@ -1169,120 +1276,35 @@ class _HomePageContentState extends State<HomePageContent> {
       );
 
   Widget _authButtons(double height, double width) => SizedBox(
+        height: height,
         width: width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            SizedBox(
-              height: height * 0.02,
-            ),
             Image.asset(
-              "assets/survey.png",
-              height: height * 0.4,
+              "assets/splash1.jpeg",
+              fit: BoxFit.cover,
+              height: height,
+              width: width,
             ),
-            Text(
-              "Тавтай морил",
-              style: TextStyle(
-                color: kBtnColor,
-                fontSize: height * 0.03,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.0,
-              ),
-            ),
-            SizedBox(height: height * 0.01),
-            Text(
-              "Palo",
-              style: TextStyle(
-                color: kBtnColor.withOpacity(0.6),
-                fontSize: height * 0.02,
-              ),
-            ),
-            SizedBox(height: height * 0.001),
-            Text(
-              "таны сонирхол, таны ойр",
-              style: TextStyle(
-                color: kBtnColor.withOpacity(0.6),
-                fontSize: height * 0.02,
-              ),
-            ),
-            SizedBox(height: height * 0.1),
-            Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: kPrimaryColor.withOpacity(1.0),
-                    spreadRadius: 1,
-                    blurRadius: 7,
-                    offset: const Offset(2, 4),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  12.0,
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: height * 0.2,
                 ),
-                child: Material(
-                  color: kPrimaryColor,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          duration: Duration(milliseconds: 200),
-                          type: PageTransitionType.rightToLeft,
-                          child: const LoginPage(),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                      height: height * 0.06,
-                      width: width * 0.8,
-                      child: Center(
-                        child: Text(
-                          "Нэвтрэх",
-                          style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.bold,
-                            fontSize: height * 0.02,
-                          ),
-                        ),
+                child: Text(
+                  "PALO",
+                  style: TextStyle(
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(0.0, 3.0),
+                        blurRadius: 3.0,
+                        color: Colors.black.withOpacity(0.3),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: height * 0.02),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(
-                12.0,
-              ),
-              child: Material(
-                color: Colors.white,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        duration: Duration(milliseconds: 200),
-                        type: PageTransitionType.rightToLeft,
-                        child: const RegisterPage(),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    height: height * 0.06,
-                    width: width * 0.8,
-                    child: Center(
-                      child: Text(
-                        "БҮРТГҮҮЛЭХ",
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: height * 0.02,
-                        ),
-                      ),
-                    ),
+                    ],
+                    fontFamily: "TimesNewRoman",
+                    color: Colors.black,
+                    fontSize: height * 0.058,
                   ),
                 ),
               ),

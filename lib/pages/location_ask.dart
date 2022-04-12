@@ -36,7 +36,7 @@ class _LocationAskState extends State<LocationAsk> {
         Navigator.pushReplacement(
           context,
           PageTransition(
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 175),
             type: PageTransitionType.rightToLeft,
             child: const HomePage(),
           ),
@@ -46,7 +46,7 @@ class _LocationAskState extends State<LocationAsk> {
         Navigator.pushReplacement(
           context,
           PageTransition(
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 175),
             type: PageTransitionType.rightToLeft,
             child: const HomePage(),
           ),
@@ -163,7 +163,7 @@ class _LocationAskState extends State<LocationAsk> {
                                 Navigator.pushReplacement(
                                   context,
                                   PageTransition(
-                                    duration: Duration(milliseconds: 200),
+                                    duration: Duration(milliseconds: 175),
                                     type: PageTransitionType.rightToLeft,
                                     child: const HomePage(),
                                   ),

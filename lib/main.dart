@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Sego",
         primaryColor: kPrimaryColor,
         canvasColor: Colors.transparent,
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const FirstPage(),

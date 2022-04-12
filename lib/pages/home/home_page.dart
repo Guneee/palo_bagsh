@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.pushReplacement(
         context,
         PageTransition(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
           child: SelectWords(),
         ),
@@ -111,19 +111,17 @@ class _HomePageState extends State<HomePage> {
       body: SizedBox(
         height: height,
         width: width,
-        child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: tabPages,
-                  onPageChanged: _onPageChanged,
-                  controller: _pageController,
-                ),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                children: tabPages,
+                onPageChanged: _onPageChanged,
+                controller: _pageController,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -140,7 +138,7 @@ class _HomePageState extends State<HomePage> {
           if (token != "") {
             _pageController.animateToPage(
               index,
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 175),
               curve: Curves.easeInOut,
             );
           } else {

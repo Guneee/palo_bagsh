@@ -109,7 +109,7 @@ class _PullRequestPageState extends State<PullRequestPage> {
         Navigator.pushReplacement(
           context,
           PageTransition(
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 175),
             type: PageTransitionType.rightToLeft,
             child: const HomePage(),
           ),
@@ -445,7 +445,7 @@ class _PullRequestPageState extends State<PullRequestPage> {
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
-                      duration: Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 175),
                       type: PageTransitionType.rightToLeft,
                       child: const HomePage(),
                     ),

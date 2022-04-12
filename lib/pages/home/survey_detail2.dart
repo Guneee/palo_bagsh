@@ -107,7 +107,7 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
           if (token != "") {
             _pageController.animateToPage(
               index,
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 175),
               curve: Curves.easeInOut,
             );
           } else {
@@ -372,7 +372,7 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    duration: Duration(milliseconds: 200),
+                                    duration: Duration(milliseconds: 175),
                                     type: PageTransitionType.rightToLeft,
                                     child: SurveyForm2(
                                       index: index,

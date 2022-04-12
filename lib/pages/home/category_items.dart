@@ -119,7 +119,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                               Navigator.push(
                                 context,
                                 PageTransition(
-                                  duration: Duration(milliseconds: 200),
+                                  duration: Duration(milliseconds: 175),
                                   type: PageTransitionType.rightToLeft,
                                   child: SurveyDetail(
                                     index: widget.index,
@@ -230,7 +230,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                               Navigator.push(
                                 context,
                                 PageTransition(
-                                  duration: Duration(milliseconds: 200),
+                                  duration: Duration(milliseconds: 175),
                                   type: PageTransitionType.rightToLeft,
                                   child: SurveyDetail(
                                       index: widget.index,

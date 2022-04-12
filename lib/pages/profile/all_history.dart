@@ -115,7 +115,7 @@ class _AllHistoryState extends State<AllHistory> {
                                   Navigator.push(
                                     context,
                                     PageTransition(
-                                      duration: Duration(milliseconds: 200),
+                                      duration: Duration(milliseconds: 175),
                                       type: PageTransitionType.rightToLeft,
                                       child: HistoryDetail(
                                         index: index,

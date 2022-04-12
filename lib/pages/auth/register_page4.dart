@@ -91,7 +91,7 @@ class _RegisterPage4State extends State<RegisterPage4> {
                             Navigator.push(
                               context,
                               PageTransition(
-                                duration: Duration(milliseconds: 200),
+                                duration: Duration(milliseconds: 175),
                                 type: PageTransitionType.rightToLeft,
                                 child: RegisterPage5(
                                   phone: widget.phone,

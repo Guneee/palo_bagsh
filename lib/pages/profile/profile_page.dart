@@ -158,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    duration: Duration(milliseconds: 200),
+                                    duration: Duration(milliseconds: 175),
                                     type: PageTransitionType.rightToLeft,
                                     child: const AllHistory(),
                                   ),
@@ -201,7 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.pushReplacement(
                         context,
                         PageTransition(
-                          duration: Duration(milliseconds: 200),
+                          duration: Duration(milliseconds: 175),
                           type: PageTransitionType.rightToLeft,
                           child: const PullRequestPage(),
                         ),
@@ -256,7 +256,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.pushReplacement(
                         context,
                         PageTransition(
-                          duration: Duration(milliseconds: 200),
+                          duration: Duration(milliseconds: 175),
                           type: PageTransitionType.rightToLeft,
                           child: const PullList(),
                         ),
@@ -316,7 +316,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                             context,
                             PageTransition(
-                              duration: Duration(milliseconds: 200),
+                              duration: Duration(milliseconds: 175),
                               type: PageTransitionType.rightToLeft,
                               child: const ProfileEdit(),
                             ),
@@ -384,7 +384,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                             context,
                             PageTransition(
-                              duration: Duration(milliseconds: 200),
+                              duration: Duration(milliseconds: 175),
                               type: PageTransitionType.rightToLeft,
                               child: const VerifyPage(),
                             ),
@@ -463,7 +463,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                             context,
                             PageTransition(
-                              duration: Duration(milliseconds: 200),
+                              duration: Duration(milliseconds: 175),
                               type: PageTransitionType.rightToLeft,
                               child: const ProfileAccount(),
                             ),

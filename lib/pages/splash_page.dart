@@ -48,7 +48,7 @@ class _SplashPageState extends State<SplashPage> {
       Navigator.pushReplacement(
         context,
         PageTransition(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
           child: const HomePage(),
         ),
@@ -618,7 +618,10 @@ class _SplashPageState extends State<SplashPage> {
             },
             child: Text(
               "Алгасах",
-              style: TextStyle(fontSize: height * 0.021),
+              style: TextStyle(
+                fontSize: height * 0.021,
+                color: kTextGreyColor,
+              ),
             ),
           ),
         ],
