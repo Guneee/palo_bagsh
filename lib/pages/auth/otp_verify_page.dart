@@ -13,10 +13,12 @@ import '../../data.dart';
 class OTPVerifyPage extends StatefulWidget {
   final String id;
   final String phone;
+  final String password;
   const OTPVerifyPage({
     Key? key,
     required this.id,
     required this.phone,
+    required this.password,
   }) : super(key: key);
 
   @override
@@ -50,6 +52,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
           type: PageTransitionType.rightToLeft,
           child: RegisterPage2(
             phone: widget.phone,
+            password: widget.password,
           ),
         ),
       );
@@ -100,7 +103,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(

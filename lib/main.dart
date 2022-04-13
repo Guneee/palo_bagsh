@@ -14,8 +14,6 @@ import 'package:http/http.dart' as https;
 import 'constants.dart';
 import 'data.dart';
 import 'helpers/api_url.dart';
-import 'pages/home/home_page.dart';
-import 'pages/splash_page.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,

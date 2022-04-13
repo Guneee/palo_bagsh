@@ -50,7 +50,10 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   void initState() {
-    _loadUserData();
+    // _loadUserData();
+    setState(() {
+      _isLoad = true;
+    });
     super.initState();
   }
 

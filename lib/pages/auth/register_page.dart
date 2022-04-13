@@ -51,7 +51,10 @@ class _RegisterPageState extends State<RegisterPage> {
         PageTransition(
           duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
-          child: RegisterPage2(phone: _userPhoneTEC.text),
+          child: RegisterPage2(
+            phone: _userPhoneTEC.text,
+            password: _userPasswordTEC.text,
+          ),
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -77,7 +80,10 @@ class _RegisterPageState extends State<RegisterPage> {
         PageTransition(
           duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
-          child: RegisterPage2(phone: _userPhoneTEC.text),
+          child: RegisterPage2(
+            phone: _userPhoneTEC.text,
+            password: _userPasswordTEC.text,
+          ),
         ),
       );
     } else if (error.toString().contains("[firebase_auth/unknown] null")) {
@@ -87,7 +93,10 @@ class _RegisterPageState extends State<RegisterPage> {
         PageTransition(
           duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
-          child: RegisterPage2(phone: _userPhoneTEC.text),
+          child: RegisterPage2(
+            phone: _userPhoneTEC.text,
+            password: _userPhoneTEC.text,
+          ),
         ),
       );
     } else {
@@ -97,7 +106,10 @@ class _RegisterPageState extends State<RegisterPage> {
         PageTransition(
           duration: Duration(milliseconds: 175),
           type: PageTransitionType.rightToLeft,
-          child: RegisterPage2(phone: _userPhoneTEC.text),
+          child: RegisterPage2(
+            phone: _userPhoneTEC.text,
+            password: _userPasswordTEC.text,
+          ),
         ),
       );
     }
@@ -123,6 +135,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: OTPVerifyPage(
           id: id,
           phone: _userPhoneTEC.text,
+          password: _userPasswordTEC.text,
         ),
       ),
     );

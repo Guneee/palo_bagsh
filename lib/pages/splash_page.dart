@@ -62,7 +62,10 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    _loadUserData();
+    // _loadUserData();
+    setState(() {
+      _isLoad = true;
+    });
     _pageController = PageController(initialPage: 0);
     super.initState();
   }
