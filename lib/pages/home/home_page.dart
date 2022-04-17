@@ -4,7 +4,6 @@ import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/pages/job/job_page.dart';
 import 'package:palo/pages/select_words.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../quest/quest_page.dart';
 import '/data.dart';
 import '../../constants.dart';
 import '/pages/profile/profile_page.dart';
@@ -25,7 +24,6 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> tabPages = [
     const HomePageContent(),
-    const QuestPage(),
     const JobPage(),
     const ProfilePage(),
   ];
@@ -54,18 +52,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _firebaseNotification() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
@@ -79,13 +65,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     if (token != "") {
       _firebaseNotification();
       if (!isFirstHomeAdWord) {
         _checkIsFirst();
       }
-
       _pageController =
           PageController(initialPage: currentBottomIndex, keepPage: true);
     } else {
@@ -96,18 +80,19 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _pageController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = size(context).height;
+    double width = size(context).width;
     return Scaffold(
       key: _key,
+      extendBody: true,
       backgroundColor: kBackgroundColor,
-      bottomNavigationBar: (token != "") ? _bottomNavigationBar() : null,
+      bottomNavigationBar:
+          (token != "") ? _bottomNavigationBar(height, width) : null,
       body: SizedBox(
         height: height,
         width: width,
@@ -127,10 +112,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _bottomNavigationBar() => BottomNavigationBar(
+  Widget _bottomNavigationBar(double height, double width) =>
+      BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.white,
-        backgroundColor: kBtnColor,
+        fixedColor: kPrimaryColor,
+        backgroundColor: Colors.white,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: currentBottomIndex,
@@ -149,61 +135,37 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             label: "Нүүр",
             icon: (currentBottomIndex == 0)
-                ? const Text(
-                    "Нүүр",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ? Image.asset(
+                    "assets/home_selected.png",
+                    height: height * 0.05,
                   )
-                : Icon(
-                    Icons.home_outlined,
-                    color: Colors.white,
+                : Image.asset(
+                    "assets/home_unselected.png",
+                    height: height * 0.05,
                   ),
           ),
           BottomNavigationBarItem(
-            label: 'Эрэл',
+            label: 'Газрын зураг',
             icon: (currentBottomIndex == 1)
-                ? const Text(
-                    "Эрэл",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ? Image.asset(
+                    "assets/map_selected.png",
+                    height: height * 0.05,
                   )
-                : Icon(
-                    Icons.question_answer_outlined,
-                    color: Colors.white,
+                : Image.asset(
+                    "assets/map_unselected.png",
+                    height: height * 0.05,
                   ),
           ),
           BottomNavigationBarItem(
             label: "Ажил",
             icon: (currentBottomIndex == 2)
-                ? const Text(
-                    "Ажил",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ? Image.asset(
+                    "assets/profile_selected.png",
+                    height: height * 0.05,
                   )
-                : Icon(
-                    Icons.location_history_outlined,
-                    color: Colors.white,
-                  ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Хэрэглэгчийн хуудас',
-            icon: (currentBottomIndex == 3)
-                ? const Text(
-                    "Профайл",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                : Icon(
-                    Icons.person_outlined,
-                    color: Colors.white,
+                : Image.asset(
+                    "assets/profile_unselected.png",
+                    height: height * 0.05,
                   ),
           ),
         ],

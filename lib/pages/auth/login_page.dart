@@ -180,6 +180,9 @@ class _LoginPageState extends State<LoginPage> {
                       keyboardType: TextInputType.phone,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       controller: _userPhoneTEC,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: height * 0.022,
@@ -219,6 +222,9 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: height * 0.022,
                       ),
                       obscureText: true,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       decoration: InputDecoration(
                         labelText: 'Нууц үг',
                         labelStyle: TextStyle(

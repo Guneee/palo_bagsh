@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:palo/constants.dart';
 
 import '../../data.dart';
 import 'survey_detail.dart';
@@ -37,6 +38,7 @@ class _CategoryItemsState extends State<CategoryItems> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: SizedBox(
         height: height,
         width: width,

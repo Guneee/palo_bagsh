@@ -7,6 +7,7 @@ const Color kTextColor = Color(0xFF28293D);
 const Color kTextGreyColor = Color(0xFF8F90A6);
 const Color kYellowColor = Color(0xFFDFB300);
 const Color kGreyColor = Color(0xFFC7C9D9);
-Color? kBackgroundColor = Colors.white;
+const Color kShadowColor = Color.fromRGBO(60, 120, 187, 0.18);
+Color? kBackgroundColor = Color(0xFFFAFAFC);
 
 ///Users/bayrbileg/Documents/flutterlast/bin/flutter

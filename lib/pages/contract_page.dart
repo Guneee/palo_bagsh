@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:palo/constants.dart';
-import 'package:palo/data.dart';
 import 'package:palo/helpers/api_url.dart';
 import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/helpers/components.dart';
 import 'package:http/http.dart' as https;
-import 'package:palo/pages/home/home_page.dart';
+
+import 'auth/auth_page.dart';
 
 class ContractPage extends StatefulWidget {
   const ContractPage({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class _ContractPageState extends State<ContractPage> {
         Future.delayed(
           const Duration(milliseconds: 100),
           () {
-            goAndClear(context, const HomePage());
+            goAndClear(context, const AuthPage());
           },
         );
       });

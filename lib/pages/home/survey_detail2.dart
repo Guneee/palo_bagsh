@@ -5,17 +5,19 @@ import 'package:palo/pages/job/job_page.dart';
 import 'package:palo/pages/profile/profile_page.dart';
 import 'package:palo/pages/quest/quest_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../helpers/components.dart';
+import '../../pages/home/survey_form.dart';
 
 import '../../constants.dart';
 import '../../data.dart';
-import 'survey_form2.dart';
 
 class SurveyDetail2 extends StatefulWidget {
   final int index;
-
+  final int index2;
   const SurveyDetail2({
     Key? key,
     required this.index,
+    required this.index2,
   }) : super(key: key);
 
   @override
@@ -23,10 +25,11 @@ class SurveyDetail2 extends StatefulWidget {
 }
 
 class _SurveyDetail2State extends State<SurveyDetail2> {
-  late int index;
+  late int index, index2;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   late PageController _pageController;
+  bool _isLoad = false;
 
   List<Widget> tabPages = [];
 
@@ -54,9 +57,9 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
     }
     setState(() {
       index = widget.index;
-
+      index2 = widget.index2;
       tabPages = [
-        SurveyDetail2Temp(
+        SurveyDetailTemp2(
           index: index,
         ),
         const QuestPage(),
@@ -179,21 +182,62 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
       );
 }
 
-class SurveyDetail2Temp extends StatefulWidget {
+class SurveyDetailTemp2 extends StatefulWidget {
   final int index;
-
-  const SurveyDetail2Temp({
+  const SurveyDetailTemp2({
     Key? key,
     required this.index,
   }) : super(key: key);
 
   @override
-  _SurveyDetail2TempState createState() => _SurveyDetail2TempState();
+  _SurveyDetailTemp2State createState() => _SurveyDetailTemp2State();
 }
 
-class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
+class _SurveyDetailTemp2State extends State<SurveyDetailTemp2> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   late int index;
+  bool _isLoad = false;
+
+  void _next() {
+    setState(() {
+      _isLoad = true;
+    });
+
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        if (mounted) {
+          setState(() {
+            _isLoad = false;
+          });
+          Future.delayed(
+            const Duration(milliseconds: 275),
+            () {
+              var existingCall = history.firstWhere(
+                  (favCall) =>
+                      favCall["survey_id"].toString() ==
+                      nearSurveys[index]["id"].toString(),
+                  orElse: () => null);
+
+              if (existingCall == null) {
+                go(
+                  context,
+                  SurveyForm(
+                    index: index,
+                    url: nearSurveys[index]["form_link"].toString(),
+                    money: nearSurveys[index]["price"].toString(),
+                    title: nearSurveys[index]["title"].toString(),
+                  ),
+                );
+              } else {
+                showSnackBar("Та аль хэдийн бөглөсөн байна", key);
+              }
+            },
+          );
+        }
+      },
+    );
+  }
 
   Future<void> _saveIsFirst() async {
     final prefs = await SharedPreferences.getInstance();
@@ -208,10 +252,10 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          title: Text("Санамж"),
+          title: const Text("Санамж"),
           content: SingleChildScrollView(
             child: Column(
-              children: [
+              children: const [
                 Text(
                   "Судалгаа бөглөх алхамууд",
                   style: TextStyle(
@@ -239,11 +283,11 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
             ),
           ),
           actions: [
-            FlatButton(
+            TextButton(
               onPressed: () {
                 _saveIsFirst();
               },
-              child: Text("БОЛСОН"),
+              child: const Text("БОЛСОН"),
             ),
           ],
         ),
@@ -266,7 +310,7 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: key,
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Colors.white,
       body: SizedBox(
         height: height,
         width: width,
@@ -294,143 +338,173 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
           ),
           Align(
             alignment: Alignment.topCenter,
+            child: Container(
+              height: height * 0.38,
+              width: width,
+              color: Colors.black.withOpacity(0.3),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
             child: Padding(
-              padding: EdgeInsets.only(top: height * 0.43),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.08,
-                      right: width * 0.08,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        nearSurveys[index]['title'],
-                        style: TextStyle(
-                          fontSize: height * 0.028,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+              padding: EdgeInsets.only(top: height * 0.36),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Material(
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: height * 0.04,
+                          left: width * 0.06,
+                          right: width * 0.06,
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: width * 0.56,
+                              child: Ctext(
+                                text: "Үүсгэсэн огноо:",
+                                large: true,
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                            ),
+                            Expanded(
+                              child: Ctext(
+                                text: " " +
+                                    nearSurveys[index]["created_at"]
+                                        .toString()
+                                        .substring(0, 10),
+                                normal: true,
+                                color: kTextColor.withOpacity(0.8),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.004),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.08,
-                      right: width * 0.08,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Text(
-                            "Оруулсан хугацаа,",
-                            style: TextStyle(
-                              fontSize: height * 0.02,
-                              color: Colors.white.withOpacity(0.5),
-                            ),
-                          ),
-                          Text(
-                            " " +
-                                nearSurveys[index]["created_at"]
-                                    .toString()
-                                    .substring(0, 10),
-                            style: TextStyle(
-                              fontSize: height * 0.02,
-                              color: kPrimaryColor.withOpacity(0.9),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: width * 0.08),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          8.0,
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: height * 0.02,
+                          left: width * 0.06,
+                          right: width * 0.06,
                         ),
-                        child: Material(
-                          color: kBtnColor,
-                          child: InkWell(
-                            onTap: () {
-                              var existingCall = history.firstWhere(
-                                  (favCall) =>
-                                      favCall["survey_id"].toString() ==
-                                      nearSurveys[index]["id"].toString(),
-                                  orElse: () => null);
-
-                              if (existingCall == null) {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    duration: Duration(milliseconds: 175),
-                                    type: PageTransitionType.rightToLeft,
-                                    child: SurveyForm2(
-                                      index: index,
-                                      url: nearSurveys[index]["form_link"]
-                                          .toString(),
-                                      money: nearSurveys[index]["price"]
-                                          .toString(),
-                                      title: nearSurveys[index]["title"]
-                                          .toString(),
-                                    ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: width * 0.56,
+                              child: Ctext(
+                                text: "Судалгаа дуусах огноо:",
+                                large: true,
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                            ),
+                            Expanded(
+                              child: Ctext(
+                                text: " " +
+                                    nearSurveys[index]["created_at"]
+                                        .toString()
+                                        .substring(0, 10),
+                                normal: true,
+                                color: kTextColor.withOpacity(0.8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: height * 0.024,
+                          left: width * 0.06,
+                          right: width * 0.06,
+                        ),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Ctext(
+                            text: nearSurveys[index]["title"],
+                            large: true,
+                            bold: true,
+                            color: kTextColor,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: height * 0.02,
+                          left: width * 0.06,
+                          right: width * 0.06,
+                          bottom: height * 0.04,
+                        ),
+                        child: Text(
+                          nearSurveys[index]['content'],
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            fontSize: height * 0.02,
+                            letterSpacing: 1.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: height * 0.04,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: Material(
+                            color: kPrimaryColor,
+                            child: InkWell(
+                              onTap: () {
+                                if (!_isLoad) {
+                                  _next();
+                                }
+                              },
+                              child: AnimatedSize(
+                                curve: Curves.fastOutSlowIn,
+                                duration: const Duration(milliseconds: 375),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: height * 0.014,
+                                    bottom: height * 0.014,
+                                    left: _isLoad ? width * 0.04 : width * 0.25,
+                                    right:
+                                        _isLoad ? width * 0.04 : width * 0.25,
                                   ),
-                                );
-                              } else {
-                                showSnackBar(
-                                    "Та аль хэдийн бөглөсөн байна", key);
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "Судалгаа бөглөх",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: height * 0.02,
-                                    ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_isLoad)
+                                        SizedBox(
+                                          height: height * 0.03,
+                                          width: height * 0.03,
+                                          child:
+                                              const CircularProgressIndicator(
+                                            strokeWidth: 1.2,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      if (!_isLoad)
+                                        Ctext(
+                                          color: Colors.white,
+                                          text: "Судалгаа бөглөх",
+                                          large: true,
+                                          bold: true,
+                                        ),
+                                    ],
                                   ),
-                                  SizedBox(width: width * 0.02),
-                                  const Icon(
-                                    Icons.note_add,
-                                    color: Colors.white,
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.08,
-                      right: width * 0.08,
-                      bottom: height * 0.04,
-                    ),
-                    child: Text(
-                      nearSurveys[index]['content'],
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -450,35 +524,13 @@ class _SurveyDetail2TempState extends State<SurveyDetail2Temp> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      spreadRadius: 0.1,
-                      blurRadius: 4,
-                      offset: const Offset(3, 3),
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Material(
-                    color: Colors.grey.shade200.withOpacity(0.5),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: SizedBox(
-                        height: height * 0.06,
-                        width: height * 0.06,
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+              IconButton(
+                onPressed: () {
+                  back(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
                 ),
               ),
               Text(

@@ -16,10 +16,7 @@ import 'data.dart';
 import 'helpers/api_url.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
-
   print("Handling a background message: ${message.messageId}");
 }
 
@@ -28,6 +25,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp();
 
+  //TODO: Uncomment location picker
   if (Platform.isAndroid) {
     // if (kDebugMode) {
     //   print("starting android");
@@ -46,7 +44,8 @@ void main() async {
     if (kDebugMode) {
       print("starting ios");
     }
-    detectLocation();
+    //TODO: Uncomment location picker
+    // detectLocation();
 
     // BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
     // BackgroundFetch.configure(BackgroundFetchConfig(minimumFetchInterval: 15),

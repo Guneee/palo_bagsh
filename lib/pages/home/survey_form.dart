@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:palo/helpers/components.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '/data.dart';
 import 'package:http/http.dart' as https;
@@ -14,7 +15,6 @@ import '../../constants.dart';
 
 class SurveyForm extends StatefulWidget {
   final int index;
-  final int index2;
   final String url;
   final String money;
   final String title;
@@ -23,7 +23,6 @@ class SurveyForm extends StatefulWidget {
     required this.url,
     required this.money,
     required this.index,
-    required this.index2,
     required this.title,
   }) : super(key: key);
 
@@ -48,26 +47,16 @@ class _SurveyFormState extends State<SurveyForm> {
     }, body: {
       'id': currentUserId.toString(),
       'money': widget.money.toString(),
-      'survey_id':
-          homeItems[widget.index].surveys[widget.index2]['id'].toString(),
-      'title':
-          homeItems[widget.index].surveys[widget.index2]['title'].toString(),
-      'category_id': homeItems[widget.index]
-          .surveys[widget.index2]['category_id']
-          .toString(),
-      'category_text': homeItems[widget.index]
-          .surveys[widget.index2]['category_text']
-          .toString(),
-      'category_image': homeItems[widget.index]
-          .surveys[widget.index2]['category_image']
-          .toString(),
-      'image': homeItems[widget.index].surveys[widget.index2]['image'],
-      'price': homeItems[widget.index].surveys[widget.index2]['price'],
-      'content': homeItems[widget.index].surveys[widget.index2]['content'],
-      'survey_created_at': homeItems[widget.index].surveys[widget.index2]
-          ['created_at'],
-      'location':
-          homeItems[widget.index].surveys[widget.index2]['location'] ?? "",
+      'survey_id': surveys[widget.index]['id'].toString(),
+      'title': surveys[widget.index]['title'].toString(),
+      'category_id': surveys[widget.index]['category_id'].toString(),
+      'category_text': surveys[widget.index]['category_text'].toString(),
+      'category_image': surveys[widget.index]['category_image'].toString(),
+      'image': surveys[widget.index]['image'],
+      'price': surveys[widget.index]['price'],
+      'content': surveys[widget.index]['content'],
+      'survey_created_at': surveys[widget.index]['created_at'],
+      'location': surveys[widget.index]['location'] ?? "",
     });
 
     if (responce.statusCode == 201) {
@@ -96,15 +85,19 @@ class _SurveyFormState extends State<SurveyForm> {
       (Timer timer) {
         if (_timeOut == 0) {
           setState(() {
-            timer.cancel();
-            _controllerTopCenter.stop();
-            Navigator.pop(context);
-            Navigator.pop(context);
+            if (mounted) {
+              timer.cancel();
+              _controllerTopCenter.stop();
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
           });
         } else {
-          setState(() {
-            _timeOut--;
-          });
+          if (mounted) {
+            setState(() {
+              _timeOut--;
+            });
+          }
         }
       },
     );
@@ -122,13 +115,28 @@ class _SurveyFormState extends State<SurveyForm> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kBackgroundColor,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: kPrimaryColor,
+        leading: IconButton(
+          onPressed: () {
+            answerUrl = "";
+            back(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+        title: Ctext(
+          text: widget.title,
+          large: true,
+          color: Colors.white,
+        ),
+      ),
       body: SizedBox(
         height: height,
         width: width,
         child: SafeArea(
           child: Column(
             children: <Widget>[
-              _top(height, width),
               if (widget.url.isNotEmpty)
                 Expanded(
                   child: _body(height, width),
@@ -161,18 +169,31 @@ class _SurveyFormState extends State<SurveyForm> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Таньд баярлалаа",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: height * 0.022,
-                            ),
+                          Image.asset(
+                            "assets/win.png",
+                            height: height * 0.06,
+                            width: height * 0.06,
                           ),
-                          SizedBox(height: height * 0.004),
+                          SizedBox(height: height * 0.03),
+                          const Ctext(
+                            text: "Таньд баяр хүргэе!",
+                            large: true,
+                            color: kTextColor,
+                            bold: true,
+                          ),
+                          SizedBox(height: height * 0.03),
+                          Ctext(
+                            text: "Та судалгаа бөгөлж " +
+                                widget.money +
+                                "₮" +
+                                " авлаа.",
+                            large: true,
+                            color: kTextColor.withOpacity(0.7),
+                          ),
                           Text(
                             "Автоматаар гарахад " + _timeOut.toString() + "..",
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
+                              color: Colors.black.withOpacity(0.5),
                               fontSize: height * 0.016,
                             ),
                           ),
@@ -233,46 +254,5 @@ class _SurveyFormState extends State<SurveyForm> {
                 ),
               ),
         ],
-      );
-
-  Widget _top(double height, double width) => SizedBox(
-        height: height * 0.07,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: width * 0.03,
-            right: width * 0.03,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {
-                  answerUrl = "";
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                widget.title,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: height * 0.02,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.done_outline,
-                  color: Colors.transparent,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
       );
 }

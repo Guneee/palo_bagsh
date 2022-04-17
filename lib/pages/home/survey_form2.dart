@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:palo/helpers/components.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '/data.dart';
 import 'package:http/http.dart' as https;
@@ -30,11 +31,10 @@ class SurveyForm2 extends StatefulWidget {
 }
 
 class _SurveyForm2State extends State<SurveyForm2> {
-  int _progress = 0;
-  int _timeOut = 3;
-
   final ConfettiController _controllerTopCenter =
       ConfettiController(duration: const Duration(seconds: 10));
+  int _progress = 0;
+  int _timeOut = 3;
   bool _isWin = false, _isLoad = false;
 
   void _sendMoney() async {
@@ -79,20 +79,25 @@ class _SurveyForm2State extends State<SurveyForm2> {
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
+
     Timer.periodic(
       oneSec,
       (Timer timer) {
         if (_timeOut == 0) {
           setState(() {
-            timer.cancel();
-            _controllerTopCenter.stop();
-            Navigator.pop(context);
-            Navigator.pop(context);
+            if (mounted) {
+              timer.cancel();
+              _controllerTopCenter.stop();
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
           });
         } else {
-          setState(() {
-            _timeOut--;
-          });
+          if (mounted) {
+            setState(() {
+              _timeOut--;
+            });
+          }
         }
       },
     );
@@ -110,13 +115,28 @@ class _SurveyForm2State extends State<SurveyForm2> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kBackgroundColor,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: kPrimaryColor,
+        leading: IconButton(
+          onPressed: () {
+            answerUrl = "";
+            back(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+        title: Ctext(
+          text: widget.title,
+          large: true,
+          color: Colors.white,
+        ),
+      ),
       body: SizedBox(
         height: height,
         width: width,
         child: SafeArea(
           child: Column(
             children: <Widget>[
-              _top(height, width),
               if (widget.url.isNotEmpty)
                 Expanded(
                   child: _body(height, width),
@@ -149,14 +169,27 @@ class _SurveyForm2State extends State<SurveyForm2> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Таньд баярлалаа",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: height * 0.022,
-                            ),
+                          Image.asset(
+                            "assets/win.png",
+                            height: height * 0.06,
+                            width: height * 0.06,
                           ),
-                          SizedBox(height: height * 0.004),
+                          SizedBox(height: height * 0.03),
+                          const Ctext(
+                            text: "Таньд баяр хүргэе!",
+                            large: true,
+                            color: kTextColor,
+                            bold: true,
+                          ),
+                          SizedBox(height: height * 0.03),
+                          Ctext(
+                            text: "Та судалгаа бөгөлж " +
+                                widget.money +
+                                "₮" +
+                                " авлаа.",
+                            large: true,
+                            color: kTextColor.withOpacity(0.7),
+                          ),
                           Text(
                             "Автоматаар гарахад " + _timeOut.toString() + "..",
                             style: TextStyle(
@@ -221,44 +254,5 @@ class _SurveyForm2State extends State<SurveyForm2> {
                 ),
               ),
         ],
-      );
-
-  Widget _top(double height, double width) => SizedBox(
-        height: height * 0.07,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: width * 0.03,
-            right: width * 0.03,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                widget.title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: height * 0.02,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.done_outline,
-                  color: Colors.transparent,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
       );
 }

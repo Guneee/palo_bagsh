@@ -48,6 +48,7 @@ List userPullRequestItems = [];
 List quests = [];
 List questCategories = [];
 List questItems = [];
+List categories = [];
 
 //android:name="${applicationName}"
 bool clearUserData() {
