@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:palo/constants.dart';
 import 'package:palo/helpers/components.dart';
@@ -9,6 +7,7 @@ import '../../../helpers/app_preferences.dart';
 
 class JobDetail extends StatefulWidget {
   final int index;
+
   const JobDetail({
     Key? key,
     required this.index,
@@ -69,23 +68,13 @@ class _JobDetailState extends State<JobDetail> {
               ),
               child: Column(
                 children: [
-                  if (jobs[index]["image"] != null)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: Image.network(
-                        jobs[index]["image"],
-                        height: height * 0.3,
-                        width: width,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
                   SizedBox(
                     height: height * 0.02,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      jobs[index]["title"],
+                      jobs3[index]["title"],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: height * 0.022,
@@ -96,7 +85,7 @@ class _JobDetailState extends State<JobDetail> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      jobs[index]["content"],
+                      jobs3[index]["content"],
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         letterSpacing: 1.0,
@@ -108,7 +97,7 @@ class _JobDetailState extends State<JobDetail> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      jobs[index]["phone"],
+                      jobs3[index]["phone"],
                       style: TextStyle(
                         color: kPrimaryColor,
                         letterSpacing: 1.0,
@@ -119,7 +108,7 @@ class _JobDetailState extends State<JobDetail> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      jobs[index]["work_time"],
+                      jobs3[index]["work_time"],
                       style: TextStyle(
                         color: Colors.white,
                       ),

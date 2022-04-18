@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/pages/job/job_page.dart';
-import 'package:palo/pages/profile/profile_page.dart';
+import 'package:palo/pages/profile/profile_page_old.dart';
 import 'package:palo/pages/quest/quest_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../helpers/components.dart';
@@ -10,6 +10,7 @@ import '../../pages/home/survey_form.dart';
 
 import '../../constants.dart';
 import '../../data.dart';
+import '../profile/profile_page.dart';
 
 class SurveyDetail2 extends StatefulWidget {
   final int index;
@@ -62,7 +63,6 @@ class _SurveyDetail2State extends State<SurveyDetail2> {
         SurveyDetailTemp2(
           index: index,
         ),
-        const QuestPage(),
         const JobPage(),
         const ProfilePage(),
       ];

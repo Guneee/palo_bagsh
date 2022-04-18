@@ -4,9 +4,9 @@ import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/pages/job/job_page.dart';
 import 'package:palo/pages/select_words.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../profile/profile_page.dart';
 import '/data.dart';
 import '../../constants.dart';
-import '/pages/profile/profile_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'home_page_content.dart';
 

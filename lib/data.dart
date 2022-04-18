@@ -36,8 +36,12 @@ bool isVerify = false;
 //https://docs.google.com/forms/d/e/1FAIpQLSfhYUnWqT45xrBJ2WTv5VCsJQqe2vy8maqy46IKufmOe0PkGg/viewform?usp=sf_link
 
 List<Marker> jobMarkers = [];
+List<Marker> jobMarkers2 = [];
+List<Marker> jobMarkers3 = [];
 List<Marker> questMarkers = [];
 List jobs = [];
+List jobs2 = [];
+List jobs3 = [];
 List<HomeModel> homeItems = [];
 List<CategoryModel> categoryItems = [];
 List history = [];
@@ -49,6 +53,8 @@ List quests = [];
 List questCategories = [];
 List questItems = [];
 List categories = [];
+var jobData;
+bool? isProduct;
 
 //android:name="${applicationName}"
 bool clearUserData() {

@@ -1,12 +1,18 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:palo/helpers/api_url.dart';
 import 'package:palo/helpers/app_preferences.dart';
+import 'package:palo/helpers/components.dart';
+import 'package:palo/pages/job/job_list.dart';
+import 'package:palo/pages/job/job_map.dart';
 import 'package:palo/pages/job/widgets/job_detail.dart';
 import '../../constants.dart';
 import '../../data.dart';
 import 'package:http/http.dart' as https;
+import 'dart:ui' as ui;
 
 class JobPage extends StatefulWidget {
   const JobPage({Key? key}) : super(key: key);
@@ -18,8 +24,7 @@ class JobPage extends StatefulWidget {
 class _JobPageState extends State<JobPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   bool _isLoad = false;
-  late GoogleMapController googleMapController;
-  var _data;
+  final _searchTEC = TextEditingController();
 
   _getLatLong(String location, int index) {
     double latLong = 7;
@@ -33,8 +38,18 @@ class _JobPageState extends State<JobPage> {
 
   _showInfo(var data) {
     setState(() {
-      _data = data;
+      jobData = data;
     });
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   Future<void> _loadData() async {
@@ -49,12 +64,21 @@ class _JobPageState extends State<JobPage> {
       },
     );
     jobMarkers.clear();
+    jobMarkers3.clear();
     jobs.clear();
+    jobs2.clear();
+    jobs3.clear();
+
     json.decode(responce.body)["nearjobs"].forEach((data) {
-      jobs.add(data);
+      jobs3.add(data);
     });
-    json.decode(responce.body)["nearjobs"].forEach((data) {
+
+    json.decode(responce.body)["nearjobs"].forEach((data) async {
+      final Uint8List markerIcon =
+          await getBytesFromAsset('assets/location_pin.png', 60);
+
       Marker markerTemp1 = Marker(
+        icon: BitmapDescriptor.fromBytes(markerIcon),
         markerId: MarkerId(data["id"].toString()),
         position: LatLng(
           _getLatLong(data["location"], 0),
@@ -117,7 +141,11 @@ class _JobPageState extends State<JobPage> {
             }),
       );
 
-      jobMarkers.add(markerTemp1);
+      // jobMarkers.add(markerTemp1);
+      jobMarkers3.add(markerTemp1);
+      if (mounted) {
+        setState(() {});
+      }
     });
     isJobPageFirstTime = true;
     if (mounted) {
@@ -141,120 +169,383 @@ class _JobPageState extends State<JobPage> {
       key: _key,
       backgroundColor: kBackgroundColor,
       bottomSheet: (!_isLoad)
-          ? DraggableScrollableSheet(
-              expand: false,
-              initialChildSize: 0.1,
-              minChildSize: 0.1,
-              maxChildSize: 0.95,
-              builder:
-                  (BuildContext context, ScrollController scrollController) {
-                return SingleChildScrollView(
-                  controller: scrollController,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
-                    ),
-                    child: Container(
-                      color: kBackgroundColor,
-                      child: Column(
-                        children: [
-                          SizedBox(height: height * 0.006),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(""),
-                              Container(
-                                width: width * 0.06,
-                                height: 1.5,
-                                color: Colors.white,
-                              ),
-                              Text(""),
-                            ],
-                          ),
-                          SizedBox(height: height * 0.01),
-                          Text(
-                            "Нийт " + jobs.length.toString() + " ажил байна",
-                            style: TextStyle(
-                              fontSize: height * 0.022,
-                              fontWeight: FontWeight.bold,
+          ? isProduct != null
+              ? isProduct!
+                  ? DraggableScrollableSheet(
+                      expand: false,
+                      initialChildSize: jobs2.isNotEmpty ? 0.26 : 0.2,
+                      minChildSize: jobs2.isNotEmpty ? 0.26 : 0.2,
+                      maxChildSize: 0.95,
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return SingleChildScrollView(
+                          controller: scrollController,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12.0),
+                              topRight: Radius.circular(12.0),
+                            ),
+                            child: Container(
                               color: Colors.white,
+                              child: Column(
+                                children: [
+                                  SizedBox(height: height * 0.006),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(""),
+                                      Container(
+                                        width: width * 0.06,
+                                        height: 1.5,
+                                        color: Colors.black,
+                                      ),
+                                      Text(""),
+                                    ],
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  Ctext(
+                                    text: "Бүтээгдэхүүн",
+                                    bold: true,
+                                    large: true,
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  Column(
+                                    children: List.generate(
+                                      jobs2.length,
+                                      (index) => Padding(
+                                        padding: EdgeInsets.only(
+                                          bottom: height * 0.04,
+                                          left: width * 0.06,
+                                          right: width * 0.06,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            go(
+                                              context,
+                                              JobDetail(index: index),
+                                            );
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Ctext(
+                                                            text: jobs2[index]
+                                                                ["title"],
+                                                            normal: true,
+                                                            bold: true,
+                                                          ),
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Ctext(
+                                                            text: jobs2[index]
+                                                                ["address"],
+                                                            normal: true,
+                                                            color: kGreyColor,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                            height:
+                                                                height * 0.02),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Ctext(
+                                                            text: jobs2[index]
+                                                                ["work_time"],
+                                                            small: true,
+                                                            bold: true,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                            height:
+                                                                height * 0.014),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Ctext(
+                                                    text: "500м",
+                                                    small: true,
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: width,
+                                                height: 1.5,
+                                                color: Colors.grey
+                                                    .withOpacity(0.4),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.8),
+                                ],
+                              ),
                             ),
                           ),
-                          SizedBox(height: height * 0.04),
-                          Column(
-                            children: List.generate(
-                              jobs.length,
-                              (index) => Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: height * 0.04,
-                                  left: width * 0.06,
-                                  right: width * 0.06,
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    go(context, JobDetail(index: index));
-                                  },
-                                  child: Column(
+                        );
+                      },
+                    )
+                  : DraggableScrollableSheet(
+                      expand: false,
+                      initialChildSize: jobs3.isNotEmpty ? 0.26 : 0.2,
+                      minChildSize: jobs3.isNotEmpty ? 0.26 : 0.2,
+                      maxChildSize: 0.95,
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return SingleChildScrollView(
+                          controller: scrollController,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12.0),
+                              topRight: Radius.circular(12.0),
+                            ),
+                            child: Container(
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  SizedBox(height: height * 0.006),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      if (jobs[index]["image"] != null)
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                          child: Image.network(
-                                            jobs[index]["image"],
-                                            height: height * 0.3,
-                                            width: width,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      SizedBox(
-                                        height: 12.0,
+                                      Text(""),
+                                      Container(
+                                        width: width * 0.06,
+                                        height: 1.5,
+                                        color: Colors.black,
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          (index + 1).toString() +
-                                              ". " +
-                                              jobs[index]["title"],
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 8.0),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          jobs[index]["phone"],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          jobs[index]["work_time"],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
+                                      Text(""),
                                     ],
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  Ctext(
+                                    text: "Ажил",
+                                    bold: true,
+                                    large: true,
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  Column(
+                                    children: List.generate(
+                                      jobs3.length,
+                                      (index) => Padding(
+                                        padding: EdgeInsets.only(
+                                          bottom: height * 0.04,
+                                          left: width * 0.06,
+                                          right: width * 0.06,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            go(
+                                              context,
+                                              JobDetail(index: index),
+                                            );
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Ctext(
+                                                            text: jobs3[index]
+                                                                ["title"],
+                                                            normal: true,
+                                                            bold: true,
+                                                          ),
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Ctext(
+                                                            text: jobs3[index]
+                                                                ["address"],
+                                                            normal: true,
+                                                            color: kGreyColor,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                            height:
+                                                                height * 0.02),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Ctext(
+                                                            text: jobs3[index]
+                                                                ["work_time"],
+                                                            small: true,
+                                                            bold: true,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                            height:
+                                                                height * 0.014),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Ctext(
+                                                    text: "500м",
+                                                    small: true,
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: width,
+                                                height: 1.5,
+                                                color: Colors.grey
+                                                    .withOpacity(0.4),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.8),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    )
+              : DraggableScrollableSheet(
+                  expand: false,
+                  initialChildSize: jobs.isNotEmpty ? 0.26 : 0.2,
+                  minChildSize: jobs.isNotEmpty ? 0.26 : 0.2,
+                  maxChildSize: 0.95,
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return SingleChildScrollView(
+                      controller: scrollController,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12.0),
+                          topRight: Radius.circular(12.0),
+                        ),
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              SizedBox(height: height * 0.006),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(""),
+                                  Container(
+                                    width: width * 0.06,
+                                    height: 1.5,
+                                    color: Colors.black,
+                                  ),
+                                  Text(""),
+                                ],
+                              ),
+                              SizedBox(height: height * 0.01),
+                              Ctext(
+                                text: "Сүүлд үзсэн",
+                                bold: true,
+                                large: true,
+                              ),
+                              SizedBox(height: height * 0.01),
+                              Column(
+                                children: List.generate(
+                                  jobs.length,
+                                  (index) => Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: height * 0.04,
+                                      left: width * 0.06,
+                                      right: width * 0.06,
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        go(context, JobDetail(index: index));
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Ctext(
+                                                        text: jobs[index]
+                                                            ["title"],
+                                                        normal: true,
+                                                        bold: true,
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Ctext(
+                                                        text: jobs[index]
+                                                            ["address"],
+                                                        normal: true,
+                                                        color: kGreyColor,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                        height: height * 0.02),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Ctext(
+                                                        text: jobs[index]
+                                                            ["work_time"],
+                                                        small: true,
+                                                        bold: true,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                        height: height * 0.014),
+                                                  ],
+                                                ),
+                                              ),
+                                              Ctext(
+                                                text: "500м",
+                                                small: true,
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            width: width,
+                                            height: 1.5,
+                                            color: Colors.grey.withOpacity(0.4),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                              SizedBox(height: height * 0.8),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            )
+                    );
+                  },
+                )
           : null,
       body: SizedBox(
         height: height,
@@ -286,165 +577,23 @@ class _JobPageState extends State<JobPage> {
                     ),
                   if (!_isLoad)
                     Expanded(
-                      child: _body(height, width),
+                      child: Stack(
+                        children: [
+                          JobMap(),
+                          JobList(
+                            onFilterChanged: () {
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                 ],
               ),
             ),
-            if (_data != null)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: height * 0.14),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 3.0,
-                          spreadRadius: 1.0,
-                          offset: Offset(0.0, 3.0),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    height: height * 0.15,
-                    width: width * 0.9,
-                    child: Material(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(10.0),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(_data["title"]),
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      if (_data["image"] != null)
-                                        SizedBox(
-                                          height: 180.0,
-                                          width: double.infinity,
-                                          child: Image.network(
-                                            _data["image"],
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      if (_data["image"] != null)
-                                        SizedBox(
-                                          height: 8.0,
-                                        ),
-                                      ListBody(
-                                        children: <Widget>[
-                                          Text(_data["phone"]),
-                                          Text(_data["work_time"]),
-                                          SizedBox(
-                                            height: 12.0,
-                                          ),
-                                          Text(_data["content"]),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text('ХААХ'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Image.network(
-                                  _data["image"],
-                                  fit: BoxFit.cover,
-                                  height: height * 0.15,
-                                  width: width * 0.9,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 4,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: width * 0.04,
-                                    right: width * 0.04,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          _data["title"],
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          _data["content"],
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          _data["work_time"],
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
           ],
         ),
       ),
     );
   }
-
-  Widget _body(double height, double width) => GoogleMap(
-      initialCameraPosition: CameraPosition(
-        target: LatLng(
-          47.9176754,
-          106.9241525,
-        ),
-        zoom: 13.06,
-      ),
-      myLocationButtonEnabled: false,
-      markers: Set.of((jobMarkers.isNotEmpty) ? jobMarkers : []),
-      onMapCreated: (GoogleMapController controller) {
-        googleMapController = controller;
-      },
-      onTap: (lat) {
-        setState(() {
-          var toNull;
-          _data = toNull;
-        });
-      });
 }
