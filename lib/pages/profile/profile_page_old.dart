@@ -8,8 +8,6 @@ import '../verify/verify_page.dart';
 import '/helpers/app_preferences.dart';
 import '/pages/profile/profile_account.dart';
 import '/pages/profile/all_history.dart';
-import '../../pages/auth/login_page.dart';
-import '../../pages/auth/register_page.dart';
 import '../../constants.dart';
 import '../../data.dart';
 import 'profile_edit.dart';
