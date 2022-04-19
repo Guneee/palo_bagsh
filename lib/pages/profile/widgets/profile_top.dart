@@ -154,28 +154,30 @@ class ProfileTop extends StatelessWidget {
                     SizedBox(width: width * 0.07),
                   ],
                 ),
-                SizedBox(height: height * 0.005),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: width * 0.14),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.error,
-                          color: Colors.yellow,
-                        ),
-                        SizedBox(width: width * 0.02),
-                        Ctext(
-                          text: "Бүртгэлээ баталгаажуулна уу",
-                          color: Colors.yellow,
-                          extraSmall: true,
-                        ),
-                      ],
+                if (user["verify"] == "Татгалзсан" || user["verify"] == null)
+                  SizedBox(height: height * 0.005),
+                if (user["verify"] == "Татгалзсан" || user["verify"] == null)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: width * 0.14),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.error,
+                            color: Colors.yellow,
+                          ),
+                          SizedBox(width: width * 0.02),
+                          Ctext(
+                            text: "Бүртгэлээ баталгаажуулна уу",
+                            color: Colors.yellow,
+                            extraSmall: true,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
