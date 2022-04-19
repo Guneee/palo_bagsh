@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:palo/helpers/app_preferences.dart';
 import 'package:palo/helpers/components.dart';
+import 'package:palo/pages/auth/auth_page.dart';
 import 'package:palo/pages/home/home_page.dart';
 import 'package:palo/pages/splash_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,9 +52,15 @@ class _FirstPageState extends State<FirstPage> {
   @override
   void initState() {
     // _loadUserData();
-    setState(() {
-      _isLoad = true;
-    });
+    // setState(() {
+    //   _isLoad = true;
+    // });
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        goRepalce(context, const AuthPage());
+      },
+    );
     super.initState();
   }
 

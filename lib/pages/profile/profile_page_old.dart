@@ -2,6 +2,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:palo/pages/auth/auth_page.dart';
 import 'package:palo/pages/profile/pull_list.dart';
 import 'package:palo/pages/profile/pull_request.dart';
 import '../verify/verify_page.dart';
@@ -551,7 +552,7 @@ class _ProfilePageOldState extends State<ProfilePageOld> {
                                   onPressed: () {
                                     final isFinish = clearUserData();
                                     if (isFinish) {
-                                      goHome(context);
+                                      goAndClear(context, AuthPage());
                                     } else {
                                       showSnackBar("Алдаа гарлаа", _key);
                                     }
